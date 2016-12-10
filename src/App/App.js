@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
+import logo from '../logo.svg';
 import './App.scss';
 import RaisedButton from 'material-ui/RaisedButton';
+import TodoContainer from './components/TodoContainer';
 
 class App extends Component {
   render() {
@@ -23,6 +24,7 @@ class App extends Component {
           <br />
           <RaisedButton label="Full width" fullWidth={true} />
         </div>
+        <TodoContainer />
       </div>
     );
   }

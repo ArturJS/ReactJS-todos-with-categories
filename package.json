@@ -53,7 +53,9 @@
     "material-ui": "0.16.5",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
-    "react-tap-event-plugin": "2.0.1"
+    "react-redux": "4.4.6",
+    "react-tap-event-plugin": "2.0.1",
+    "redux": "3.6.0"
   },
   "scripts": {
     "start": "node scripts/start.js",
