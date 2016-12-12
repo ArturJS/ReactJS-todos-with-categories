@@ -1,4 +1,6 @@
 import React, {PropTypes, Component} from 'react';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class TodoForm extends Component {
   constructor(props) {
@@ -8,8 +10,8 @@ class TodoForm extends Component {
   }
 
   onAddTodoClick() {
-    const titleElement = document.getElementById('title');
-    const descriptionElement = document.getElementById('description');
+    const titleElement = this.refs.title.getInputNode();
+    const descriptionElement = this.refs.description.getInputNode();
 
     this.props.addTodo({
       id: Math.random(),
@@ -24,16 +26,32 @@ class TodoForm extends Component {
   }
 
   componentDidMount() {
-    document.getElementById('title').focus();
+    this.refs.title.getInputNode().focus();
   }
 
   render() {
     return (
-      <div>
-        <input id="title" type="text" placeholder="Todo title" />
-        <input id="description" type="text" placeholder="Todo description" />
-        <button onClick={this.onAddTodoClick}>Add Todo</button>
-      </div>
+      <form>
+        <TextField
+          ref="title"
+          hintText="Enter todo title here..."
+          floatingLabelText="Todo title"
+          fullWidth={true}
+        />
+        <br/>
+        <TextField
+          ref="description"
+          hintText="Enter todo description here..."
+          floatingLabelText="Todo description"
+          fullWidth={true}
+          multiLine={true}
+        />
+        <RaisedButton
+          label="Add Todo"
+          fullWidth={true}
+          onClick={this.onAddTodoClick}
+        />
+      </form>
     );
   }
 }

@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import * as todoActions from '../actions/todo-actions';
 import TodoList from './TodoList';
 import TodoForm from './TodoForm';
+import './TodoContainer.scss';
 
 class TodoContainer extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class TodoContainer extends Component {
     const {todoList} = this.props;
 
     return (
-      <div>
+      <div className="todo-container">
         <TodoForm addTodo={this.props.actions.addTodo} />
         <TodoList todoList={todoList} />
       </div>
