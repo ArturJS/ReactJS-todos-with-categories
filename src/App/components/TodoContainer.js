@@ -5,6 +5,10 @@ import * as todoActions from '../actions/todo-actions';
 import TodoList from './TodoList';
 import TodoForm from './TodoForm';
 import './TodoContainer.scss';
+import RaisedButton from 'material-ui/RaisedButton';
+
+import {store} from './../../index';
+import {ActionCreators} from 'redux-undo';
 
 class TodoContainer extends Component {
   constructor(props) {
@@ -15,21 +19,40 @@ class TodoContainer extends Component {
     };
   }
 
+  undo() {
+    store.dispatch(ActionCreators.undo());
+  }
+
+  redo() {
+    store.dispatch(ActionCreators.redo());
+  }
+
   render() {
-    const {todoList} = this.props;
+    let {todoList} = this.props;
     const {addTodo, removeTodo} = this.props.actions;
 
+    todoList = todoList.present;
     return (
       <div className="todo-container">
-        <TodoForm addTodo={addTodo} />
-        <TodoList todoList={todoList} removeTodo={removeTodo} />
+        <RaisedButton
+          className="half-width"
+          label="Undo"
+          onClick={()=> this.undo()}
+        />
+        <RaisedButton
+          className="half-width"
+          label="Redo"
+          onClick={()=> this.redo()}
+        />
+        <TodoForm addTodo={addTodo}/>
+        <TodoList todoList={todoList} removeTodo={removeTodo}/>
       </div>
     );
   }
 }
 
 TodoContainer.propTypes = {
-  todoList: PropTypes.array.isRequired,
+  todoList: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 };
 
