@@ -17,11 +17,12 @@ class TodoContainer extends Component {
 
   render() {
     const {todoList} = this.props;
+    const {addTodo, removeTodo} = this.props.actions;
 
     return (
       <div className="todo-container">
-        <TodoForm addTodo={this.props.actions.addTodo} />
-        <TodoList todoList={todoList} />
+        <TodoForm addTodo={addTodo} />
+        <TodoList todoList={todoList} removeTodo={removeTodo} />
       </div>
     );
   }

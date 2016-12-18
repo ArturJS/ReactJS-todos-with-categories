@@ -1,32 +1,20 @@
 import React, {PropTypes} from 'react';
-import {Card, CardHeader, CardText} from 'material-ui/Card';
 import './Todo.scss';
 
-const style = {
-  todoTitle: {
-    'font-size': '24px',
-    'font-weight': 'bold'
-  }
-};
-
-const Todo = ({todo}) => {
+const Todo = ({todo, removeTodo}) => {
   return (
-    <Card className="todo-card">
-      <CardHeader
-        title={todo.title}
-        actAsExpander={true}
-        showExpandableButton={true}
-        titleStyle={style.todoTitle}
-      />
-      <CardText expandable={true}>
-        {todo.description}
-      </CardText>
-    </Card>
+    <div className="todo-card">
+      <i className="todo-remove"
+         onClick={() => removeTodo(todo)}>&times;</i>
+      <h3>{todo.title}</h3>
+      <p>{todo.description}</p>
+    </div>
   );
 };
 
 Todo.propTypes = {
-  todo: PropTypes.object.isRequired
+  todo: PropTypes.object.isRequired,
+  removeTodo: PropTypes.func.isRequired
 };
 
 export default Todo;

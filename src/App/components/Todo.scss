@@ -1,3 +1,38 @@
 .todo-card {
+  $c-shadow: #2e2e2e;
+  $c-border: #e4e4e4;
+
   margin-top: 15px;
+  border: 1px solid $c-border;
+  box-shadow: $c-shadow 0 0 0;
+  transition: box-shadow 0.25s ease-in;
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+  animation: zoom 0.3s;
+
+  &:hover {
+    box-shadow: $c-shadow 0 0 10px;
+  }
+
+  .todo-remove {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 30px;
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+    cursor: pointer;
+  }
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
 }
