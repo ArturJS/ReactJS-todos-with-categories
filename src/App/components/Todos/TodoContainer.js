@@ -1,13 +1,13 @@
 import React, {PropTypes, Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as todoActions from '../actions/todo-actions';
+import * as todoActions from '../../actions/todo-actions';
 import TodoList from './TodoList';
 import TodoForm from './TodoForm';
 import './TodoContainer.scss';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import {store} from './../../index';
+import {store} from './../../../index';
 import {ActionCreators} from 'redux-undo';
 
 class TodoContainer extends Component {

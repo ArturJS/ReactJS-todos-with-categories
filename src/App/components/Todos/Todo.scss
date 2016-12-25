@@ -1,5 +1,5 @@
 .todo-card {
-  $c-shadow: #2e2e2e;
+  $c-shadow: rgba(46, 46, 46, 0.35);
   $c-border: #e4e4e4;
 
   margin-top: 15px;
@@ -12,7 +12,7 @@
   animation: zoom 0.3s;
 
   &:hover {
-    box-shadow: $c-shadow 0 0 10px;
+    box-shadow: $c-shadow 0 5px 20px 3px;
   }
 
   .todo-remove {
