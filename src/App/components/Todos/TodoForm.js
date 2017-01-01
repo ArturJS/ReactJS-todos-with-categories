@@ -3,44 +3,63 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
 class TodoForm extends Component {
+  _title;
+  _description;
+
   constructor(props) {
     super(props);
 
     this.onAddTodoClick = this.onAddTodoClick.bind(this);
+    this.focusTitleInput = this.focusTitleInput.bind(this);
+    this.resetForm = this.resetForm.bind(this);
   }
 
   onAddTodoClick() {
-    const titleElement = this.refs.title.getInputNode();
-    const descriptionElement = this.refs.description.getInputNode();
 
     this.props.addTodo({
       id: Math.random(),
-      title: titleElement.value,
-      description: descriptionElement.value
+      title: this._title.getValue(),
+      description: this._description.getValue()
     });
 
-    titleElement.value = "";
-    descriptionElement.value = "";
+    this.resetForm();
 
-    titleElement.focus();
+    this.focusTitleInput();
   }
 
   componentDidMount() {
-    this.refs.title.getInputNode().focus();
+    this.focusTitleInput();
+  }
+
+  resetForm() {
+    this._title.input.value = '';//necessary for single line material-ui input
+    this._description.input.setValue('');//necessary for multi line material-ui input
+
+    this._title.setState({
+      hasValue: false
+    });
+
+    this._description.setState({
+      hasValue: false
+    });
+  }
+
+  focusTitleInput() {
+    this._title.getInputNode().focus();
   }
 
   render() {
     return (
       <form>
         <TextField
-          ref="title"
+          ref={(node) => this._title = node}
           hintText="Enter todo title here..."
           floatingLabelText="Todo title"
           fullWidth={true}
         />
         <br/>
         <TextField
-          ref="description"
+          ref={(node) => this._description = node}
           hintText="Enter todo description here..."
           floatingLabelText="Todo description"
           fullWidth={true}
