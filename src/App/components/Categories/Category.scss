@@ -1,13 +1,11 @@
 .category-card {
-  display: inline-block;
-  min-width: 250px;
 
   &-header {
     display: block;
     box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
     border-radius: 2px;
     text-align: left;
-    padding: 15px 10px;
+    padding: 10px;
     cursor: pointer;
   }
 
@@ -35,9 +33,18 @@
   .category-name {
     color: #00bcd4;
     cursor: pointer;
+    margin: 0 10px;
 
     &:hover {
       text-decoration: underline;
+    }
+  }
+
+  .category-controls-right {
+    float: right;
+
+    .glyphicon {
+      margin-right: 5px;
     }
   }
 

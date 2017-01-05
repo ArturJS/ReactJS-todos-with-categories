@@ -6,9 +6,15 @@ class Category extends Component {
   constructor(props) {
     super(props);
 
+    const categoryId = props.category.id;
+
     this.state = {
       isExpanded: false
     };
+
+    this.toggleExpand = this.toggleExpand.bind(this);
+    this.addSubcategory = this.addSubcategory.bind(this, categoryId);
+    this.deleteCategory = this.deleteCategory.bind(this, categoryId);
   }
 
   toggleExpand() {
@@ -17,15 +23,26 @@ class Category extends Component {
     })
   }
 
+  addSubcategory(categoryId, event) {
+    event.stopPropagation();
+    this.props.addSubcategory(categoryId);
+  }
+
+  deleteCategory(categoryId, event) {
+    event.stopPropagation();
+    this.props.deleteCategory(categoryId);
+  }
+
   render() {
     let {category} = this.props;
     let {isExpanded} = this.state;
     let hasChilds = category.childs.length > 0;
+    const {addSubcategory, deleteCategory} = this.props;
 
     return (
       <div className="category-card">
         <div className="category-card-header"
-             onClick={() => this.toggleExpand()}>
+             onClick={this.toggleExpand}>
           <i className={`
           category-toggle-open
           ${isExpanded ? 'is-expanded' : ''}
@@ -37,6 +54,13 @@ class Category extends Component {
             </svg>
           </i>
           <a className="category-name">{category.name}</a>
+          <i className="glyphicon glyphicon-pencil"></i>
+          <span className="category-controls-right">
+            <i className="glyphicon glyphicon-trash"
+               onClick={this.deleteCategory}></i>
+            <i className="glyphicon glyphicon-plus-sign"
+               onClick={this.addSubcategory}></i>
+          </span>
         </div>
 
         {
@@ -47,7 +71,9 @@ class Category extends Component {
                   {
                     category.childs.map((child) =>
                       <li key={child.id}>
-                        <Category category={child}></Category>
+                        <Category category={child}
+                                  addSubcategory={addSubcategory}
+                                  deleteCategory={deleteCategory}></Category>
                       </li>
                     )
                   }
@@ -63,7 +89,9 @@ class Category extends Component {
 }
 
 Category.propTypes = {
-  category: PropTypes.object.isRequired
+  category: PropTypes.object.isRequired,
+  addSubcategory: PropTypes.func.isRequired,
+  deleteCategory: PropTypes.func.isRequired
 };
 
 export default Category;

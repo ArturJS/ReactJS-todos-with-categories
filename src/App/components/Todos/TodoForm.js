@@ -66,6 +66,7 @@ class TodoForm extends Component {
           multiLine={true}
         />
         <RaisedButton
+          type="button"
           label="Add Todo"
           fullWidth={true}
           onClick={this.onAddTodoClick}
