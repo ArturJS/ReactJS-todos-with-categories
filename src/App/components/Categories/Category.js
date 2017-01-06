@@ -6,10 +6,11 @@ class Category extends Component {
   constructor(props) {
     super(props);
 
-    const categoryId = props.category.id;
+    let {category} = props;
+    const categoryId = category.id;
 
     this.state = {
-      isExpanded: false
+      isExpanded: category.isExpanded
     };
 
     this.toggleExpand = this.toggleExpand.bind(this);
@@ -20,7 +21,11 @@ class Category extends Component {
   toggleExpand() {
     this.setState({
       isExpanded: !this.state.isExpanded//todo fix
-    })
+    });
+
+    let {category} = this.props;
+
+    category.isExpanded = !category.isExpanded;
   }
 
   addSubcategory(categoryId, event) {
