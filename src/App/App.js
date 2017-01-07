@@ -4,6 +4,8 @@ import './App.scss';
 import TodoContainer from './components/Todos/TodoContainer';
 import CategoryContainer from './components/Categories/CategoryContainer';
 
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+
 class App extends Component {
   render() {
     return (
@@ -14,12 +16,14 @@ class App extends Component {
         </div>
         <div className="App-body">
           <CategoryContainer />
-          <TodoContainer />
+          <Router history={hashHistory}>
+            <Route path='/' component={TodoContainer} />
+            <Route path='/category' component={CategoryContainer} />
+          </Router>
         </div>
       </div>
     );
   }
 }
-
 
 export default App;

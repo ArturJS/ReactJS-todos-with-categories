@@ -25,7 +25,17 @@
     line-height: 1em;
     cursor: pointer;
   }
+
+  .chbx-cnt {
+    font-size: 30px;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
+
+
 
 @keyframes zoom {
   from {
