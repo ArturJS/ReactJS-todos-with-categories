@@ -5,6 +5,8 @@
   height: 1em;
   cursor: pointer;
   user-select: none;
+  margin: 0;
+  vertical-align: text-top;
 
   &:before {
     display: inline-block;

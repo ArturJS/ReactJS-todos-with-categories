@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import logo from '../logo.svg';
 import './App.scss';
+import TodoFilter from './components/TodoFilter/TodoFilter';
 import TodoContainer from './components/Todos/TodoContainer';
 import CategoryContainer from './components/Categories/CategoryContainer';
 
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+import { Router, Route, hashHistory } from 'react-router';
 
 class App extends Component {
   render() {
@@ -16,10 +17,14 @@ class App extends Component {
         </div>
         <div className="App-body">
           <CategoryContainer />
-          <Router history={hashHistory}>
-            <Route path='/' component={TodoContainer} />
-            <Route path='/category' component={CategoryContainer} />
-          </Router>
+          <div>
+            <TodoFilter />
+            <Router history={hashHistory}>
+              <Route path='/' component={TodoContainer} />
+              <Route path='/category' component={CategoryContainer} />
+            </Router>
+          </div>
+
         </div>
       </div>
     );

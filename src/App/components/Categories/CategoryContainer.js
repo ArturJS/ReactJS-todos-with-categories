@@ -86,7 +86,7 @@ class CategoryContainer extends Component {
     if (hasChildsList.length > 0) {
       for (let category of hasChildsList) {
         relatedCategory = this.findRelatedCategory(category.childs, categoryId);
-        
+
         if (relatedCategory) {
           return relatedCategory;
         }

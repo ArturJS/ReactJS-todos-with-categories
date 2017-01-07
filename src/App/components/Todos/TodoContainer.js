@@ -28,10 +28,16 @@ class TodoContainer extends Component {
   }
 
   render() {
-    let {todoList} = this.props;
+    let {todoList, todoFilterState} = this.props;
     const {addTodo, removeTodo, updateTodo} = this.props.actions;
 
     todoList = todoList.present;
+    todoFilterState = todoFilterState.present;
+
+    if (todoFilterState.showDone) {
+      todoList = todoList.filter((todo)=> todo.isDone);
+    }
+
     return (
       <div className="todo-container">
         <RaisedButton
@@ -52,13 +58,15 @@ class TodoContainer extends Component {
 }
 
 TodoContainer.propTypes = {
+  todoFilterState: PropTypes.object.isRequired,
   todoList: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, props) {
   return {
-    todoList: state.todoList
+    todoList: state.todoList,
+    todoFilterState: state.todoFilterState
   };
 }
 
