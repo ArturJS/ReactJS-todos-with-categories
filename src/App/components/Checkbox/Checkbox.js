@@ -1,12 +1,12 @@
 import React, {PropTypes} from 'react';
 import './Checkbox.scss';
 
-const Checkbox = ({defaultValue, onChange}) => {
+const Checkbox = ({value, onChange}) => {
   return (
     <label className="chbx-cnt">
       <input type="checkbox"
              className="chbx"
-             defaultChecked={defaultValue}
+             checked={value}
              onChange={(event)=>{
               onChange(event.target.checked);
              }}
@@ -17,7 +17,7 @@ const Checkbox = ({defaultValue, onChange}) => {
 };
 
 Checkbox.propTypes = {
-  defaultValue: PropTypes.bool,
+  value: PropTypes.bool,
   onChange: PropTypes.func.isRequired
 };
 

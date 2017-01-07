@@ -4,6 +4,7 @@
   width: 1em;
   height: 1em;
   cursor: pointer;
+  user-select: none;
 
   &:before {
     display: inline-block;

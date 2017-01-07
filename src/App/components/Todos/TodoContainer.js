@@ -29,7 +29,7 @@ class TodoContainer extends Component {
 
   render() {
     let {todoList} = this.props;
-    const {addTodo, removeTodo} = this.props.actions;
+    const {addTodo, removeTodo, updateTodo} = this.props.actions;
 
     todoList = todoList.present;
     return (
@@ -45,7 +45,7 @@ class TodoContainer extends Component {
           onClick={()=> this.redo()}
         />
         <TodoForm addTodo={addTodo}/>
-        <TodoList todoList={todoList} removeTodo={removeTodo}/>
+        <TodoList todoList={todoList} removeTodo={removeTodo} updateTodo={updateTodo}/>
       </div>
     );
   }
