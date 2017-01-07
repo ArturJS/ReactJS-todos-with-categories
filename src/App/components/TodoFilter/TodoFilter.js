@@ -13,6 +13,17 @@ class TodoFilter extends Component {
       showDone: true,
       searchQuery: ''
     };
+
+    this.updateSearchQuery = this.updateSearchQuery.bind(this);
+    this.resetSearchQuery = this.resetSearchQuery.bind(this);
+  }
+
+  updateSearchQuery(event) {
+    this.props.actions.updateTodoFilter({searchQuery: event.target.value});
+  }
+
+  resetSearchQuery() {
+    this.props.actions.updateTodoFilter({searchQuery: ''});
   }
 
   render() {
@@ -21,15 +32,28 @@ class TodoFilter extends Component {
 
     todoFilterState = todoFilterState.present;
 
+    let {showDone, searchQuery} = todoFilterState;
+
     return (
-      <div className="todo-filter-container">
+      <div className="todo-filter">
         <h4>Todo Filter</h4>
-        <label className="cp">
-          <Checkbox value={todoFilterState.showDone} onChange={(value)=>{
+        <label className="show-done">
+          <Checkbox value={showDone} onChange={(value)=>{
             updateTodoFilter({showDone: value});
           }}/>
           &nbsp;Show done
         </label>
+        <div className="search-input-cnt">
+          <input type="text"
+                 className="search-input"
+                 value={searchQuery}
+                 onInput={this.updateSearchQuery}
+                 placeholder="search todo..."
+          />
+          <button className="reset-search-input"
+                  onClick={this.resetSearchQuery}>&times;</button>
+        </div>
+
       </div>
     );
   }

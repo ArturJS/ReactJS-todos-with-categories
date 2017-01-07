@@ -34,8 +34,19 @@ class TodoContainer extends Component {
     todoList = todoList.present;
     todoFilterState = todoFilterState.present;
 
-    if (todoFilterState.showDone) {
+    let {showDone, searchQuery} = todoFilterState;
+
+    if (showDone) {
       todoList = todoList.filter((todo)=> todo.isDone);
+    }
+
+    if (searchQuery && searchQuery.trim()) {
+      searchQuery = searchQuery.toLowerCase();
+
+      todoList = todoList.filter((todo)=> {
+        return todo.title.toLowerCase().indexOf(searchQuery) > -1 ||
+          todo.description.toLowerCase().indexOf(searchQuery) > -1;
+      });
     }
 
     return (
