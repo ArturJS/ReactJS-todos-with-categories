@@ -6,34 +6,47 @@ import './TodoEditPage.scss';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import { Link } from 'react-router';
+import Checkbox from '../../components/Checkbox/Checkbox';
 import CategoryContainer from '../../components/Categories/CategoryContainer';
 
 import {store} from '../../store/store';
 
 class TodoEditPage extends Component {
-  _tempTodo;
 
   constructor(props) {
     super(props);
 
+    console.dir(props);
+
+    const {currentTodo} = this.props;
+
+    this.state = {
+      tempTodo: Object.assign({}, currentTodo.present)
+    };
+
     this.saveChanges = this.saveChanges.bind(this);
     this.cancel = this.cancel.bind(this);
+    this.updateIsDone = this.updateIsDone.bind(this);
   }
 
   saveChanges() {
     const {updateTodo} = this.props.actions;
     const {currentTodo} = this.props;
-    store.dispatch(updateTodo(currentTodo, this._tempTodo));
+    store.dispatch(updateTodo(currentTodo, this.state.tempTodo));
   }
 
   cancel() {
     //store.dispatch();//use goBack() from react-router-redux
   }
 
-  render() {
-    const {currentTodo} = this.props;
+  updateIsDone(isDone) {
+    this.setState({
+      tempTodo: Object.assign({}, this.state.tempTodo, {isDone: isDone})
+    });
+  }
 
-    this._tempTodo = Object.assign({}, currentTodo.present);
+  render() {
+    const {tempTodo} = this.state;
 
     return (
       <div className="App-body">
@@ -61,9 +74,22 @@ class TodoEditPage extends Component {
               </div>
             </div>
 
-            {this._tempTodo.title}
-            <br/>
-            {this._tempTodo.description}
+            <p>
+              <input type="text"
+                     className="todo-title-field"
+                     defaultValue={tempTodo.title}
+              />
+            </p>
+            <p>
+              <label className="cp">
+                <Checkbox value={tempTodo.isDone} onChange={this.updateIsDone} />
+                &nbsp;
+                Done
+              </label>
+            </p>
+            <p>
+              <textarea defaultValue={tempTodo.description}></textarea>
+            </p>
 
           </div>
         </div>
