@@ -22,9 +22,8 @@ class TodoEditPage extends Component {
 
   saveChanges() {
     const {updateTodo} = this.props.actions;
-    const {tempTodo} = this.state;
     const {currentTodo} = this.props;
-    store.dispatch(updateTodo(currentTodo, tempTodo));
+    store.dispatch(updateTodo(currentTodo, this._tempTodo));
   }
 
   cancel() {
