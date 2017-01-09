@@ -1,11 +1,17 @@
 import React, {Component} from 'react';
+import { Router, Route, hashHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
+
 import logo from '../logo.svg';
 import './App.scss';
-import TodoFilter from './components/TodoFilter/TodoFilter';
-import TodoContainer from './components/Todos/TodoContainer';
-import CategoryContainer from './components/Categories/CategoryContainer';
 
-import { Router, Route, hashHistory } from 'react-router';
+
+import TodoListPage from './pages/TodoListPage/TodoListPage';
+import TodoEditPage from './pages/TodoEditPage/TodoEditPage';
+
+import {store} from './store/store';
+
+const history = syncHistoryWithStore(hashHistory, store);
 
 class App extends Component {
   render() {
@@ -15,17 +21,10 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo"/>
           <h2 className="App-logo-text">Welcome to React</h2>
         </div>
-        <div className="App-body">
-          <CategoryContainer />
-          <div>
-            <TodoFilter />
-            <Router history={hashHistory}>
-              <Route path='/' component={TodoContainer} />
-              <Route path='/category' component={CategoryContainer} />
-            </Router>
-          </div>
-
-        </div>
+        <Router history={history}>
+          <Route path='/' component={TodoListPage} />
+          <Route path='/todo/:todoId' component={TodoEditPage} />
+        </Router>
       </div>
     );
   }

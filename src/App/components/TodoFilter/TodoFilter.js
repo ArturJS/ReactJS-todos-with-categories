@@ -36,7 +36,6 @@ class TodoFilter extends Component {
 
     return (
       <div className="todo-filter">
-        <h4>Todo Filter</h4>
         <label className="show-done">
           <Checkbox value={showDone} onChange={(value)=>{
             updateTodoFilter({showDone: value});

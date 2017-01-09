@@ -4,13 +4,17 @@ import {bindActionCreators} from 'redux';
 import * as todoActions from '../../actions/todo-actions';
 import TodoList from './TodoList';
 import TodoForm from './TodoForm';
-import './TodoContainer.scss';
+import './TodoListPage.scss';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import {store} from './../../../index';
+import {store} from '../../store/store';
 import {ActionCreators} from 'redux-undo';
 
-class TodoContainer extends Component {
+import { Link } from 'react-router';
+import TodoFilter from '../../components/TodoFilter/TodoFilter';
+import CategoryContainer from '../../components/Categories/CategoryContainer';
+
+class TodoListPage extends Component {
   constructor(props) {
     super(props);
 
@@ -50,25 +54,37 @@ class TodoContainer extends Component {
     }
 
     return (
-      <div className="todo-container">
-        <RaisedButton
-          className="half-width"
-          label="Undo"
-          onClick={()=> this.undo()}
-        />
-        <RaisedButton
-          className="half-width"
-          label="Redo"
-          onClick={()=> this.redo()}
-        />
-        <TodoForm addTodo={addTodo}/>
-        <TodoList todoList={todoList} removeTodo={removeTodo} updateTodo={updateTodo}/>
+      <div className="App-body">
+        <div className="layout-left-pane">
+          <ul>
+            <li><Link to={`/todo/${123}`}>todo 123</Link></li>
+            <li><Link to={`/`}>Home page</Link></li>
+          </ul>
+          <CategoryContainer />
+        </div>
+        <div className="layout-right-pane">
+          <TodoFilter />
+          <div className="todo-list-page">
+            <RaisedButton
+              className="half-width"
+              label="Undo"
+              onClick={()=> this.undo()}
+            />
+            <RaisedButton
+              className="half-width"
+              label="Redo"
+              onClick={()=> this.redo()}
+            />
+            <TodoForm addTodo={addTodo}/>
+            <TodoList todoList={todoList} removeTodo={removeTodo} updateTodo={updateTodo}/>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-TodoContainer.propTypes = {
+TodoListPage.propTypes = {
   todoFilterState: PropTypes.object.isRequired,
   todoList: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
@@ -87,4 +103,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(TodoListPage);
