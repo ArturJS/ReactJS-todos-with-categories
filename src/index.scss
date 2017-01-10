@@ -41,14 +41,14 @@ body {
 .layout {
   &-left-pane {
     width: 300px;
-    margin: 15px auto;
+    overflow: auto;
+    padding: 15px;
   }
 
   &-right-pane {
-    width: 350px;
-    margin: 15px auto;
-    overflow: auto;
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
+    overflow: auto;
   }
 }

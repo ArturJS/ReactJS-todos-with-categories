@@ -1,4 +1,9 @@
+@import "../../styles/mixins";
+
 .todo-filter {
+  text-align: right;
+  padding: 15px;
+
   .show-done {
     cursor: pointer;
     margin-right: 25px;
@@ -9,17 +14,10 @@
     position: relative;
 
     .search-input {
-      box-shadow: rgba(0, 0, 0, 0.117647) 0px 3px 16px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
       border: none;
       font-size: 16px;
       padding: 0 5px;
-      outline: none;
-      transition: box-shadow 0.15s linear;
-      will-change: box-shadow;
-
-      &:focus {
-        box-shadow: rgba(33, 150, 243, 0.5) 0px 3px 16px, rgba(33, 150, 243, 0.5) 0px 1px 4px;
-      }
+      @include input-shadow();
     }
 
     .reset-search-input {
