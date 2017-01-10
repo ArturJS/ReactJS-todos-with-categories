@@ -149,7 +149,7 @@ class Category extends Component {
 
     return (
       <div className="category-card-body">
-        <Collapse isOpened={isExpanded}>
+        <Collapse isOpened={!!isExpanded}>
           <ul className="category-card-body-wrap">
             {
               category.childs.map((child) =>

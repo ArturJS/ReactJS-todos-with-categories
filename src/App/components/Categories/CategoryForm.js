@@ -20,7 +20,7 @@ class CategoryForm extends Component {
     this.props.addCategory({
       id: Math.random(),
       name: this._name.value,
-      parent: null,
+      parentId: null,
       childs: []
     });
 
