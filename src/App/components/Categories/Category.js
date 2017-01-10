@@ -93,13 +93,14 @@ class Category extends Component {
           {
             isEditing
               ?
-                <span>
+                <span className="category-input-cnt">
                   <input type="text"
+                         className="category-input"
                          ref={(node) => this._nameInput = node}
                          defaultValue={this._tempName}/>
-                  <i className="glyphicon glyphicon-ok-circle"
+                  <i className="glyphicon glyphicon-ok-circle category-control-icon"
                      onClick={this.saveCategory}></i>
-                  <i className="glyphicon glyphicon-remove-circle"
+                  <i className="glyphicon glyphicon-remove-circle category-control-icon"
                      onClick={this.cancelEditing}></i>
                 </span>
 

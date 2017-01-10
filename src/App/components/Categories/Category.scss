@@ -1,7 +1,7 @@
 .category-card {
 
   &-header {
-    display: block;
+    display: flex;
     box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
     border-radius: 2px;
     text-align: left;
@@ -20,8 +20,11 @@
   }
 
   .category-toggle-open {
-    display: inline-block;
+    display: flex;
+    align-self: center;
     cursor: pointer;
+    width: 20px;
+    height: 10px;
     transition: transform 0.15s ease-in;
     transform: rotate(-90deg);
 
@@ -41,11 +44,30 @@
   }
 
   .category-controls-right {
-    float: right;
+    display: flex;
+    margin-left: auto;
+    align-self: center;
 
     .glyphicon {
       margin-right: 5px;
     }
+  }
+
+  .category-input {
+    width: 100%;
+    margin-right: 5px;
+    min-width: 50px;
+
+    &-cnt {
+      display: flex;
+      flex-grow: 1;
+    }
+  }
+
+  .category-control-icon {
+    display: flex;
+    align-self: center;
+    margin-right: 5px;
   }
 
 
