@@ -23,6 +23,7 @@ class Category extends Component {
     this.editCategory = this.editCategory.bind(this);
     this.saveCategory = this.saveCategory.bind(this);
     this.cancelEditing = this.cancelEditing.bind(this);
+    this.preventEvent = this.preventEvent.bind(this);
   }
 
   toggleExpand() {
@@ -70,6 +71,11 @@ class Category extends Component {
     this.setState({isEditing: false});
   }
 
+  preventEvent(event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
   render() {
     let {category} = this.props;
     let {isExpanded, isEditing} = this.state;
@@ -97,6 +103,7 @@ class Category extends Component {
                   <input type="text"
                          className="category-input"
                          ref={(node) => this._nameInput = node}
+                         onClick={this.preventEvent}
                          defaultValue={this._tempName}/>
                   <i className="glyphicon glyphicon-ok-circle category-control-icon"
                      onClick={this.saveCategory}></i>
