@@ -49,6 +49,9 @@ class Category extends Component {
     event.stopPropagation();
 
     this._tempName = this.props.category.name;
+    setTimeout(()=>{
+      this._nameInput.focus();
+    }, 0);
 
     this.setState({isEditing: true});
   }
