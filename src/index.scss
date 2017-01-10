@@ -30,6 +30,10 @@ body {
   cursor: pointer;
 }
 
+.w100 {
+  width: 100%;
+}
+
 .root-container {
   overflow: hidden;
 }
@@ -44,5 +48,7 @@ body {
     width: 350px;
     margin: 15px auto;
     overflow: auto;
+    display: flex;
+    flex-direction: column;
   }
 }

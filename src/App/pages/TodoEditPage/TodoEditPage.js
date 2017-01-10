@@ -1,6 +1,7 @@
 import React, {PropTypes, Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import {push} from 'react-router-redux';
 import * as todoActions from '../../actions/todo-actions';
 import './TodoEditPage.scss';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -26,22 +27,37 @@ class TodoEditPage extends Component {
 
     this.saveChanges = this.saveChanges.bind(this);
     this.cancel = this.cancel.bind(this);
+    this.updateTitle = this.updateTitle.bind(this);
     this.updateIsDone = this.updateIsDone.bind(this);
+    this.updateDescription = this.updateDescription.bind(this);
   }
 
   saveChanges() {
     const {updateTodo} = this.props.actions;
     const {currentTodo} = this.props;
-    store.dispatch(updateTodo(currentTodo, this.state.tempTodo));
+    store.dispatch(updateTodo(currentTodo.present, this.state.tempTodo));
+    store.dispatch(push('/'));
   }
 
   cancel() {
-    //store.dispatch();//use goBack() from react-router-redux
+    store.dispatch(push('/'));
+  }
+
+  updateTitle(event) {
+    this.setState({
+      tempTodo: Object.assign({}, this.state.tempTodo, {title: event.target.value})
+    });
   }
 
   updateIsDone(isDone) {
     this.setState({
       tempTodo: Object.assign({}, this.state.tempTodo, {isDone: isDone})
+    });
+  }
+
+  updateDescription(event) {
+    this.setState({
+      tempTodo: Object.assign({}, this.state.tempTodo, {description: event.target.value})
     });
   }
 
@@ -73,24 +89,29 @@ class TodoEditPage extends Component {
                 />
               </div>
             </div>
-
-            <p>
-              <input type="text"
-                     className="todo-title-field"
-                     defaultValue={tempTodo.title}
-              />
-            </p>
-            <p>
-              <label className="cp">
-                <Checkbox value={tempTodo.isDone} onChange={this.updateIsDone} />
-                &nbsp;
-                Done
-              </label>
-            </p>
-            <p>
-              <textarea defaultValue={tempTodo.description}></textarea>
-            </p>
-
+            <div className="todo-edit-page--body">
+              <p>
+                <input type="text"
+                       className="todo-title-field"
+                       placeholder="todo title here..."
+                       defaultValue={tempTodo.title}
+                       onInput={this.updateTitle}
+                />
+              </p>
+              <p>
+                <label className="todo-is-done">
+                  <Checkbox value={tempTodo.isDone} onChange={this.updateIsDone} />
+                  &nbsp;
+                  Done
+                </label>
+              </p>
+              <p className="todo-description-area-cnt">
+                <textarea className="todo-description-area"
+                          placeholder="todo description here..."
+                          onInput={this.updateDescription}
+                          defaultValue={tempTodo.description}></textarea>
+              </p>
+            </div>
           </div>
         </div>
       </div>

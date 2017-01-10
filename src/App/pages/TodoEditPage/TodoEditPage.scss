@@ -1,5 +1,9 @@
+@import "../../styles/mixins";
+
 .todo-edit-page {
-  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 
   .buttons-right {
     float: right;
@@ -9,18 +13,39 @@
     }
   }
 
-  .todo-title-field {//todo use mixin
-    box-shadow: rgba(0, 0, 0, 0.117647) 0px 3px 16px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+  .todo-title-field {
+    width: 100%;
     border: none;
     height: 35px;
     font-size: 16px;
     padding: 0 5px;
-    transition: box-shadow 0.15s linear;
-    will-change: box-shadow;
+    @include input-shadow();
+  }
 
-    &:focus {
-      outline: none;
-      box-shadow: rgba(33, 150, 243, 0.5) 0px 3px 16px, rgba(33, 150, 243, 0.5) 0px 1px 4px;
+  &--body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    text-align: left;
+    padding: 10px 10px 0;
+  }
+
+  .todo-is-done {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .todo-description-area {
+    width: 100%;
+    resize: none;
+    flex-grow: 1;
+    border: 0;
+    @include input-shadow();
+
+    &-cnt {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: column;
     }
   }
 }
