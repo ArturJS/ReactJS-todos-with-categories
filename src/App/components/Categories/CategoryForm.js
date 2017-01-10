@@ -8,12 +8,14 @@ class CategoryForm extends Component {
   constructor(props) {
     super(props);
 
-    this.onAddCategoryClick = this.onAddCategoryClick.bind(this);
+    this.onAddCategory = this.onAddCategory.bind(this);
     this.focusTitleInput = this.focusTitleInput.bind(this);
     this.resetForm = this.resetForm.bind(this);
   }
 
-  onAddCategoryClick() {
+  onAddCategory(event) {
+    event.preventDefault();
+    event.stopPropagation();
 
     this.props.addCategory({
       id: Math.random(),
@@ -41,15 +43,14 @@ class CategoryForm extends Component {
 
   render() {
     return (
-      <form className="category-form">
+      <form className="category-form" onSubmit={this.onAddCategory}>
         <input type="text"
                className="category-name-field"
                ref={(node) => this._name = node}
         />
         <RaisedButton
-          type="button"
+          type="submit"
           label="Add"
-          onClick={this.onAddCategoryClick}
         />
       </form>
     );

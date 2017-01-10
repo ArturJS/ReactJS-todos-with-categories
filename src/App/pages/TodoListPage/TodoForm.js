@@ -9,12 +9,14 @@ class TodoForm extends Component {
   constructor(props) {
     super(props);
 
-    this.onAddTodoClick = this.onAddTodoClick.bind(this);
+    this.onAddTodo = this.onAddTodo.bind(this);
     this.focusTitleInput = this.focusTitleInput.bind(this);
     this.resetForm = this.resetForm.bind(this);
   }
 
-  onAddTodoClick() {
+  onAddTodo(event) {
+    event.preventDefault();
+    event.stopPropagation();
 
     this.props.addTodo({
       id: Math.random(),
@@ -50,7 +52,7 @@ class TodoForm extends Component {
 
   render() {
     return (
-      <form>
+      <form onSubmit={this.onAddTodo}>
         <TextField
           ref={(node) => this._title = node}
           hintText="Enter todo title here..."
@@ -66,10 +68,9 @@ class TodoForm extends Component {
           multiLine={true}
         />
         <RaisedButton
-          type="button"
+          type="submit"
           label="Add Todo"
           fullWidth={true}
-          onClick={this.onAddTodoClick}
         />
       </form>
     );
