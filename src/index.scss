@@ -1,3 +1,4 @@
+@import "App/styles/mixins";
 $bootstrap-sass-asset-helper: true;
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
@@ -39,6 +40,32 @@ body {
 }
 
 .layout {
+  &-header {
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px;
+  }
+
+  &-subheading {
+    height: 50px;
+
+    .page-name {
+      max-width: 100%;
+      float: left;
+      @include ellipsis();
+    }
+
+    .todo-filter {
+      float: right;
+    }
+  }
+
+  &-body {
+    display: flex;
+    padding: 10px 15px;
+    height: calc(100% - 100px);
+  }
+
   &-left-pane {
     display: flex;
     flex-direction: column;
@@ -50,5 +77,16 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+  }
+}
+
+
+.progress-bar-cnt {
+  height: 50px;
+  display: flex;
+  padding-right: 15px;
+
+  .progress-bar {
+    align-self: center;
   }
 }

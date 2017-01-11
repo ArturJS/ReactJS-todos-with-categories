@@ -6,6 +6,7 @@ import TodoList from './TodoList';
 import TodoForm from './TodoForm';
 import './TodoListPage.scss';
 import RaisedButton from 'material-ui/RaisedButton';
+import LinearProgress from 'material-ui/LinearProgress';
 
 import {store} from '../../store/store';
 import {ActionCreators} from 'redux-undo';
@@ -54,33 +55,40 @@ class TodoListPage extends Component {
     }
 
     return (
-      <div className="App-body">
-        <div className="layout-left-pane">
-          <ul>
-            <li><Link to={`/todo/${123}`}>todo 123</Link></li>
-            <li><Link to={`/`}>Home page</Link></li>
-          </ul>
-          <CategoryContainer />
-        </div>
-        <div className="layout-right-pane">
-          <TodoFilter />
-          <div className="todo-list-page">
-            <div className="undo-redo-cnt">
-              <RaisedButton
-                className="half-width"
-                label="Undo"
-                onClick={()=> this.undo()}
-              />
-              <RaisedButton
-                className="half-width"
-                label="Redo"
-                onClick={()=> this.redo()}
-              />
-            </div>
-            <TodoForm addTodo={addTodo}/>
-            <TodoList todoList={todoList} removeTodo={removeTodo} updateTodo={updateTodo}/>
+      <div className="App-body todo-list-page-modifier">
+        <div className="layout-header">
+          <div className="layout-subheading">
+            <h2 className="page-name">To-do list</h2>
+            <TodoFilter />
+          </div>
+          <div className="progress-bar-cnt">
+            <LinearProgress className="progress-bar" mode="determinate" value={this.state.completed} />
           </div>
         </div>
+        <div className="layout-body">
+          <div className="layout-left-pane">
+            <CategoryContainer />
+          </div>
+          <div className="layout-right-pane">
+            <div className="todo-list-page">
+              <div className="undo-redo-cnt">
+                <RaisedButton
+                  className="half-width"
+                  label="Undo"
+                  onClick={()=> this.undo()}
+                />
+                <RaisedButton
+                  className="half-width"
+                  label="Redo"
+                  onClick={()=> this.redo()}
+                />
+              </div>
+              <TodoForm addTodo={addTodo}/>
+              <TodoList todoList={todoList} removeTodo={removeTodo} updateTodo={updateTodo}/>
+            </div>
+          </div>
+        </div>
+
       </div>
     );
   }

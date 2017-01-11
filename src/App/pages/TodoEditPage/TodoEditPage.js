@@ -66,51 +66,54 @@ class TodoEditPage extends Component {
 
     return (
       <div className="App-body">
-        <div className="layout-left-pane">
-          <ul>
-            <li><Link to={`/todo/${123}`}>todo 123</Link></li>
-            <li><Link to={`/`}>Home page</Link></li>
-          </ul>
-          <CategoryContainer />
+        <div className="layout-header">
+          <div className="layout-subheading">
+            <h2 className="page-name">{tempTodo.title}</h2>
+          </div>
         </div>
-        <div className="layout-right-pane">
-          <div className="todo-edit-page">
-            <div className="buttons-container clearfix">
-              <div className="buttons-right">
-                <RaisedButton
-                  className="button-item"
-                  label="Save changes"
-                  onClick={this.saveChanges}
-                />
-                <RaisedButton
-                  className="button-item"
-                  label="Cancel"
-                  onClick={this.cancel}
-                />
+        <div className="layout-body">
+          <div className="layout-left-pane">
+            <CategoryContainer />
+          </div>
+          <div className="layout-right-pane">
+            <div className="todo-edit-page">
+              <div className="buttons-container clearfix">
+                <div className="buttons-right">
+                  <RaisedButton
+                    className="button-item"
+                    label="Save changes"
+                    onClick={this.saveChanges}
+                  />
+                  <RaisedButton
+                    className="button-item"
+                    label="Cancel"
+                    onClick={this.cancel}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="todo-edit-page--body">
-              <p>
-                <input type="text"
-                       className="todo-title-field"
-                       placeholder="todo title here..."
-                       defaultValue={tempTodo.title}
-                       onInput={this.updateTitle}
-                />
-              </p>
-              <p>
-                <label className="todo-is-done">
-                  <Checkbox value={tempTodo.isDone} onChange={this.updateIsDone} />
-                  &nbsp;
-                  Done
-                </label>
-              </p>
-              <p className="todo-description-area-cnt">
+              <div className="todo-edit-page--body">
+                <p>
+                  <input type="text"
+                         className="todo-title-field"
+                         placeholder="todo title here..."
+                         defaultValue={tempTodo.title}
+                         onInput={this.updateTitle}
+                  />
+                </p>
+                <p>
+                  <label className="todo-is-done">
+                    <Checkbox value={tempTodo.isDone} onChange={this.updateIsDone} />
+                    &nbsp;
+                    Done
+                  </label>
+                </p>
+                <p className="todo-description-area-cnt">
                 <textarea className="todo-description-area"
                           placeholder="todo description here..."
                           onInput={this.updateDescription}
                           defaultValue={tempTodo.description}></textarea>
-              </p>
+                </p>
+              </div>
             </div>
           </div>
         </div>

@@ -28,10 +28,11 @@
 
   &-body {
     display: flex;
-    flex-direction: row;
-    padding: 15px 10px;
+    width: 100%;
+    flex-direction: column;
     margin: 0 auto;
     height: calc(100% - 80px);
+    flex-grow: 1;
   }
 
   &-intro {
