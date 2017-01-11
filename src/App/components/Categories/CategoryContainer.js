@@ -9,6 +9,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import './CategoryContainer.scss';
 import * as _ from 'lodash';
+import shortid from 'shortid';
 
 import {push} from 'react-router-redux';
 import {store} from '../../store/store';
@@ -96,7 +97,7 @@ class CategoryContainer extends Component {
 
     if (relatedCategory) {
       relatedCategory.childs.push({
-        id: Math.random(),
+        id: shortid.generate(),
         name: relatedCategory.name + '-' + relatedCategory.childs.length,
         parentId: relatedCategory.id,
         childs: []

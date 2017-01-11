@@ -1,6 +1,7 @@
 import React, {PropTypes, Component} from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import './CategoryForm.scss';
+import shortid from 'shortid';
 
 class CategoryForm extends Component {
   _name;
@@ -18,7 +19,7 @@ class CategoryForm extends Component {
     event.stopPropagation();
 
     this.props.addCategory({
-      id: Math.random(),
+      id: shortid.generate(),
       name: this._name.value,
       parentId: null,
       childs: []

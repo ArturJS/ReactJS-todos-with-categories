@@ -1,6 +1,7 @@
 import React, {PropTypes, Component} from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import shortid from 'shortid';
 
 class TodoForm extends Component {
   _title;
@@ -19,7 +20,7 @@ class TodoForm extends Component {
     event.stopPropagation();
 
     this.props.addTodo({
-      id: Math.random(),
+      id: shortid.generate(),
       title: this._title.getValue(),
       description: this._description.getValue()
     });

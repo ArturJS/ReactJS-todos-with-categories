@@ -24,9 +24,7 @@ export default (state = [], action) => {
         return state;
       }
     case types.REMOVE_CATEGORY:
-      let categoryId = action.category.id;//todo use string type for all ids
-
-      categoryId += '';
+      let categoryId = action.category.id;
 
       return state.filter((todo)=> todo.categoryId !== categoryId);
     default:

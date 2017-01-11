@@ -7,7 +7,7 @@ export default (state = {}, action) => {
       console.log('LOCATION_CHANGE');
       console.dir(action.payload);
       let todoList = store.getState().todoList.present;
-      let todoId = +action.payload.pathname.substr(6);//todo fix (get normal params from current state)
+      let todoId = action.payload.pathname.substr(6);//todo fix (get normal params from current state)
 
       let relatedTodo = _.find(todoList, (todo)=> todo.id === todoId);
       return Object.assign({}, relatedTodo || {});
