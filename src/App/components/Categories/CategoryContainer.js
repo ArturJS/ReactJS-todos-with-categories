@@ -1,19 +1,31 @@
 import React, {PropTypes, Component} from 'react';
+import Modal from 'react-modal';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as categoryActions from '../../actions/category-actions';
 import CategoryForm from './CategoryForm';
 import CategoryList from './CategoryList';
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import './CategoryContainer.scss';
 import * as _ from 'lodash';
 
 class CategoryContainer extends Component {
+  _categoryForRemoving;
+
   constructor(props) {
     super(props);
+
+    this.state = {
+      modalIsOpen: false
+    };
 
     this.addCategory = this.addCategory.bind(this);
     this.addSubcategory = this.addSubcategory.bind(this);
     this.deleteCategory = this.deleteCategory.bind(this);
+    this.onDeleteCategory = this.onDeleteCategory.bind(this);//should open confirm modal before delete action
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   render() {
@@ -25,10 +37,42 @@ class CategoryContainer extends Component {
         <CategoryForm addCategory={this.addCategory}/>
         <CategoryList categoryList={categoryList}
                       addSubcategory={this.addSubcategory}
-                      deleteCategory={this.deleteCategory}/>
+                      deleteCategory={this.onDeleteCategory}/>
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          className="confirm-modal"
+          contentLabel={''}>
+          <h3>Please, confirm your action</h3>
+          <p>
+            {
+              `Are you sure that you want to remove ${this._categoryForRemoving && this._categoryForRemoving.name} ?`
+            }
+          </p>
+          <div className="modal-buttons-group">
+            <FlatButton type="button"
+                        label="Remove"
+                        className="btn-modal"
+                        onClick={()=> {
+                          this.deleteCategory(this._categoryForRemoving.id)
+                        }}/>
+            <RaisedButton type="button"
+                          label="Cancel"
+                          className="btn-modal"
+                          onClick={this.closeModal}/>
+          </div>
+        </Modal>
       </div>
     );
   }
+
+  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
+  }
+
 
   addCategory(newCategory) {
     newCategory = Object.assign({parentId: null}, newCategory);
@@ -60,6 +104,15 @@ class CategoryContainer extends Component {
     }
   }
 
+  onDeleteCategory(categoryId) {
+    let {categoryList} = this.props;
+    categoryList = categoryList.present;
+
+    this._categoryForRemoving = this.findRelatedCategory(categoryList, categoryId);
+
+    this.openModal();
+  }
+
   deleteCategory(categoryId) {
     let {categoryList} = this.props;
     categoryList = categoryList.present;
@@ -76,6 +129,8 @@ class CategoryContainer extends Component {
       const {updateCategoryList} = this.props.actions;
       updateCategoryList(categoryList);
     }
+
+    this.closeModal();
   }
 
   findRelatedCategory(categoryList, categoryId) {
