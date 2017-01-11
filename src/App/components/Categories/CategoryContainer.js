@@ -82,7 +82,7 @@ class CategoryContainer extends Component {
 
     const {updateCategoryList} = this.props.actions;
 
-    updateCategoryList([...categoryList, newCategory]);
+    updateCategoryList([newCategory, ...categoryList]);
   }
 
   addSubcategory(categoryId) {

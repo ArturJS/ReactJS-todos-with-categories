@@ -10,7 +10,7 @@ export default (state = [], action) => {
 
   switch (action.type) {
     case types.ADD_TODO:
-      return [...state, Object.assign({}, action.todo)];
+      return [Object.assign({}, action.todo), ...state];
     case types.REMOVE_TODO:
       return state.filter(item => item.id !== todoId);
     case types.UPDATE_TODO:

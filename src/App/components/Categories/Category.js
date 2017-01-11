@@ -91,7 +91,7 @@ class Category extends Component {
           ${hasChilds ? '' : 'hidden'}
           `}>
             <svg height="10"
-                 width="20">
+                 width="25">
               <path d="M 1 1 L 10 10 L 20 1"></path>
             </svg>
           </i>
@@ -111,7 +111,7 @@ class Category extends Component {
                      onClick={this.cancelEditing}></i>
                 </span>
 
-              : <span>
+              : <span className="category-name-cnt">
                   <a className="category-name">{category.name}</a>
                   <i className="glyphicon glyphicon-pencil"
                      onClick={this.editCategory}></i>
