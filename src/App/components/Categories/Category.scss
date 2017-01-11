@@ -85,5 +85,10 @@
   .hidden {
     visibility: hidden;
   }
+
+  .category-selected {
+    font-weight: bold;
+    text-decoration: underline;
+  }
 }
 

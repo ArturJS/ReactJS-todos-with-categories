@@ -6,3 +6,10 @@ export const updateCategoryList = (categoryList) => {
     categoryList: JSON.parse(JSON.stringify(categoryList))
   };
 };
+
+export const removeCategory = (category) => {
+  return {
+    type: types.REMOVE_CATEGORY,
+    category: category
+  };
+};

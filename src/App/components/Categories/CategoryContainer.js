@@ -126,7 +126,8 @@ class CategoryContainer extends Component {
 
       _.remove(parent ? parent.childs : categoryList, (o)=>o.id === categoryId);
 
-      const {updateCategoryList} = this.props.actions;
+      const {updateCategoryList, removeCategory} = this.props.actions;
+      removeCategory(relatedCategory);
       updateCategoryList(categoryList);
     }
 

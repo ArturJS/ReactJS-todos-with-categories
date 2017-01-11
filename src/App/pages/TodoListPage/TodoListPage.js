@@ -11,7 +11,6 @@ import LinearProgress from 'material-ui/LinearProgress';
 import {store} from '../../store/store';
 import {ActionCreators} from 'redux-undo';
 
-import { Link } from 'react-router';
 import TodoFilter from '../../components/TodoFilter/TodoFilter';
 import CategoryContainer from '../../components/Categories/CategoryContainer';
 
@@ -20,8 +19,17 @@ class TodoListPage extends Component {
     super(props);
 
     this.state = {
+      categoryId: props.params.categoryId,
       todoList: []
     };
+
+    this.onAddTodo = this.onAddTodo.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      categoryId: nextProps.params.categoryId
+    });
   }
 
   undo() {
@@ -32,27 +40,12 @@ class TodoListPage extends Component {
     store.dispatch(ActionCreators.redo());
   }
 
+  onAddTodo(todo) {
+    this.props.actions.addTodo(todo, this.state.categoryId);
+  }
+
   render() {
-    let {todoList, todoFilterState} = this.props;
-    const {addTodo, removeTodo, updateTodo} = this.props.actions;
-
-    todoList = todoList.present;
-    todoFilterState = todoFilterState.present;
-
-    let {showDone, searchQuery} = todoFilterState;
-
-    if (showDone) {
-      todoList = todoList.filter((todo)=> todo.isDone);
-    }
-
-    if (searchQuery && searchQuery.trim()) {
-      searchQuery = searchQuery.toLowerCase();
-
-      todoList = todoList.filter((todo)=> {
-        return todo.title.toLowerCase().indexOf(searchQuery) > -1 ||
-          todo.description.toLowerCase().indexOf(searchQuery) > -1;
-      });
-    }
+    let {categoryId} = this.state;
 
     return (
       <div className="App-body todo-list-page-modifier">
@@ -70,25 +63,55 @@ class TodoListPage extends Component {
             <CategoryContainer />
           </div>
           <div className="layout-right-pane">
-            <div className="todo-list-page">
-              <div className="undo-redo-cnt">
-                <RaisedButton
-                  className="half-width"
-                  label="Undo"
-                  onClick={()=> this.undo()}
-                />
-                <RaisedButton
-                  className="half-width"
-                  label="Redo"
-                  onClick={()=> this.redo()}
-                />
-              </div>
-              <TodoForm addTodo={addTodo}/>
-              <TodoList todoList={todoList} removeTodo={removeTodo} updateTodo={updateTodo}/>
-            </div>
+            {categoryId ? this.renderTodoListPage() : ''}
           </div>
         </div>
 
+      </div>
+    );
+  }
+
+  renderTodoListPage() {
+    const {removeTodo, updateTodo} = this.props.actions;
+    const {categoryId} = this.state;
+    let {todoList, todoFilterState} = this.props;
+
+    todoList = todoList.present;
+    todoFilterState = todoFilterState.present;
+
+    let {showDone, searchQuery} = todoFilterState;
+
+    todoList = todoList.filter((todo)=> todo.categoryId === categoryId);
+
+    if (showDone) {
+      todoList = todoList.filter((todo)=> todo.isDone);
+    }
+
+    if (searchQuery && searchQuery.trim()) {
+      searchQuery = searchQuery.toLowerCase();
+
+      todoList = todoList.filter((todo)=> {
+        return todo.title.toLowerCase().indexOf(searchQuery) > -1 ||
+          todo.description.toLowerCase().indexOf(searchQuery) > -1;
+      });
+    }
+
+    return (
+      <div className="todo-list-page">
+        <div className="undo-redo-cnt">
+          <RaisedButton
+            className="half-width"
+            label="Undo"
+            onClick={()=> this.undo()}
+          />
+          <RaisedButton
+            className="half-width"
+            label="Redo"
+            onClick={()=> this.redo()}
+          />
+        </div>
+        <TodoForm addTodo={this.onAddTodo}/>
+        <TodoList todoList={todoList} removeTodo={removeTodo} updateTodo={updateTodo}/>
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import React, {PropTypes, Component} from 'react';
 import Collapse from 'react-collapse';
 import './Category.scss';
+import { Link } from 'react-router';
 
 class Category extends Component {
   _tempName;
@@ -23,7 +24,7 @@ class Category extends Component {
     this.editCategory = this.editCategory.bind(this);
     this.saveCategory = this.saveCategory.bind(this);
     this.cancelEditing = this.cancelEditing.bind(this);
-    this.preventEvent = this.preventEvent.bind(this);
+    this.stopPropagation = this.stopPropagation.bind(this);
   }
 
   toggleExpand() {
@@ -71,8 +72,7 @@ class Category extends Component {
     this.setState({isEditing: false});
   }
 
-  preventEvent(event) {
-    event.preventDefault();
+  stopPropagation(event) {
     event.stopPropagation();
   }
 
@@ -103,7 +103,7 @@ class Category extends Component {
                   <input type="text"
                          className="category-input"
                          ref={(node) => this._nameInput = node}
-                         onClick={this.preventEvent}
+                         onClick={this.stopPropagation}
                          defaultValue={this._tempName}/>
                   <i className="glyphicon glyphicon-ok-circle category-control-icon"
                      onClick={this.saveCategory}></i>
@@ -112,7 +112,10 @@ class Category extends Component {
                 </span>
 
               : <span className="category-name-cnt">
-                  <a className="category-name">{category.name}</a>
+                  <Link to={'category/'+category.id}
+                        onClick={this.stopPropagation}
+                        activeClassName={'category-selected'}
+                        className="category-name">{category.name}</Link>
                   <i className="glyphicon glyphicon-pencil"
                      onClick={this.editCategory}></i>
                 </span>
