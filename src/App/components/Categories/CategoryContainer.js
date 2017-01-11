@@ -10,6 +10,9 @@ import FlatButton from 'material-ui/FlatButton';
 import './CategoryContainer.scss';
 import * as _ from 'lodash';
 
+import {push} from 'react-router-redux';
+import {store} from '../../store/store';
+
 class CategoryContainer extends Component {
   _categoryForRemoving;
 
@@ -129,6 +132,10 @@ class CategoryContainer extends Component {
       const {updateCategoryList, removeCategory} = this.props.actions;
       removeCategory(relatedCategory);
       updateCategoryList(categoryList);
+
+      if (relatedCategory.id.toString() === this.props.currentCategoryId) {
+        store.dispatch(push('/'));
+      }
     }
 
     this.closeModal();

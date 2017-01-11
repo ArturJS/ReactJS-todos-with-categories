@@ -60,7 +60,7 @@ class TodoListPage extends Component {
         </div>
         <div className="layout-body">
           <div className="layout-left-pane">
-            <CategoryContainer />
+            <CategoryContainer currentCategoryId={this.props.params.categoryId} />
           </div>
           <div className="layout-right-pane">
             {categoryId ? this.renderTodoListPage() : ''}
