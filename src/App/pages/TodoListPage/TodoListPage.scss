@@ -1,5 +1,8 @@
 .todo-list-page {
-  margin: 15px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 15px 15px 0;
 
   .half-width {
     width: 50%;

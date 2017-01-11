@@ -65,16 +65,18 @@ class TodoListPage extends Component {
         <div className="layout-right-pane">
           <TodoFilter />
           <div className="todo-list-page">
-            <RaisedButton
-              className="half-width"
-              label="Undo"
-              onClick={()=> this.undo()}
-            />
-            <RaisedButton
-              className="half-width"
-              label="Redo"
-              onClick={()=> this.redo()}
-            />
+            <div className="undo-redo-cnt">
+              <RaisedButton
+                className="half-width"
+                label="Undo"
+                onClick={()=> this.undo()}
+              />
+              <RaisedButton
+                className="half-width"
+                label="Redo"
+                onClick={()=> this.redo()}
+              />
+            </div>
             <TodoForm addTodo={addTodo}/>
             <TodoList todoList={todoList} removeTodo={removeTodo} updateTodo={updateTodo}/>
           </div>

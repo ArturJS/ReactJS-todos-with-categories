@@ -1,9 +1,10 @@
 import React, {PropTypes} from 'react';
 import Todo from './Todo';
+import './TodoList.scss';
 
 const TodoList = ({todoList, removeTodo, updateTodo}) => {
   return (
-    <div>
+    <div className="todo-list">
       {
         todoList.length > 0
         ? todoList.map((todo) =>
