@@ -47,6 +47,7 @@ class CategoryForm extends Component {
       <form className="category-form" onSubmit={this.onAddCategory}>
         <input type="text"
                className="category-name-field"
+               placeholder="Enter category title here..."
                ref={(node) => this._name = node}
         />
         <RaisedButton

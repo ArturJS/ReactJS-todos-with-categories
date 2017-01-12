@@ -5,7 +5,6 @@ import * as todoActions from '../../actions/todo-actions';
 import TodoList from './TodoList';
 import TodoForm from './TodoForm';
 import './TodoListPage.scss';
-import RaisedButton from 'material-ui/RaisedButton';
 import LinearProgress from 'material-ui/LinearProgress';
 
 import {store} from '../../store/store';
@@ -98,18 +97,6 @@ class TodoListPage extends Component {
 
     return (
       <div className="todo-list-page">
-        <div className="undo-redo-cnt">
-          <RaisedButton
-            className="half-width"
-            label="Undo"
-            onClick={()=> this.undo()}
-          />
-          <RaisedButton
-            className="half-width"
-            label="Redo"
-            onClick={()=> this.redo()}
-          />
-        </div>
         <TodoForm addTodo={this.onAddTodo}/>
         <TodoList todoList={todoList} removeTodo={removeTodo} updateTodo={updateTodo}/>
       </div>

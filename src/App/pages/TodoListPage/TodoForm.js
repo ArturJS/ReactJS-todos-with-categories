@@ -1,10 +1,9 @@
 import React, {PropTypes, Component} from 'react';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import './TodoForm.scss';
 
 class TodoForm extends Component {
   _title;
-  _description;
 
   constructor(props) {
     super(props);
@@ -19,8 +18,8 @@ class TodoForm extends Component {
     event.stopPropagation();
 
     this.props.addTodo({
-      title: this._title.getValue(),
-      description: this._description.getValue()
+      title: this._title.value,
+      description: ''
     });
 
     this.resetForm();
@@ -28,48 +27,25 @@ class TodoForm extends Component {
     this.focusTitleInput();
   }
 
-  componentDidMount() {
-    this.focusTitleInput();
-  }
-
   resetForm() {
-    this._title.input.value = '';//necessary for single line material-ui input
-    this._description.input.setValue('');//necessary for multi line material-ui input
-
-    this._title.setState({
-      hasValue: false
-    });
-
-    this._description.setState({
-      hasValue: false
-    });
+    this._title.value = '';
   }
 
   focusTitleInput() {
-    this._title.getInputNode().focus();
+    this._title.focus();
   }
 
   render() {
     return (
-      <form onSubmit={this.onAddTodo}>
-        <TextField
-          ref={(node) => this._title = node}
-          hintText="Enter todo title here..."
-          floatingLabelText="Todo title"
-          fullWidth={true}
-        />
-        <br/>
-        <TextField
-          ref={(node) => this._description = node}
-          hintText="Enter todo description here..."
-          floatingLabelText="Todo description"
-          fullWidth={true}
-          multiLine={true}
+      <form className="todo-form" onSubmit={this.onAddTodo}>
+        <input type="text"
+               className="todo-title-field"
+               placeholder="Enter todo title here..."
+               ref={(node) => this._title = node}
         />
         <RaisedButton
           type="submit"
-          label="Add Todo"
-          fullWidth={true}
+          label="Add"
         />
       </form>
     );
