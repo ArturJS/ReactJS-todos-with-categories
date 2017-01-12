@@ -9,11 +9,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import './CategoryContainer.scss';
 import * as _ from 'lodash';
-import shortid from 'shortid';
 
 import {push} from 'react-router-redux';
 import {store} from '../../store/store';
-import {getAllChildCategoryIds} from '../../helpers/category.helpers';
+import {getAllChildCategoryIds, findRelatedCategory} from '../../helpers/category.helpers';
 
 class CategoryContainer extends Component {
   _categoryForRemoving;
@@ -80,40 +79,18 @@ class CategoryContainer extends Component {
 
 
   addCategory(newCategory) {
-    newCategory = Object.assign({parentId: null}, newCategory);
-
-    let {categoryList} = this.props;
-    categoryList = categoryList.present;
-
-    const {updateCategoryList} = this.props.actions;
-
-    updateCategoryList([newCategory, ...categoryList]);
+    this.props.actions.addCategory(newCategory);
   }
 
-  addSubcategory(categoryId) {
-    let {categoryList} = this.props;
-    categoryList = categoryList.present;
-
-    let relatedCategory = this.findRelatedCategory(categoryList, categoryId);
-
-    if (relatedCategory) {
-      relatedCategory.childs.push({
-        id: shortid.generate(),
-        name: relatedCategory.name + '-' + relatedCategory.childs.length,
-        parentId: relatedCategory.id,
-        childs: []
-      });
-
-      const {updateCategoryList} = this.props.actions;
-      updateCategoryList(categoryList);
-    }
+  addSubcategory(relatedCategoryId) {
+    this.props.actions.addSubCategory(relatedCategoryId);
   }
 
   onDeleteCategory(categoryId) {
     let {categoryList} = this.props;
     categoryList = categoryList.present;
 
-    this._categoryForRemoving = this.findRelatedCategory(categoryList, categoryId);
+    this._categoryForRemoving = findRelatedCategory(categoryList, categoryId);
 
     this.openModal();
   }
@@ -122,51 +99,21 @@ class CategoryContainer extends Component {
     let {categoryList} = this.props;
     categoryList = categoryList.present;
 
-    let relatedCategory = this.findRelatedCategory(categoryList, categoryId);
+    let relatedCategory = findRelatedCategory(categoryList, categoryId);
 
     if (relatedCategory) {
-      const {parentId} = relatedCategory;
-
-      let parent = this.findRelatedCategory(categoryList, parentId);
-
-      _.remove(parent ? parent.childs : categoryList, (o)=>o.id === categoryId);
-
-
       let allRelatedCategoryIds = [relatedCategory.id, ...getAllChildCategoryIds(relatedCategory)];
 
       if (_.includes(allRelatedCategoryIds, this.props.currentCategoryId)) {
         store.dispatch(push('/'));
       }
 
-      const {updateCategoryList, removeCategory} = this.props.actions;
+      const {removeCategoryTodos, removeCategory} = this.props.actions;
+      removeCategoryTodos(relatedCategory);
       removeCategory(relatedCategory);
-      updateCategoryList(categoryList);
     }
 
     this.closeModal();
-  }
-
-  findRelatedCategory(categoryList, categoryId) {
-    let relatedCategory = _.find(categoryList, (o)=> o.id === categoryId);
-
-    if (relatedCategory) {
-      return relatedCategory;
-    }
-
-    let hasChildsList = _.filter(categoryList, (o)=>o.childs.length > 0);
-
-    if (hasChildsList.length > 0) {
-      for (let category of hasChildsList) {
-        relatedCategory = this.findRelatedCategory(category.childs, categoryId);
-
-        if (relatedCategory) {
-          return relatedCategory;
-        }
-      }
-    } else {
-      return null;
-    }
-
   }
 }
 

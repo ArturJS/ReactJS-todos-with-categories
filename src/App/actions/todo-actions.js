@@ -1,9 +1,10 @@
 import * as types from './action-types';
+import shortid from 'shortid';
 
 export const addTodo = (todo, categoryId) => {
   return {
     type: types.ADD_TODO,
-    todo: Object.assign({}, todo, {isDone: false, categoryId: categoryId})
+    todo: Object.assign({}, todo, {id: shortid.generate(), isDone: false, categoryId: categoryId})
   };
 };
 

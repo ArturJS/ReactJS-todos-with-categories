@@ -24,7 +24,7 @@ export default (state = [], action) => {
       } else {
         return state;
       }
-    case types.REMOVE_CATEGORY:
+    case types.REMOVE_CATEGORY_TODOS:
       let {category} = action;
       let allRelatedCategoryIds = [category.id, ...getAllChildCategoryIds(category)];
 
