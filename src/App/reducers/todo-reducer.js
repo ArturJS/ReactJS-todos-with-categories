@@ -1,4 +1,5 @@
 import * as types from '../actions/action-types';
+import {getAllChildCategoryIds} from '../helpers/category.helpers';
 import * as _ from 'lodash';
 
 export default (state = [], action) => {
@@ -24,9 +25,10 @@ export default (state = [], action) => {
         return state;
       }
     case types.REMOVE_CATEGORY:
-      let categoryId = action.category.id;
+      let {category} = action;
+      let allRelatedCategoryIds = [category.id, ...getAllChildCategoryIds(category)];
 
-      return state.filter((todo)=> todo.categoryId !== categoryId);
+      return state.filter((todo)=> !_.includes(allRelatedCategoryIds, todo.categoryId));
     default:
       return state;
   }

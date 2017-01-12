@@ -13,6 +13,7 @@ import shortid from 'shortid';
 
 import {push} from 'react-router-redux';
 import {store} from '../../store/store';
+import {getAllChildCategoryIds} from '../../helpers/category.helpers';
 
 class CategoryContainer extends Component {
   _categoryForRemoving;
@@ -130,13 +131,16 @@ class CategoryContainer extends Component {
 
       _.remove(parent ? parent.childs : categoryList, (o)=>o.id === categoryId);
 
+
+      let allRelatedCategoryIds = [relatedCategory.id, ...getAllChildCategoryIds(relatedCategory)];
+
+      if (_.includes(allRelatedCategoryIds, this.props.currentCategoryId)) {
+        store.dispatch(push('/'));
+      }
+
       const {updateCategoryList, removeCategory} = this.props.actions;
       removeCategory(relatedCategory);
       updateCategoryList(categoryList);
-
-      if (relatedCategory.id === this.props.currentCategoryId) {
-        store.dispatch(push('/'));
-      }
     }
 
     this.closeModal();
