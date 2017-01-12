@@ -134,7 +134,7 @@ class CategoryContainer extends Component {
       removeCategory(relatedCategory);
       updateCategoryList(categoryList);
 
-      if (relatedCategory.id.toString() === this.props.currentCategoryId) {
+      if (relatedCategory.id === this.props.currentCategoryId) {
         store.dispatch(push('/'));
       }
     }

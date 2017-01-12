@@ -29,17 +29,23 @@ class TodoEditPage extends Component {
     this.updateTitle = this.updateTitle.bind(this);
     this.updateIsDone = this.updateIsDone.bind(this);
     this.updateDescription = this.updateDescription.bind(this);
+    this.goToRelatedCategoryPage = this.goToRelatedCategoryPage.bind(this);
   }
 
   saveChanges() {
     const {updateTodo} = this.props.actions;
     const {currentTodo} = this.props;
     store.dispatch(updateTodo(currentTodo.present, this.state.tempTodo));
-    store.dispatch(push('/'));
+    this.goToRelatedCategoryPage();
   }
 
   cancel() {
-    store.dispatch(push('/'));
+    this.goToRelatedCategoryPage();
+  }
+
+  goToRelatedCategoryPage() {
+    const {categoryId} = this.props.currentTodo.present;
+    store.dispatch(push('/category/' + categoryId));
   }
 
   updateTitle(event) {
@@ -101,7 +107,7 @@ class TodoEditPage extends Component {
                 </p>
                 <p>
                   <label className="todo-is-done">
-                    <Checkbox value={tempTodo.isDone} onChange={this.updateIsDone} />
+                    <Checkbox value={tempTodo.isDone} onChange={this.updateIsDone}/>
                     &nbsp;
                     Done
                   </label>
