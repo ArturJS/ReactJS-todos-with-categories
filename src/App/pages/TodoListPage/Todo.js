@@ -8,8 +8,10 @@ const Todo = ({todo, removeTodo, updateTodo}) => {
     <div className="todo-card">
       <i className="todo-remove"
          onClick={() => removeTodo(todo)}>&times;</i>
-      <h3><Link to={`/todo/${todo.id}`}>{todo.title}</Link></h3>
-      <p>{todo.description}</p>
+      <h3 className="todo-title">
+        <Link to={`/todo/${todo.id}`}
+              className="todo-title-link">{todo.title}</Link>
+      </h3>
       <Checkbox value={todo.isDone} onChange={(value)=>{
         updateTodo(todo, {isDone: value});
       }} />

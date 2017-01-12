@@ -17,8 +17,12 @@ class TodoForm extends Component {
     event.preventDefault();
     event.stopPropagation();
 
+    let title = this._title.value.trim();
+
+    if (!title) return;
+
     this.props.addTodo({
-      title: this._title.value,
+      title: title,
       description: ''
     });
 
