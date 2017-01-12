@@ -23,7 +23,7 @@ class App extends Component {
         </div>
         <Router history={history}>
           <Route path='/' component={TodoListPage} />
-          <Route path='/category/:categoryId' component={TodoListPage} />
+          <Route path='/category/:categoryId(/searchQuery/:searchQuery)(/showDone/:showDone)' component={TodoListPage} />
           <Route path='/category/:categoryId/todo/:todoId' component={TodoEditPage} />
         </Router>
       </div>

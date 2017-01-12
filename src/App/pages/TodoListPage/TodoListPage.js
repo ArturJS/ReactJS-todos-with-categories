@@ -9,6 +9,7 @@ import LinearProgress from 'material-ui/LinearProgress';
 
 import {store} from '../../store/store';
 import {ActionCreators} from 'redux-undo';
+import {updateTodoFilter} from '../../actions/todo-filter-actions';
 
 import TodoFilter from '../../components/TodoFilter/TodoFilter';
 import CategoryContainer from '../../components/Categories/CategoryContainer';
@@ -22,13 +23,37 @@ class TodoListPage extends Component {
       todoList: []
     };
 
+    const {searchQuery, showDone} = props.params;
+
+    store.dispatch(
+      updateTodoFilter({
+        searchQuery,
+        showDone
+      })
+    );
+
     this.onAddTodo = this.onAddTodo.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
+    const {categoryId, searchQuery, showDone} = nextProps.params;
+    let {todoFilterState} = store.getState();
+    todoFilterState = todoFilterState.present;
+
     this.setState({
-      categoryId: nextProps.params.categoryId
+      categoryId: categoryId
     });
+
+    console.dir(store.getState());
+
+    if (searchQuery !== todoFilterState.searchQuery || showDone !== todoFilterState.showDone) {
+      store.dispatch(
+        updateTodoFilter({
+          searchQuery,
+          showDone
+        })
+      );
+    }
   }
 
   undo() {
@@ -45,6 +70,7 @@ class TodoListPage extends Component {
 
   render() {
     let {categoryId} = this.state;
+    console.dir(this.props.params);
 
     return (
       <div className="App-body todo-list-page-modifier">
