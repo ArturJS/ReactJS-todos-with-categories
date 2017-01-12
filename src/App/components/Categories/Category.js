@@ -77,7 +77,7 @@ class Category extends Component {
   }
 
   render() {
-    let {category} = this.props;
+    let {category, currentCategoryId} = this.props;
     let {isExpanded, isEditing} = this.state;
     let hasChilds = category.childs.length > 0;
 
@@ -112,10 +112,12 @@ class Category extends Component {
                 </span>
 
               : <span className="category-name-cnt">
-                  <Link to={'category/'+category.id}
+                  <Link to={'category/' + category.id}
                         onClick={this.stopPropagation}
                         activeClassName={'category-selected'}
-                        className="category-name">{category.name}</Link>
+                        className={`category-name ${category.id === currentCategoryId ? 'category-selected' : ''}`}>
+                    {category.name}
+                  </Link>
                   <i className="glyphicon glyphicon-pencil"
                      onClick={this.editCategory}></i>
                 </span>
@@ -146,7 +148,7 @@ class Category extends Component {
   }
 
   renderChilds() {
-    let {category} = this.props;
+    let {category, currentCategoryId} = this.props;
     let {isExpanded} = this.state;
     const {addSubcategory, deleteCategory} = this.props;
 
@@ -158,6 +160,7 @@ class Category extends Component {
               category.childs.map((child) =>
                 <li key={child.id}>
                   <Category category={child}
+                            currentCategoryId={currentCategoryId}
                             addSubcategory={addSubcategory}
                             deleteCategory={deleteCategory}></Category>
                 </li>

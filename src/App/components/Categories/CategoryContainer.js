@@ -33,13 +33,14 @@ class CategoryContainer extends Component {
   }
 
   render() {
-    let {categoryList} = this.props;
+    let {categoryList, currentCategoryId} = this.props;
     categoryList = categoryList.present;
 
     return (
       <div className="category-container">
         <CategoryForm addCategory={this.addCategory}/>
         <CategoryList categoryList={categoryList}
+                      currentCategoryId={currentCategoryId}
                       addSubcategory={this.addSubcategory}
                       deleteCategory={this.onDeleteCategory}/>
         <Modal

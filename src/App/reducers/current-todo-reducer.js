@@ -1,16 +1,22 @@
 import {store} from '../store/store';
 import * as _ from 'lodash';
 
+const todoEditUrlRegexp = /category\/([^\/]+)\/todo\/([^\/]+)/;
+
 export default (state = {}, action) => {
+
   switch (action.type) {
-    case '@@router/LOCATION_CHANGE'://todo fix (import normal action type from react-router-redux)
-      console.log('LOCATION_CHANGE');
-      console.dir(action.payload);
+    case '@@router/LOCATION_CHANGE': {
+      let {pathname} = action.payload;
+
+      if (!todoEditUrlRegexp.test(pathname)) return state;
+
       let todoList = store.getState().todoList.present;
-      let todoId = action.payload.pathname.substr(6);//todo fix (get normal params from current state)
+      let todoId = todoEditUrlRegexp.exec(pathname)[2];
 
       let relatedTodo = _.find(todoList, (todo)=> todo.id === todoId);
       return Object.assign({}, relatedTodo || {});
+    }
     default:
       return state;
   }

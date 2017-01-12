@@ -9,7 +9,7 @@ const Todo = ({todo, removeTodo, updateTodo}) => {
       <i className="todo-remove"
          onClick={() => removeTodo(todo)}>&times;</i>
       <h3 className="todo-title">
-        <Link to={`/todo/${todo.id}`}
+        <Link to={`category/${todo.categoryId}/todo/${todo.id}`}
               className="todo-title-link">{todo.title}</Link>
       </h3>
       <Checkbox value={todo.isDone} onChange={(value)=>{
