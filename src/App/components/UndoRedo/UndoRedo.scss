@@ -1,0 +1,10 @@
+.undo-redo-cnt {
+  .undo-button {
+    margin-right: 10px;
+  }
+
+  .undo-icon {
+    display: inline-block;
+    transform: scaleX(-1);
+  }
+}

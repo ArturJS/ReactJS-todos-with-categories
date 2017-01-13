@@ -8,7 +8,6 @@ import './TodoListPage.scss';
 import LinearProgress from 'material-ui/LinearProgress';
 
 import {store} from '../../store/store';
-import {ActionCreators} from 'redux-undo';
 import {updateTodoFilter} from '../../actions/todo-filter-actions';
 
 import TodoFilter from '../../components/TodoFilter/TodoFilter';
@@ -62,14 +61,6 @@ class TodoListPage extends Component {
         })
       );
     }
-  }
-
-  undo() {
-    store.dispatch(ActionCreators.undo());
-  }
-
-  redo() {
-    store.dispatch(ActionCreators.redo());
   }
 
   onAddTodo(todo) {

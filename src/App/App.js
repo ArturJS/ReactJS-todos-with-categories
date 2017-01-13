@@ -5,7 +5,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import logo from '../logo.svg';
 import './App.scss';
 
-
+import UndoRedo from './components/UndoRedo/UndoRedo.js';
 import TodoListPage from './pages/TodoListPage/TodoListPage';
 import TodoEditPage from './pages/TodoEditPage/TodoEditPage';
 
@@ -18,6 +18,7 @@ class App extends Component {
     return (
       <div className="App wh100">
         <div className="App-header">
+          <UndoRedo />
           <img src={logo} className="App-logo" alt="logo"/>
           <h2 className="App-logo-text">Welcome to React</h2>
         </div>

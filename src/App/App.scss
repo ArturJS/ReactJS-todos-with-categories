@@ -24,6 +24,13 @@
     color: #fff;
     overflow: hidden;
     position: relative;
+
+    .undo-redo-cnt {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 
   &-body {
