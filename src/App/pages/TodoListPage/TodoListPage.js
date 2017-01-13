@@ -78,7 +78,7 @@ class TodoListPage extends Component {
             <TodoFilter />
           </div>
           <div className="progress-bar-cnt">
-            <LinearProgress className="progress-bar" mode="determinate" value={this.state.completed} />
+            <LinearProgress className="progress-bar" mode="determinate" value={this.props.progress.present} />
           </div>
         </div>
         <div className="layout-body">
@@ -131,13 +131,15 @@ class TodoListPage extends Component {
 TodoListPage.propTypes = {
   todoFilterState: PropTypes.object.isRequired,
   todoList: PropTypes.object.isRequired,
+  progress: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, props) {
   return {
     todoList: state.todoList,
-    todoFilterState: state.todoFilterState
+    todoFilterState: state.todoFilterState,
+    progress: state.progress
   };
 }
 
