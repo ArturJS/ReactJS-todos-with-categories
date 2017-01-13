@@ -9,6 +9,7 @@
     text-align: left;
     padding: 10px;
     cursor: pointer;
+    position: relative;
   }
 
   &-body {
@@ -54,6 +55,11 @@
     }
   }
 
+  .category-name-with-controls {
+    flex-grow: 1;
+    display: flex;
+  }
+
   .category-controls-right {
     display: flex;
     margin-left: auto;
@@ -89,6 +95,21 @@
   .category-selected {
     font-weight: bold;
     text-decoration: underline;
+  }
+
+  .attach-icon {
+    transform: scaleX(-1);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    align-items: center;
+    text-align: center;
+    padding-left: 5px;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.12);
+    }
   }
 }
 

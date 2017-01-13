@@ -5,16 +5,18 @@ import {push} from 'react-router-redux';
 const categoryUrlRegexp = /category\/([^\/]+)/;
 
 export const todoFilterMiddleware = store => next => action => {
+
   if (action.type === types.UPDATE_TODO_FILTER) {
-    let {pathname} = store.getState().routing.locationBeforeTransitions;
-    let categoryUrlGroups = categoryUrlRegexp.exec(pathname);
+    let storeState = store.getState();
+    let {locationBeforeTransitions} = storeState.routing;
+    let pathnameInStore = locationBeforeTransitions && locationBeforeTransitions.pathname;
+    let categoryUrlGroups = categoryUrlRegexp.exec(pathnameInStore);
     let categoryPath = categoryUrlGroups ? categoryUrlGroups[0] : '';
-    let {searchQuery, showDone} = action.todoFilterState;
+    let {searchQuery, showDone} = Object.assign({}, storeState.todoFilterState.present, action.todoFilterState);
 
     store.dispatch(
-      push(`${categoryPath}${ searchQuery ? '/searchQuery/' + searchQuery : ''}${showDone ? '/showDone/true' : ''}`)
+      push(`/${categoryPath}${ searchQuery ? '/searchQuery/' + searchQuery : ''}${showDone ? '/showDone/true' : ''}`)
     );
-    console.dir(pathname);
   }
 
   next(action);

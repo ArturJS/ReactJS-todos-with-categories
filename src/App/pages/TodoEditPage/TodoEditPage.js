@@ -16,8 +16,6 @@ class TodoEditPage extends Component {
   constructor(props) {
     super(props);
 
-    console.dir(props);
-
     const {currentTodo} = this.props;
 
     this.state = {
@@ -29,23 +27,31 @@ class TodoEditPage extends Component {
     this.updateTitle = this.updateTitle.bind(this);
     this.updateIsDone = this.updateIsDone.bind(this);
     this.updateDescription = this.updateDescription.bind(this);
+    this.attachByCategoryId = this.attachByCategoryId.bind(this);
     this.goToRelatedCategoryPage = this.goToRelatedCategoryPage.bind(this);
   }
 
   saveChanges() {
-    const {updateTodo} = this.props.actions;
+    const {updateTodo} = todoActions;//this.props.actions;
     const {currentTodo} = this.props;
-    store.dispatch(updateTodo(currentTodo.present, this.state.tempTodo));
-    this.goToRelatedCategoryPage();
+    let {tempTodo} = this.state;
+    store.dispatch(updateTodo(currentTodo.present, tempTodo));
+
+    const {categoryId} = tempTodo;
+    this.goToRelatedCategoryPage(categoryId);
   }
 
   cancel() {
-    this.goToRelatedCategoryPage();
+    const {categoryId} = this.props.currentTodo.present;
+    this.goToRelatedCategoryPage(categoryId);
   }
 
-  goToRelatedCategoryPage() {
-    const {categoryId} = this.props.currentTodo.present;
-    store.dispatch(push('/category/' + categoryId));
+  goToRelatedCategoryPage(categoryId) {
+    let {searchQuery, showDone} = store.getState().todoFilterState.present;
+
+    store.dispatch(
+      push(`/category/${categoryId}${ searchQuery ? '/searchQuery/' + searchQuery : ''}${showDone ? '/showDone/true' : ''}`)
+    );
   }
 
   updateTitle(event) {
@@ -66,6 +72,14 @@ class TodoEditPage extends Component {
     });
   }
 
+  attachByCategoryId(categoryId) {
+    let {tempTodo} = this.state;
+    this.setState({
+      tempTodo: Object.assign({}, tempTodo, {categoryId: categoryId})
+    });
+    store.dispatch(push(`category/${categoryId}/todo/${tempTodo.id}`));
+  }
+
   render() {
     const {tempTodo} = this.state;
 
@@ -78,7 +92,10 @@ class TodoEditPage extends Component {
         </div>
         <div className="layout-body">
           <div className="layout-left-pane">
-            <CategoryContainer currentCategoryId={this.props.params.categoryId} />
+            <CategoryContainer currentCategoryId={this.props.params.categoryId}
+                               isAttachMode={true}
+                               attachByCategoryId={this.attachByCategoryId}
+            />
           </div>
           <div className="layout-right-pane">
             <div className="todo-edit-page">

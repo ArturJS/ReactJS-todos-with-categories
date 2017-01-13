@@ -1,7 +1,7 @@
 import React, {PropTypes, Component} from 'react';
 import Collapse from 'react-collapse';
 import './Category.scss';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
 
 class Category extends Component {
   _tempName;
@@ -25,6 +25,7 @@ class Category extends Component {
     this.saveCategory = this.saveCategory.bind(this);
     this.cancelEditing = this.cancelEditing.bind(this);
     this.stopPropagation = this.stopPropagation.bind(this);
+    this.attachByCategoryId = this.attachByCategoryId.bind(this);
   }
 
   toggleExpand() {
@@ -51,7 +52,7 @@ class Category extends Component {
     event.stopPropagation();
 
     this._tempName = this.props.category.name;
-    setTimeout(()=>{
+    setTimeout(()=> {
       this._nameInput.focus();
     }, 0);
 
@@ -72,13 +73,19 @@ class Category extends Component {
     this.setState({isEditing: false});
   }
 
+  attachByCategoryId(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.props.attachByCategoryId(this.props.category.id);
+  }
+
   stopPropagation(event) {
     event.stopPropagation();
   }
 
   render() {
-    let {category, currentCategoryId} = this.props;
-    let {isExpanded, isEditing} = this.state;
+    let {category, isAttachMode} = this.props;
+    let {isExpanded} = this.state;
     let hasChilds = category.childs.length > 0;
 
     return (
@@ -95,11 +102,45 @@ class Category extends Component {
               <path d="M 1 1 L 10 10 L 20 1"></path>
             </svg>
           </i>
-
           {
-            isEditing
-              ?
-                <span className="category-input-cnt">
+            isAttachMode ? this.renderAttachMode() : this.renderDefaultMode()
+          }
+        </div>
+        {
+          hasChilds ? this.renderChilds() : ''
+        }
+      </div>
+    );
+  }
+
+  renderAttachMode() {
+    let {category, currentCategoryId} = this.props;
+    return (
+      <div className="category-name-with-controls">
+        <span className="category-name-cnt">
+          <Link to={'category/' + category.id}
+                onClick={this.stopPropagation}
+                className={`category-name ${category.id === currentCategoryId ? 'category-selected' : ''}`}>
+            {category.name}
+          </Link>
+        </span>
+        <span className="category-controls-right attach-icon">
+        <i className="glyphicon glyphicon-share-alt"
+           onClick={this.attachByCategoryId}></i>
+        </span>
+      </div>
+    );
+  }
+
+  renderDefaultMode() {
+    let {isEditing} = this.state;
+    let {category, currentCategoryId} = this.props;
+    return (
+      <div className="category-name-with-controls">
+        {
+          isEditing
+            ?
+            <span className="category-input-cnt">
                   <input type="text"
                          className="category-input"
                          ref={(node) => this._nameInput = node}
@@ -111,27 +152,18 @@ class Category extends Component {
                      onClick={this.cancelEditing}></i>
                 </span>
 
-              : <span className="category-name-cnt">
+            : <span className="category-name-cnt">
                   <Link to={'category/' + category.id}
                         onClick={this.stopPropagation}
-                        activeClassName={'category-selected'}
                         className={`category-name ${category.id === currentCategoryId ? 'category-selected' : ''}`}>
                     {category.name}
                   </Link>
                   <i className="glyphicon glyphicon-pencil"
                      onClick={this.editCategory}></i>
                 </span>
-          }
-
-          {this.renderRightControls()}
-        </div>
-
-        {
-          hasChilds ?
-            this.renderChilds()
-            : ''
         }
 
+        {this.renderRightControls()}
       </div>
     );
   }
@@ -150,7 +182,7 @@ class Category extends Component {
   renderChilds() {
     let {category, currentCategoryId} = this.props;
     let {isExpanded} = this.state;
-    const {addSubcategory, deleteCategory} = this.props;
+    const {addSubcategory, deleteCategory, attachByCategoryId, isAttachMode} = this.props;
 
     return (
       <div className="category-card-body">
@@ -162,7 +194,10 @@ class Category extends Component {
                   <Category category={child}
                             currentCategoryId={currentCategoryId}
                             addSubcategory={addSubcategory}
-                            deleteCategory={deleteCategory}></Category>
+                            deleteCategory={deleteCategory}
+                            isAttachMode={isAttachMode}
+                            attachByCategoryId={attachByCategoryId}
+                  ></Category>
                 </li>
               )
             }

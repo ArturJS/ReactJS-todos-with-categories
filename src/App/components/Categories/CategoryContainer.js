@@ -33,7 +33,7 @@ class CategoryContainer extends Component {
   }
 
   render() {
-    let {categoryList, currentCategoryId} = this.props;
+    let {categoryList, currentCategoryId, isAttachMode, attachByCategoryId} = this.props;
     categoryList = categoryList.present;
 
     return (
@@ -42,7 +42,10 @@ class CategoryContainer extends Component {
         <CategoryList categoryList={categoryList}
                       currentCategoryId={currentCategoryId}
                       addSubcategory={this.addSubcategory}
-                      deleteCategory={this.onDeleteCategory}/>
+                      deleteCategory={this.onDeleteCategory}
+                      isAttachMode={isAttachMode}
+                      attachByCategoryId={attachByCategoryId}
+        />
         <Modal
           isOpen={this.state.modalIsOpen}
           className="confirm-modal"

@@ -14,6 +14,8 @@ import {updateTodoFilter} from '../../actions/todo-filter-actions';
 import TodoFilter from '../../components/TodoFilter/TodoFilter';
 import CategoryContainer from '../../components/Categories/CategoryContainer';
 
+import * as _ from 'lodash';
+
 class TodoListPage extends Component {
   constructor(props) {
     super(props);
@@ -23,20 +25,26 @@ class TodoListPage extends Component {
       todoList: []
     };
 
-    const {searchQuery, showDone} = props.params;
+    let {searchQuery, showDone} = props.params;
 
-    store.dispatch(
-      updateTodoFilter({
-        searchQuery,
-        showDone
-      })
-    );
+    if (searchQuery || showDone) {
+      showDone = showDone && JSON.parse(showDone);
+
+      store.dispatch(
+        updateTodoFilter({
+          searchQuery,
+          showDone
+        })
+      );
+    }
 
     this.onAddTodo = this.onAddTodo.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    const {categoryId, searchQuery, showDone} = nextProps.params;
+    if (_.isEqual(this.props.params, nextProps.params)) return;
+
+    let {categoryId, searchQuery, showDone} = nextProps.params;
     let {todoFilterState} = store.getState();
     todoFilterState = todoFilterState.present;
 
@@ -44,7 +52,7 @@ class TodoListPage extends Component {
       categoryId: categoryId
     });
 
-    console.dir(store.getState());
+    showDone = showDone && JSON.parse(showDone);
 
     if (searchQuery !== todoFilterState.searchQuery || showDone !== todoFilterState.showDone) {
       store.dispatch(
@@ -70,7 +78,6 @@ class TodoListPage extends Component {
 
   render() {
     let {categoryId} = this.state;
-    console.dir(this.props.params);
 
     return (
       <div className="App-body todo-list-page-modifier">
