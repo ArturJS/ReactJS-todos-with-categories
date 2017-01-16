@@ -39,7 +39,7 @@ function getAllChildCategoryIdsImpl(category) {
   let ownChildIds = category.childs.map(category => category.id);
   getAllChildCategoryIds.categoryIds = [...getAllChildCategoryIds.categoryIds, ...ownChildIds];
 
-  for (let category of category.childs) {
-    getAllChildCategoryIdsImpl(category);
+  for (let categoryItem of category.childs) {
+    getAllChildCategoryIdsImpl(categoryItem);
   }
 }
