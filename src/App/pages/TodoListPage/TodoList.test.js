@@ -3,7 +3,6 @@ import {render} from 'enzyme';
 import * as _ from 'lodash';
 import shortid from 'shortid';
 
-import Todo from './Todo';
 import TodoList from './TodoList';
 
 describe('<TodoList />', () => {
