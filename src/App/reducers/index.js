@@ -4,7 +4,6 @@ import todoList from './todo-reducer.js';
 import todoFilterState from './todo-filter-reducer.js';
 import currentTodo from './current-todo-reducer.js';
 import categoryList from './category-list-reducer.js';
-import progress from './progress-reducer.js';
 import {routerReducer} from 'react-router-redux';
 
 const rootReducer = combineReducers({
@@ -12,8 +11,7 @@ const rootReducer = combineReducers({
   todoFilterState: undoable(todoFilterState),
   routing: routerReducer,
   currentTodo: undoable(currentTodo),
-  categoryList: undoable(categoryList),
-  progress: undoable(progress)
+  categoryList: undoable(categoryList)
 });
 
 export default rootReducer;

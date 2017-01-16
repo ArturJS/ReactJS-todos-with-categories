@@ -5,12 +5,12 @@ import * as todoActions from '../../actions/todo-actions';
 import TodoList from './TodoList';
 import TodoForm from './TodoForm';
 import './TodoListPage.scss';
-import LinearProgress from 'material-ui/LinearProgress';
 
 import {store} from '../../store/store';
 import {updateTodoFilter} from '../../actions/todo-filter-actions';
 
 import TodoFilter from '../../components/TodoFilter/TodoFilter';
+import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import CategoryContainer from '../../components/Categories/CategoryContainer';
 
 import * as _ from 'lodash';
@@ -77,9 +77,7 @@ class TodoListPage extends Component {
             <h2 className="page-name">To-do list</h2>
             <TodoFilter />
           </div>
-          <div className="progress-bar-cnt">
-            <LinearProgress className="progress-bar" mode="determinate" value={this.props.progress.present} />
-          </div>
+          <ProgressBar />
         </div>
         <div className="layout-body">
           <div className="layout-left-pane">
@@ -131,15 +129,13 @@ class TodoListPage extends Component {
 TodoListPage.propTypes = {
   todoFilterState: PropTypes.object.isRequired,
   todoList: PropTypes.object.isRequired,
-  progress: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, props) {
   return {
     todoList: state.todoList,
-    todoFilterState: state.todoFilterState,
-    progress: state.progress
+    todoFilterState: state.todoFilterState
   };
 }
 
