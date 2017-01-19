@@ -1,3 +1,5 @@
+@import "./styles/_colors";
+
 .App {
   text-align: center;
 
@@ -18,10 +20,10 @@
   }
 
   &-header {
-    background-color: #222;
+    background-color: $c-dark-bg;
     height: 80px;
     padding: 20px;
-    color: #fff;
+    color: $c-app-header-text;
     overflow: hidden;
     position: relative;
 
@@ -50,8 +52,4 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
-}
-
-.m15 {
-  margin: 15px;
 }

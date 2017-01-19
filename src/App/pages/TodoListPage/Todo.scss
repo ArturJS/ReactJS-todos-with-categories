@@ -1,6 +1,8 @@
+@import "../../styles/_colors";
+
 .todo-card {
-  $c-shadow: rgba(46, 46, 46, 0.35);
-  $c-border: #e4e4e4;
+  $c-shadow: $c-todo-card-shadow;
+  $c-border: $c-todo-card-border;
 
   display: flex;
   flex-direction: column;

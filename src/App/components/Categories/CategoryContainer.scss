@@ -1,3 +1,5 @@
+@import "../../styles/_colors";
+
 .category-container {
   display: flex;
   flex-grow: 1;
@@ -12,8 +14,8 @@
   bottom: auto;
   transform: translate(-50%, -50%);
   transform-origin: center center;
-  background-color: #ffffff;
-  box-shadow: rgba(0, 0, 0, 0.117647) 0px 3px 16px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+  background-color: $c-light-bg;
+  box-shadow: $c-category-bg 0 3px 16px, $c-category-bg 0 1px 4px;
   padding: 10px 20px;
   outline: none;
   animation: zoom-modal-open 0.3s;

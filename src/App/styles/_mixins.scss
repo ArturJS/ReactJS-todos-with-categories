@@ -1,11 +1,13 @@
+@import "./_colors";
+
 @mixin input-shadow() {
-  box-shadow: rgba(0, 0, 0, 0.117647) 0px 3px 16px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+  box-shadow: $c-input-shadow 0px 3px 16px, $c-input-shadow 0px 1px 4px;
   transition: box-shadow 0.15s linear;
   will-change: box-shadow;
 
   &:focus {
     outline: none;
-    box-shadow: rgba(33, 150, 243, 0.5) 0px 3px 16px, rgba(33, 150, 243, 0.5) 0px 1px 4px;
+    box-shadow: $c-input-outline-shadow 0px 3px 16px, $c-input-outline-shadow 0px 1px 4px;
   }
 }
 

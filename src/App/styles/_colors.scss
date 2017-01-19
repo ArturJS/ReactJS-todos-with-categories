@@ -1,0 +1,30 @@
+$_white: #FFFFFF;
+$_dark-gray: #222222;
+$_gray: #E4E4E4;
+$_blue: #00BCD4;
+$_orange: #FFA500;
+
+$_light-blue05: rgba(33, 150, 243, 0.5);
+$_dark-gray035: rgba(46, 46, 46, 0.35);
+$_black012: rgba(0, 0, 0, 0.12);
+$_black03: rgba(0, 0, 0, 0.3);
+$_black05: rgba(0, 0, 0, 0.5);
+$_black07: rgba(0, 0, 0, 0.7);
+
+
+$c-light-bg: $_white;
+$c-dark-bg: $_dark-gray;
+$c-app-header-text: $_white;
+$c-category-text: $_blue;
+$c-checkbox-check-mark: $_orange;
+$c-todo-card-border: $_gray;
+
+$c-category-shadow: $_black012;
+$c-category-bg: $_black012;
+$c-checkbox-border: $_black05;
+$c-reset-search-border: $_black05;
+$c-reset-search-text: $_black07;
+$c-reset-search-shadow: $_black03;
+$c-todo-card-shadow: $_dark-gray035;
+$c-input-shadow: $_black012;
+$c-input-outline-shadow: $_light-blue05;
