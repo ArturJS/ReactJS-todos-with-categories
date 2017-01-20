@@ -6,6 +6,6 @@ import {todoFilterMiddleware} from '../middlewares/todo-filter.middleware';
 
 const middleware = routerMiddleware(hashHistory);
 
-export default (initialState) => {
+export default (initialState) => {//todo: you may add redux-dev-tools
   return createStore(rootReducer, initialState, applyMiddleware(middleware, todoFilterMiddleware));
 };

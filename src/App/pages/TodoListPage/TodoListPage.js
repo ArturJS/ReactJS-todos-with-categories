@@ -40,7 +40,7 @@ class TodoListPage extends Component {
     this.onAddTodo = this.onAddTodo.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {//todo: split to smart (with Business logic) and dumb component (only for render)
     if (_.isEqual(this.props.params, nextProps.params)) return;
 
     let {categoryId, searchQuery, showDone} = nextProps.params;
@@ -100,7 +100,7 @@ class TodoListPage extends Component {
     todoList = todoList.present;
     todoFilterState = todoFilterState.present;
 
-    let {showDone, searchQuery} = todoFilterState;
+    let {showDone, searchQuery} = todoFilterState;//todo: use selector
 
     todoList = todoList.filter((todo)=> todo.categoryId === categoryId);
 

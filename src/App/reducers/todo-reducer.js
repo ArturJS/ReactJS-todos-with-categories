@@ -13,7 +13,7 @@ export default (state = [], action) => {
     case types.ADD_TODO:
       return [Object.assign({}, action.todo), ...state];
     case types.REMOVE_TODO:
-      return state.filter(item => item.id !== todoId);
+      return state.filter(item => item.id !== todoId);//todo use todoId
     case types.UPDATE_TODO:
       let todoListCopy = state.slice();
       let todoIndex = _.findIndex(todoListCopy, (todo)=>todo.id === todoId);

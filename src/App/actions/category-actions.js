@@ -25,7 +25,7 @@ export const removeCategoryTodos = (category) => {
 export const addCategory = (category) => {
   return {
     type: types.ADD_CATEGORY,
-    category: Object.assign({}, category, {id: shortid.generate(), parentId: null, childs: []})
+    category: Object.assign({}, category, {id: shortid.generate(), parentId: null, childs: []})//todo: swap default object with category
   };
 };
 

@@ -20,7 +20,7 @@ class CategoryContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.state = {//todo move modal to App
       modalIsOpen: false
     };
 
@@ -103,7 +103,7 @@ class CategoryContainer extends Component {
     let {categoryList} = this.props;
     categoryList = categoryList.present;
 
-    let relatedCategory = findRelatedCategory(categoryList, categoryId);
+    let relatedCategory = findRelatedCategory(categoryList, categoryId);//todo: move to removeCategory()
 
     if (relatedCategory) {
       let allRelatedCategoryIds = [relatedCategory.id, ...getAllChildCategoryIds(relatedCategory)];
