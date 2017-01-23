@@ -15,6 +15,8 @@ import CategoryContainer from '../../components/Categories/CategoryContainer';
 
 import * as _ from 'lodash';
 
+import getTodoList from '../../selectors/todo-list.selector';
+
 class TodoListPage extends Component {
   constructor(props) {
     super(props);
@@ -94,28 +96,7 @@ class TodoListPage extends Component {
 
   renderTodoListPage() {
     const {removeTodo, updateTodo} = this.props.actions;
-    const {categoryId} = this.state;
-    let {todoList, todoFilterState} = this.props;
-
-    todoList = todoList.present;
-    todoFilterState = todoFilterState.present;
-
-    let {showDone, searchQuery} = todoFilterState;//todo: use selector
-
-    todoList = todoList.filter((todo)=> todo.categoryId === categoryId);
-
-    if (showDone) {
-      todoList = todoList.filter((todo)=> todo.isDone);
-    }
-
-    if (searchQuery && searchQuery.trim()) {
-      searchQuery = searchQuery.toLowerCase();
-
-      todoList = todoList.filter((todo)=> {
-        return todo.title.toLowerCase().indexOf(searchQuery) > -1 ||
-          todo.description.toLowerCase().indexOf(searchQuery) > -1;
-      });
-    }
+    let {todoList} = this.props;
 
     return (
       <div className="todo-list-page">
@@ -127,15 +108,13 @@ class TodoListPage extends Component {
 }
 
 TodoListPage.propTypes = {
-  todoFilterState: PropTypes.object.isRequired,
-  todoList: PropTypes.object.isRequired,
+  todoList: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, props) {
   return {
-    todoList: state.todoList,
-    todoFilterState: state.todoFilterState
+    todoList: getTodoList(state)
   };
 }
 
