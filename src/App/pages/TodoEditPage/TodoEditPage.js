@@ -7,7 +7,7 @@ import './TodoEditPage.scss';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import Checkbox from '../../components/Checkbox/Checkbox';
-import CategoryContainer from '../../components/Categories/CategoryContainer';
+import CategoryContainer from '../../components/CategoryContainer/CategoryContainer';
 
 import {store} from '../../store/store';
 

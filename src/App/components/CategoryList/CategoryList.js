@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import Category from './Category';
+import Category from '../Category/Category';
 import './CategoryList.scss';
 
 const CategoryList = ({categoryList, currentCategoryId, isAttachMode, attachByCategoryId, addSubcategory, deleteCategory}) => {
