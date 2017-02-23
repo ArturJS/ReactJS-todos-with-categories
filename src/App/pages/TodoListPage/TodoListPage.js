@@ -17,7 +17,26 @@ import * as _ from 'lodash';
 
 import getTodoList from '../../selectors/todo-list.selector';
 
-class TodoListPage extends Component {
+
+function mapStateToProps(state, props) {
+  return {
+    todoList: getTodoList(state)
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(todoActions, dispatch)
+  };
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class TodoListPage extends Component {
+  static propTypes = {
+    todoList: PropTypes.array.isRequired,
+    actions: PropTypes.object.isRequired
+  };
+
   constructor(props) {
     super(props);
 
@@ -38,8 +57,6 @@ class TodoListPage extends Component {
         })
       );
     }
-
-    this.onAddTodo = this.onAddTodo.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {//todo: split to smart (with Business logic) and dumb component (only for render)
@@ -65,9 +82,9 @@ class TodoListPage extends Component {
     }
   }
 
-  onAddTodo(todo) {
+  onAddTodo = (todo) => {
     this.props.actions.addTodo(todo, this.state.categoryId);
-  }
+  };
 
   render() {
     let {categoryId} = this.state;
@@ -83,7 +100,7 @@ class TodoListPage extends Component {
         </div>
         <div className="layout-body">
           <div className="layout-left-pane">
-            <CategoryContainer currentCategoryId={this.props.params.categoryId} />
+            <CategoryContainer currentCategoryId={this.props.params.categoryId}/>
           </div>
           <div className="layout-right-pane">
             {categoryId ? this.renderTodoListPage() : ''}
@@ -106,22 +123,3 @@ class TodoListPage extends Component {
     );
   }
 }
-
-TodoListPage.propTypes = {
-  todoList: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired
-};
-
-function mapStateToProps(state, props) {
-  return {
-    todoList: getTodoList(state)
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(todoActions, dispatch)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoListPage);
