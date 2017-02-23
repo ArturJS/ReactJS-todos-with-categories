@@ -5,9 +5,9 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import logo from '../logo.svg';
 import './App.scss';
 
-import UndoRedo from './components/UndoRedo/UndoRedo.js';
-import TodoListPage from './pages/TodoListPage/TodoListPage';
-import TodoEditPage from './pages/TodoEditPage/TodoEditPage';
+import UndoRedo from './components/Common/UndoRedo/UndoRedo.js';
+import TodoListPage from './components/Pages/TodoListPage/TodoListPage';
+import TodoEditPage from './components/Pages/TodoEditPage/TodoEditPage';
 
 import {store} from './store/store';
 

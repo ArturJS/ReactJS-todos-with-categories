@@ -1,9 +1,9 @@
 import React, {PropTypes, Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as todoFilterActions from '../../actions/todo-filter-actions';
+import * as todoFilterActions from '../../../actions/todo-filter-actions';
 import './TodoFilter.scss';
-import Checkbox from './../Checkbox/Checkbox';
+import Checkbox from '../Checkbox/Checkbox';
 
 class TodoFilter extends Component {
   constructor(props) {

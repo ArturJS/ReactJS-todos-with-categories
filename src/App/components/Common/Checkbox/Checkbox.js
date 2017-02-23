@@ -11,7 +11,7 @@ const Checkbox = ({value, onChange}) => {
               onChange(event.target.checked);
              }}
       />
-      <span className="chbx-img"></span>
+      <span className="chbx-img" />
     </label>
   );
 };

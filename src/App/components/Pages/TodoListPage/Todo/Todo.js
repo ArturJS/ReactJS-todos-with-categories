@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import './Todo.scss';
-import Checkbox from '../../../components/Checkbox/Checkbox';
+import Checkbox from '../../../Common/Checkbox/Checkbox';
 import { Link } from 'react-router';
 
 const Todo = ({todo, removeTodo, updateTodo}) => {

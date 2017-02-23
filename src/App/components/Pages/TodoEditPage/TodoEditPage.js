@@ -2,14 +2,14 @@ import React, {PropTypes, Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {push} from 'react-router-redux';
-import * as todoActions from '../../actions/todo-actions';
+import * as todoActions from '../../../actions/todo-actions';
 import './TodoEditPage.scss';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import Checkbox from '../../components/Checkbox/Checkbox';
-import CategoryContainer from '../../components/CategoryContainer/CategoryContainer';
+import Checkbox from '../../Common/Checkbox/Checkbox';
+import CategoryContainer from '../../Common/CategoryContainer/CategoryContainer';
 
-import {store} from '../../store/store';
+import {store} from '../../../store/store';
 
 class TodoEditPage extends Component {
 
@@ -133,7 +133,7 @@ class TodoEditPage extends Component {
                 <textarea className="todo-description-area"
                           placeholder="todo description here..."
                           onInput={this.updateDescription}
-                          defaultValue={tempTodo.description}></textarea>
+                          defaultValue={tempTodo.description} />
                 </p>
               </div>
             </div>

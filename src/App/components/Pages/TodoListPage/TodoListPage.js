@@ -1,21 +1,21 @@
 import React, {PropTypes, Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as todoActions from '../../actions/todo-actions';
+import * as todoActions from '../../../actions/todo-actions';
 import TodoList from './TodoList/TodoList';
 import TodoForm from './TodoForm/TodoForm';
 import './TodoListPage.scss';
 
-import {store} from '../../store/store';
-import {updateTodoFilter} from '../../actions/todo-filter-actions';
+import {store} from '../../../store/store';
+import {updateTodoFilter} from '../../../actions/todo-filter-actions';
 
-import TodoFilter from '../../components/TodoFilter/TodoFilter';
-import ProgressBar from '../../components/ProgressBar/ProgressBar';
-import CategoryContainer from '../../components/CategoryContainer/CategoryContainer';
+import TodoFilter from '../../Common/TodoFilter/TodoFilter';
+import ProgressBar from '../../Common/ProgressBar/ProgressBar';
+import CategoryContainer from '../../Common/CategoryContainer/CategoryContainer';
 
 import * as _ from 'lodash';
 
-import getTodoList from '../../selectors/todo-list.selector';
+import getTodoList from '../../../selectors/todo-list.selector';
 
 
 function mapStateToProps(state, props) {

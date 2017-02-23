@@ -2,7 +2,7 @@ import React, {PropTypes, Component} from 'react';
 import Modal from 'react-modal';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as categoryActions from '../../actions/category-actions';
+import * as categoryActions from '../../../actions/category-actions';
 import CategoryForm from '../CategoryForm/CategoryForm';
 import CategoryList from '../CategoryList/CategoryList';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -11,8 +11,8 @@ import './CategoryContainer.scss';
 import * as _ from 'lodash';
 
 import {push} from 'react-router-redux';
-import {store} from '../../store/store';
-import {getAllChildCategoryIds, findRelatedCategory} from '../../helpers/category.helpers';
+import {store} from '../../../store/store';
+import {getAllChildCategoryIds, findRelatedCategory} from '../../../helpers/category.helpers';
 
 class CategoryContainer extends Component {
   _categoryForRemoving;

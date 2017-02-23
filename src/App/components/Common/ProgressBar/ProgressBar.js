@@ -1,7 +1,7 @@
 import React, {PropTypes, Component} from 'react';
 import {connect} from 'react-redux';
 import LinearProgress from 'material-ui/LinearProgress';
-import getProgress from '../../selectors/progress.selector';
+import getProgress from '../../../selectors/progress.selector';
 import './ProgressBar.scss';
 
 class ProgressBar extends Component {

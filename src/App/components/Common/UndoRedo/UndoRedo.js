@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './UndoRedo.scss';
 import {ActionCreators} from 'redux-undo';
-import {store} from '../../store/store';
+import {store} from '../../../store/store';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 class UndoRedo extends Component {
