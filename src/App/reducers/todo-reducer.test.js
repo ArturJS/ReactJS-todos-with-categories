@@ -2,7 +2,7 @@ import TodoReducer from './todo-reducer';
 import {addTodo, removeTodo, updateTodo} from '../actions/todo-actions';
 import {removeCategoryTodos} from '../actions/category-actions';
 import shortid from 'shortid';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 describe('TodoReducer test', ()=> {
   it('should handle ADD_TODO action', ()=> {

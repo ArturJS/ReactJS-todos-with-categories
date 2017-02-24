@@ -2,18 +2,14 @@ import React, {PropTypes, Component} from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import './TodoForm.scss';
 
-class TodoForm extends Component {
+export default class TodoForm extends Component {
+  static propTypes = {
+    addTodo: PropTypes.func.isRequired
+  };
+
   _title;
 
-  constructor(props) {
-    super(props);
-
-    this.onAddTodo = this.onAddTodo.bind(this);
-    this.focusTitleInput = this.focusTitleInput.bind(this);
-    this.resetForm = this.resetForm.bind(this);
-  }
-
-  onAddTodo(event) {
+  onAddTodo = (event) => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -29,23 +25,28 @@ class TodoForm extends Component {
     this.resetForm();
 
     this.focusTitleInput();
-  }
+  };
 
-  resetForm() {
+  resetForm = () => {
     this._title.value = '';
-  }
+  };
 
-  focusTitleInput() {
+  focusTitleInput = () => {
     this._title.focus();
-  }
+  };
+
+  setTitleInput = (node) => {
+    this._title = node;
+  };
 
   render() {
     return (
-      <form className="todo-form" onSubmit={this.onAddTodo}>
+      <form className="todo-form"
+            onSubmit={this.onAddTodo}>
         <input type="text"
                className="todo-title-field"
                placeholder="Enter todo title here..."
-               ref={(node) => this._title = node}
+               ref={this.setTitleInput}
         />
         <RaisedButton
           type="submit"
@@ -55,9 +56,3 @@ class TodoForm extends Component {
     );
   }
 }
-
-TodoForm.propTypes = {
-  addTodo: PropTypes.func.isRequired
-};
-
-export default TodoForm;

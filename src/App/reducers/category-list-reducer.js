@@ -1,5 +1,5 @@
 import * as types from '../actions/action-types';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import {findRelatedCategory} from '../helpers/category.helpers';
 
 export default (state = [], action) => {

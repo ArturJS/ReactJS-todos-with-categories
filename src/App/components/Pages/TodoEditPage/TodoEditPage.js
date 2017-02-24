@@ -11,7 +11,25 @@ import CategoryContainer from '../../Common/CategoryContainer/CategoryContainer'
 
 import {store} from '../../../store/store';
 
-class TodoEditPage extends Component {
+
+function mapStateToProps(state, props) {
+  return {
+    currentTodo: state.currentTodo
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(todoActions, dispatch)
+  }
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class TodoEditPage extends Component {
+  static propTypes = {
+    currentTodo: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired
+  };
 
   constructor(props) {
     super(props);
@@ -21,64 +39,55 @@ class TodoEditPage extends Component {
     this.state = {
       tempTodo: Object.assign({}, currentTodo.present)
     };
-
-    this.saveChanges = this.saveChanges.bind(this);
-    this.cancel = this.cancel.bind(this);
-    this.updateTitle = this.updateTitle.bind(this);
-    this.updateIsDone = this.updateIsDone.bind(this);
-    this.updateDescription = this.updateDescription.bind(this);
-    this.attachByCategoryId = this.attachByCategoryId.bind(this);
-    this.goToRelatedCategoryPage = this.goToRelatedCategoryPage.bind(this);
   }
 
-  saveChanges() {
+  saveChanges = () => {
     const {updateTodo} = todoActions;//this.props.actions;
     const {currentTodo} = this.props;
     let {tempTodo} = this.state;
     store.dispatch(updateTodo(currentTodo.present, tempTodo));
 
-    const {categoryId} = tempTodo;
-    this.goToRelatedCategoryPage(categoryId);
-  }
+    this.goToRelatedCategoryPage(tempTodo.categoryId);
+  };
 
-  cancel() {
+  cancel = () => {
     const {categoryId} = this.props.currentTodo.present;
     this.goToRelatedCategoryPage(categoryId);
-  }
+  };
 
-  goToRelatedCategoryPage(categoryId) {
+  goToRelatedCategoryPage = (categoryId) => {
     let {searchQuery, showDone} = store.getState().todoFilterState.present;
 
     store.dispatch(
       push(`/category/${categoryId}${ searchQuery ? '/searchQuery/' + searchQuery : ''}${showDone ? '/showDone/true' : ''}`)
     );
-  }
+  };
 
-  updateTitle(event) {
+  updateTitle = (event) => {
     this.setState({
       tempTodo: Object.assign({}, this.state.tempTodo, {title: event.target.value})
     });
-  }
+  };
 
-  updateIsDone(isDone) {
+  updateIsDone = (isDone) => {
     this.setState({
       tempTodo: Object.assign({}, this.state.tempTodo, {isDone: isDone})
     });
-  }
+  };
 
-  updateDescription(event) {
+  updateDescription = (event) => {
     this.setState({
       tempTodo: Object.assign({}, this.state.tempTodo, {description: event.target.value})
     });
-  }
+  };
 
-  attachByCategoryId(categoryId) {
+  attachByCategoryId = (categoryId) => {
     let {tempTodo} = this.state;
     this.setState({
       tempTodo: Object.assign({}, tempTodo, {categoryId: categoryId})
     });
     store.dispatch(push(`category/${categoryId}/todo/${tempTodo.id}`));
-  }
+  };
 
   render() {
     const {tempTodo} = this.state;
@@ -144,22 +153,3 @@ class TodoEditPage extends Component {
     );
   }
 }
-
-TodoEditPage.propTypes = {
-  currentTodo: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
-};
-
-function mapStateToProps(state, props) {
-  return {
-    currentTodo: state.currentTodo
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(todoActions, dispatch)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoEditPage);

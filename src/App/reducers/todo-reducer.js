@@ -1,6 +1,6 @@
 import * as types from '../actions/action-types';
 import {getAllChildCategoryIds} from '../helpers/category.helpers';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 export default (state = [], action) => {
   let todoId;

@@ -5,7 +5,25 @@ import * as todoFilterActions from '../../../actions/todo-filter-actions';
 import './TodoFilter.scss';
 import Checkbox from '../Checkbox/Checkbox';
 
-class TodoFilter extends Component {
+function mapStateToProps(state, props) {
+  return {
+    todoFilterState: state.todoFilterState
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(todoFilterActions, dispatch)
+  }
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class TodoFilter extends Component {
+  static propTypes = {
+    todoFilterState: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired
+  };
+
   constructor(props) {
     super(props);
 
@@ -18,13 +36,13 @@ class TodoFilter extends Component {
     this.resetSearchQuery = this.resetSearchQuery.bind(this);
   }
 
-  updateSearchQuery(event) {
+  updateSearchQuery = (event) => {
     this.props.actions.updateTodoFilter({searchQuery: event.target.value});
-  }
+  };
 
-  resetSearchQuery() {
+  resetSearchQuery = () => {
     this.props.actions.updateTodoFilter({searchQuery: ''});
-  }
+  };
 
   render() {
     let {todoFilterState} = this.props;
@@ -57,22 +75,3 @@ class TodoFilter extends Component {
     );
   }
 }
-
-TodoFilter.propTypes = {
-  todoFilterState: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
-};
-
-function mapStateToProps(state, props) {
-  return {
-    todoFilterState: state.todoFilterState
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(todoFilterActions, dispatch)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoFilter);

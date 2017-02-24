@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount, render} from 'enzyme';
 import sinon from 'sinon';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import shortid from 'shortid';
 
 import Todo from './Todo';

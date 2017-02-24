@@ -2,7 +2,11 @@ import React, {PropTypes, Component} from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import './CategoryForm.scss';
 
-class CategoryForm extends Component {
+export default class CategoryForm extends Component {
+  static propTypes = {
+    addCategory: PropTypes.func.isRequired
+  };
+
   _name;
 
   constructor(props) {
@@ -13,7 +17,11 @@ class CategoryForm extends Component {
     this.resetForm = this.resetForm.bind(this);
   }
 
-  onAddCategory(event) {
+  componentDidMount() {
+    this.focusTitleInput();
+  }
+
+  onAddCategory = (event) => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -28,19 +36,15 @@ class CategoryForm extends Component {
     this.resetForm();
 
     this.focusTitleInput();
-  }
+  };
 
-  componentDidMount() {
-    this.focusTitleInput();
-  }
-
-  resetForm() {
+  resetForm = () => {
     this._name.value = '';
-  }
+  };
 
-  focusTitleInput() {
+  focusTitleInput = () => {
     this._name.focus();
-  }
+  };
 
   render() {
     return (
@@ -58,9 +62,3 @@ class CategoryForm extends Component {
     );
   }
 }
-
-CategoryForm.propTypes = {
-  addCategory: PropTypes.func.isRequired
-};
-
-export default CategoryForm;

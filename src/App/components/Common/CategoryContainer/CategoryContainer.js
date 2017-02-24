@@ -8,13 +8,32 @@ import CategoryList from '../CategoryList/CategoryList';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import './CategoryContainer.scss';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 import {push} from 'react-router-redux';
 import {store} from '../../../store/store';
 import {getAllChildCategoryIds, findRelatedCategory} from '../../../helpers/category.helpers';
 
-class CategoryContainer extends Component {
+
+function mapStateToProps(state, props) {
+  return {
+    categoryList: state.categoryList
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(categoryActions, dispatch)
+  };
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class CategoryContainer extends Component {
+  static propTypes = {
+    categoryList: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired
+  };
+
   _categoryForRemoving;
 
   constructor(props) {
@@ -23,14 +42,55 @@ class CategoryContainer extends Component {
     this.state = {//todo move modal to App
       modalIsOpen: false
     };
-
-    this.addCategory = this.addCategory.bind(this);
-    this.addSubcategory = this.addSubcategory.bind(this);
-    this.deleteCategory = this.deleteCategory.bind(this);
-    this.onDeleteCategory = this.onDeleteCategory.bind(this);//should open confirm modal before delete action
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
   }
+
+  openModal = () => {
+    this.setState({modalIsOpen: true});
+  };
+
+  closeModal = () => {
+    this.setState({modalIsOpen: false});
+  };
+
+
+  addCategory = (newCategory) => {
+    this.props.actions.addCategory(newCategory);
+  };
+
+  addSubcategory = (relatedCategoryId) => {
+    this.props.actions.addSubCategory(relatedCategoryId);
+  };
+
+  onDeleteCategory = (categoryId) => {
+    let {categoryList} = this.props;
+    categoryList = categoryList.present;
+
+    this._categoryForRemoving = findRelatedCategory(categoryList, categoryId);
+
+    this.openModal();
+  };
+
+  deleteCategory = () => {
+    let categoryId = this._categoryForRemoving.id;
+    let {categoryList} = this.props;
+    categoryList = categoryList.present;
+
+    let relatedCategory = findRelatedCategory(categoryList, categoryId);//todo: move to removeCategory()
+
+    if (relatedCategory) {
+      let allRelatedCategoryIds = [relatedCategory.id, ...getAllChildCategoryIds(relatedCategory)];
+
+      if (_.includes(allRelatedCategoryIds, this.props.currentCategoryId)) {
+        store.dispatch(push('/'));
+      }
+
+      const {removeCategoryTodos, removeCategory} = this.props.actions;
+      removeCategoryTodos(relatedCategory);
+      removeCategory(relatedCategory);
+    }
+
+    this.closeModal();
+  };
 
   render() {
     let {categoryList, currentCategoryId, isAttachMode, attachByCategoryId} = this.props;
@@ -60,9 +120,7 @@ class CategoryContainer extends Component {
             <FlatButton type="button"
                         label="Remove"
                         className="btn-modal"
-                        onClick={()=> {
-                          this.deleteCategory(this._categoryForRemoving.id)
-                        }}/>
+                        onClick={this.deleteCategory}/>
             <RaisedButton type="button"
                           label="Cancel"
                           className="btn-modal"
@@ -72,71 +130,4 @@ class CategoryContainer extends Component {
       </div>
     );
   }
-
-  openModal() {
-    this.setState({modalIsOpen: true});
-  }
-
-  closeModal() {
-    this.setState({modalIsOpen: false});
-  }
-
-
-  addCategory(newCategory) {
-    this.props.actions.addCategory(newCategory);
-  }
-
-  addSubcategory(relatedCategoryId) {
-    this.props.actions.addSubCategory(relatedCategoryId);
-  }
-
-  onDeleteCategory(categoryId) {
-    let {categoryList} = this.props;
-    categoryList = categoryList.present;
-
-    this._categoryForRemoving = findRelatedCategory(categoryList, categoryId);
-
-    this.openModal();
-  }
-
-  deleteCategory(categoryId) {
-    let {categoryList} = this.props;
-    categoryList = categoryList.present;
-
-    let relatedCategory = findRelatedCategory(categoryList, categoryId);//todo: move to removeCategory()
-
-    if (relatedCategory) {
-      let allRelatedCategoryIds = [relatedCategory.id, ...getAllChildCategoryIds(relatedCategory)];
-
-      if (_.includes(allRelatedCategoryIds, this.props.currentCategoryId)) {
-        store.dispatch(push('/'));
-      }
-
-      const {removeCategoryTodos, removeCategory} = this.props.actions;
-      removeCategoryTodos(relatedCategory);
-      removeCategory(relatedCategory);
-    }
-
-    this.closeModal();
-  }
 }
-
-CategoryContainer.propTypes = {
-  categoryList: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
-};
-
-function mapStateToProps(state, props) {
-  return {
-    categoryList: state.categoryList
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(categoryActions, dispatch)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryContainer);
-

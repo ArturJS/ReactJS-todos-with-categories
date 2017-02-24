@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 export function findRelatedCategory(categoryList, categoryId) {
   let relatedCategory = _.find(categoryList, (o)=> o.id === categoryId);

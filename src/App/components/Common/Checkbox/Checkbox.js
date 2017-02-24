@@ -1,24 +1,26 @@
-import React, {PropTypes} from 'react';
+import React, {PropTypes, Component} from 'react';
 import './Checkbox.scss';
 
-const Checkbox = ({value, onChange}) => {
-  return (
-    <label className="chbx-cnt">
-      <input type="checkbox"
-             className="chbx"
-             checked={value}
-             onChange={(event)=>{
+export default class Checkbox extends Component {
+  static propTypes = {
+    value: PropTypes.bool,
+    onChange: PropTypes.func.isRequired
+  };
+  
+  render() {
+    let {value, onChange} = this.props;
+    
+    return (
+      <label className="chbx-cnt">
+        <input type="checkbox"
+               className="chbx"
+               checked={value}
+               onChange={(event)=>{
               onChange(event.target.checked);
              }}
-      />
-      <span className="chbx-img" />
-    </label>
-  );
-};
-
-Checkbox.propTypes = {
-  value: PropTypes.bool,
-  onChange: PropTypes.func.isRequired
-};
-
-export default Checkbox;
+        />
+        <span className="chbx-img" />
+      </label>
+    );
+  }
+}

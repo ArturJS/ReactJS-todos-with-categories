@@ -1,28 +1,48 @@
-import React, {PropTypes} from 'react';
+import React, {PropTypes, Component} from 'react';
 import './Todo.scss';
 import Checkbox from '../../../Common/Checkbox/Checkbox';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
 
-const Todo = ({todo, removeTodo, updateTodo}) => {
-  return (
-    <div className="todo-card">
-      <i className="todo-remove"
-         onClick={() => removeTodo(todo)}>&times;</i>
-      <h3 className="todo-title">
-        <Link to={`category/${todo.categoryId}/todo/${todo.id}`}
-              className="todo-title-link">{todo.title}</Link>
-      </h3>
-      <Checkbox value={todo.isDone} onChange={(value)=>{
-        updateTodo(todo, {isDone: value});
-      }} />
-    </div>
-  );
-};
+export default class Todo extends Component {
+  static propTypes = {
+    todo: PropTypes.object.isRequired,
+    removeTodo: PropTypes.func.isRequired,
+    updateTodo: PropTypes.func.isRequired
+  };
 
-Todo.propTypes = {
-  todo: PropTypes.object.isRequired,
-  removeTodo: PropTypes.func.isRequired,
-  updateTodo: PropTypes.func.isRequired
-};
+  removeTodo = () => {
+    const {
+      todo,
+      removeTodo
+    } = this.props;
 
-export default Todo;
+    removeTodo(todo);
+  };
+
+  updateTodo = (value) => {
+    const {
+      todo,
+      updateTodo
+    } = this.props;
+
+    updateTodo(todo, {isDone: value});
+  };
+
+  render() {
+    const {
+      todo
+    } = this.props;
+
+    return (
+      <div className="todo-card">
+        <i className="todo-remove"
+           onClick={this.removeTodo}>&times;</i>
+        <h3 className="todo-title">
+          <Link to={`category/${todo.categoryId}/todo/${todo.id}`}
+                className="todo-title-link">{todo.title}</Link>
+        </h3>
+        <Checkbox value={todo.isDone} onChange={this.updateTodo}/>
+      </div>
+    );
+  }
+}

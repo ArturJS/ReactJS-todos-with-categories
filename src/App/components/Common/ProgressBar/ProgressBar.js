@@ -4,7 +4,18 @@ import LinearProgress from 'material-ui/LinearProgress';
 import getProgress from '../../../selectors/progress.selector';
 import './ProgressBar.scss';
 
-class ProgressBar extends Component {
+function mapStateToProps(state, props) {
+  return {
+    progress: getProgress(state)
+  };
+}
+
+@connect(mapStateToProps)
+export default class ProgressBar extends Component {
+  static propTypes = {
+    progress: PropTypes.number
+  };
+  
   render() {
     return (
       <div className="progress-bar-cnt">
@@ -13,15 +24,3 @@ class ProgressBar extends Component {
     );
   }
 }
-
-ProgressBar.propTypes = {
-  progress: PropTypes.number,
-};
-
-function mapStateToProps(state, props) {
-  return {
-    progress: getProgress(state)
-  };
-}
-
-export default connect(mapStateToProps)(ProgressBar);

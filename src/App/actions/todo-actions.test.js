@@ -1,7 +1,7 @@
 import {addTodo, removeTodo, updateTodo} from './todo-actions';
 import * as types from './action-types';
 import shortid from 'shortid';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 describe('TodoActions test', ()=> {
   it('addTodo should create ADD_TODO action', ()=> {

@@ -1,5 +1,5 @@
 import {store} from '../store/store';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 const todoEditUrlRegexp = /category\/([^\/]+)\/todo\/([^\/]+)/;
 

@@ -13,7 +13,7 @@ import TodoFilter from '../../Common/TodoFilter/TodoFilter';
 import ProgressBar from '../../Common/ProgressBar/ProgressBar';
 import CategoryContainer from '../../Common/CategoryContainer/CategoryContainer';
 
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 import getTodoList from '../../../selectors/todo-list.selector';
 
