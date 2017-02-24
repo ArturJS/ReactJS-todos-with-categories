@@ -93,7 +93,9 @@ export default class TodoListPage extends Component {
       <div className="App-body todo-list-page-modifier">
         <div className="layout-header">
           <div className="layout-subheading">
+            {/*save in redux store*/}
             <h2 className="page-name">To-do list</h2>
+            {/*depends on selected page (route)*/}
             <TodoFilter />
           </div>
           <ProgressBar />

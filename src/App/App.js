@@ -1,35 +1,36 @@
 import React, {Component} from 'react';
-import { Router, Route, hashHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
+import {Router, Route, IndexRoute, hashHistory} from 'react-router';
+import {syncHistoryWithStore} from 'react-router-redux';
 
-import logo from '../logo.svg';
-import './App.scss';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {Provider} from 'react-redux';
 
-import UndoRedo from './components/Common/UndoRedo/UndoRedo.js';
 import TodoListPage from './components/Pages/TodoListPage/TodoListPage';
 import TodoEditPage from './components/Pages/TodoEditPage/TodoEditPage';
+import Shell from './components/Shell';
+import './App.scss';
 
 import {store} from './store/store';
 
 const history = syncHistoryWithStore(hashHistory, store);
 
-class App extends Component {
+const routes = (
+  <Route path="/" component={Shell}>
+    <IndexRoute component={TodoListPage}/>
+    <Route path='/category/:categoryId(/searchQuery/:searchQuery)(/showDone/:showDone)'
+           component={TodoListPage}/>
+    <Route path='/category/:categoryId/todo/:todoId' component={TodoEditPage}/>
+  </Route>
+);
+
+export default class App extends Component {
   render() {
     return (
-      <div className="App wh100">
-        <div className="App-header">
-          <UndoRedo />
-          <img src={logo} className="App-logo" alt="logo"/>
-          <h2 className="App-logo-text">Welcome to React</h2>
-        </div>
-        <Router history={history}>
-          <Route path='/' component={TodoListPage} />
-          <Route path='/category/:categoryId(/searchQuery/:searchQuery)(/showDone/:showDone)' component={TodoListPage} />
-          <Route path='/category/:categoryId/todo/:todoId' component={TodoEditPage} />
-        </Router>
-      </div>
+      <MuiThemeProvider>
+        <Provider store={store}>
+          <Router history={history} routes={routes} />
+        </Provider>
+      </MuiThemeProvider>
     );
   }
 }
-
-export default App;
