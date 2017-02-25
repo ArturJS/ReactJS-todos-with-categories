@@ -8,10 +8,7 @@ import './TodoListPage.scss';
 
 import {store} from '../../../store/store';
 import {updateTodoFilter} from '../../../actions/todo-filter-actions';
-
-import TodoFilter from '../../Common/TodoFilter/TodoFilter';
-import ProgressBar from '../../Common/ProgressBar/ProgressBar';
-import CategoryContainer from '../../Common/CategoryContainer/CategoryContainer';
+import {updatePageTitle} from '../../../actions/page-title-actions';
 
 import _ from 'lodash';
 
@@ -45,7 +42,11 @@ export default class TodoListPage extends Component {
       todoList: []
     };
 
-    let {searchQuery, showDone} = props.params;
+
+  }
+
+  componentDidMount() {
+    let {searchQuery, showDone} = this.props.params;
 
     if (searchQuery || showDone) {
       showDone = showDone && JSON.parse(showDone);
@@ -57,6 +58,10 @@ export default class TodoListPage extends Component {
         })
       );
     }
+    
+    store.dispatch(
+      updatePageTitle('To-do list')
+    );
   }
 
   componentWillReceiveProps(nextProps) {//todo: split to smart (with Business logic) and dumb component (only for render)
@@ -87,33 +92,6 @@ export default class TodoListPage extends Component {
   };
 
   render() {
-    let {categoryId} = this.state;
-
-    return (
-      <div className="App-body todo-list-page-modifier">
-        <div className="layout-header">
-          <div className="layout-subheading">
-            {/*save in redux store*/}
-            <h2 className="page-name">To-do list</h2>
-            {/*depends on selected page (route)*/}
-            <TodoFilter />
-          </div>
-          <ProgressBar />
-        </div>
-        <div className="layout-body">
-          <div className="layout-left-pane">
-            <CategoryContainer currentCategoryId={this.props.params.categoryId}/>
-          </div>
-          <div className="layout-right-pane">
-            {categoryId ? this.renderTodoListPage() : ''}
-          </div>
-        </div>
-
-      </div>
-    );
-  }
-
-  renderTodoListPage() {
     const {removeTodo, updateTodo} = this.props.actions;
     let {todoList} = this.props;
 

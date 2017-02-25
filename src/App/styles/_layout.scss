@@ -58,5 +58,19 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    overflow: hidden;
+
+    > div {
+      white-space: nowrap;
+      position: relative;
+
+      > div {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+    }
   }
 }

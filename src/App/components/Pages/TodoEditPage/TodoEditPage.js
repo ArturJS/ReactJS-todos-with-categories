@@ -3,11 +3,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {push} from 'react-router-redux';
 import * as todoActions from '../../../actions/todo-actions';
+import {updatePageTitle} from '../../../actions/page-title-actions';
 import './TodoEditPage.scss';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import Checkbox from '../../Common/Checkbox/Checkbox';
-import CategoryContainer from '../../Common/CategoryContainer/CategoryContainer';
 
 import {store} from '../../../store/store';
 
@@ -40,6 +40,12 @@ export default class TodoEditPage extends Component {
       tempTodo: Object.assign({}, currentTodo.present)
     };
   }
+  
+  componentDidMount() {
+    store.dispatch(
+      updatePageTitle(this.props.currentTodo.present.title)
+    );
+  }
 
   saveChanges = () => {
     const {updateTodo} = todoActions;//this.props.actions;
@@ -64,9 +70,15 @@ export default class TodoEditPage extends Component {
   };
 
   updateTitle = (event) => {
+    let title = event.target.value;
+    
     this.setState({
-      tempTodo: Object.assign({}, this.state.tempTodo, {title: event.target.value})
+      tempTodo: {...this.state.tempTodo, title }
     });
+
+    store.dispatch(
+      updatePageTitle(title)
+    );
   };
 
   updateIsDone = (isDone) => {
@@ -93,63 +105,45 @@ export default class TodoEditPage extends Component {
     const {tempTodo} = this.state;
 
     return (
-      <div className="App-body">
-        <div className="layout-header">
-          <div className="layout-subheading">
-            <h2 className="page-name">{tempTodo.title}</h2>
-          </div>
-        </div>
-        <div className="layout-body">
-          <div className="layout-left-pane">
-            <CategoryContainer currentCategoryId={this.props.params.categoryId}
-                               isAttachMode={true}
-                               attachByCategoryId={this.attachByCategoryId}
+      <div className="todo-edit-page">
+        <div className="buttons-container clearfix">
+          <div className="buttons-right">
+            <RaisedButton
+              className="button-item"
+              label="Save changes"
+              onClick={this.saveChanges}
+            />
+            <RaisedButton
+              className="button-item"
+              label="Cancel"
+              onClick={this.cancel}
             />
           </div>
-          <div className="layout-right-pane">
-            <div className="todo-edit-page">
-              <div className="buttons-container clearfix">
-                <div className="buttons-right">
-                  <RaisedButton
-                    className="button-item"
-                    label="Save changes"
-                    onClick={this.saveChanges}
-                  />
-                  <RaisedButton
-                    className="button-item"
-                    label="Cancel"
-                    onClick={this.cancel}
-                  />
-                </div>
-              </div>
-              <div className="todo-edit-page--body">
-                <p>
-                  <input type="text"
-                         className="todo-title-field"
-                         placeholder="todo title here..."
-                         defaultValue={tempTodo.title}
-                         onInput={this.updateTitle}
-                  />
-                </p>
-                <p>
-                  <label className="todo-is-done">
-                    <Checkbox value={tempTodo.isDone} onChange={this.updateIsDone}/>
-                    &nbsp;
-                    Done
-                  </label>
-                </p>
-                <p className="todo-description-area-cnt">
+        </div>
+        <div className="todo-edit-page--body">
+          <p>
+            <input type="text"
+                   className="todo-title-field"
+                   placeholder="todo title here..."
+                   defaultValue={tempTodo.title}
+                   onInput={this.updateTitle}
+            />
+          </p>
+          <p>
+            <label className="todo-is-done">
+              <Checkbox value={tempTodo.isDone} onChange={this.updateIsDone}/>
+              &nbsp;
+              Done
+            </label>
+          </p>
+          <p className="todo-description-area-cnt">
                 <textarea className="todo-description-area"
                           placeholder="todo description here..."
                           onInput={this.updateDescription}
                           defaultValue={tempTodo.description} />
-                </p>
-              </div>
-            </div>
-          </div>
+          </p>
         </div>
       </div>
-
     );
   }
 }
