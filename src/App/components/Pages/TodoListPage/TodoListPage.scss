@@ -1,12 +1,11 @@
-.layout-body {
-  height: calc(100% - 50px);
-}
+@import "../../../styles/_mixins";
 
 .todo-list-page {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   margin: 0 15px;
+  @include abs-pos();
 
   .half-width {
     width: 50%;

@@ -58,10 +58,8 @@ export default class TodoListPage extends Component {
         })
       );
     }
-    
-    store.dispatch(
-      updatePageTitle('To-do list')
-    );
+
+    this.setPageTitle();
   }
 
   componentWillReceiveProps(nextProps) {//todo: split to smart (with Business logic) and dumb component (only for render)
@@ -85,6 +83,14 @@ export default class TodoListPage extends Component {
         })
       );
     }
+
+    this.setPageTitle();
+  }
+
+  setPageTitle() {
+    store.dispatch(
+      updatePageTitle('To-do list')
+    );
   }
 
   onAddTodo = (todo) => {

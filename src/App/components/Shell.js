@@ -23,6 +23,14 @@ export default class Shell extends Component {
     return this.props.location.pathname.indexOf('todo') === -1;
   };
 
+  stylesAtEnter = () => {
+    return { translateX: this.isIndexPage() ? -100 : 100 };
+  };
+
+  stylesAtLeave = () => {
+    return { translateX: this.isIndexPage() ? 100 : -100 };
+  };
+
   render() {
     console.log(this.props.location);
 
@@ -53,9 +61,9 @@ export default class Shell extends Component {
             </div>
             <div className="layout-right-pane">
               <RouteTransition
-                pathname={this.props.location.pathname}
-                atEnter={{ translateX: 100 }}
-                atLeave={{ translateX: -100 }}
+                pathname={this.isIndexPage().toString()}
+                atEnter={this.stylesAtEnter()}
+                atLeave={this.stylesAtLeave()}
                 atActive={{ translateX: 0 }}
                 mapStyles={styles => ({ transform: `translateX(${styles.translateX}%)` })}
               >
