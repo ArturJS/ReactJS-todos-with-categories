@@ -1,5 +1,6 @@
 import {store} from '../store/store';
 import _ from 'lodash';
+import * as types from '../actions/action-types';
 
 const todoEditUrlRegexp = /category\/([^\/]+)\/todo\/([^\/]+)/;
 
@@ -16,6 +17,9 @@ export default (state = {}, action) => {
 
       let relatedTodo = _.find(todoList, (todo)=> todo.id === todoId);
       return Object.assign({}, relatedTodo || {});
+    }
+    case types.UPDATE_CURRENT_TODO: {
+      return {...state, ...action.payload};
     }
     default:
       return state;

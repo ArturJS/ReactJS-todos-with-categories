@@ -3,24 +3,25 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {push} from 'react-router-redux';
 import * as todoActions from '../../../actions/todo-actions';
-import {updatePageTitle} from '../../../actions/page-title-actions';
+import * as currentTodoActions from '../../../actions/current-todo-actions';
 import './TodoEditPage.scss';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import Checkbox from '../../Common/Checkbox/Checkbox';
 
-import {store} from '../../../store/store';
-
 
 function mapStateToProps(state, props) {
   return {
-    currentTodo: state.currentTodo
+    currentTodo: state.currentTodo,
+    todoFilterState: state.todoFilterState.present
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(todoActions, dispatch)
+    todoActions: bindActionCreators(todoActions, dispatch),
+    routerActions: bindActionCreators({push}, dispatch),
+    currentTodoActions: bindActionCreators(currentTodoActions, dispatch)
   }
 }
 
@@ -28,57 +29,55 @@ function mapDispatchToProps(dispatch) {
 export default class TodoEditPage extends Component {
   static propTypes = {
     currentTodo: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired
+    todoActions: PropTypes.object.isRequired
   };
 
   constructor(props) {
     super(props);
 
-    const {currentTodo} = this.props;
-
     this.state = {
-      tempTodo: Object.assign({}, currentTodo.present)
+      tempTodo: {...this.props.currentTodo}
     };
   }
-  
-  componentDidMount() {
-    store.dispatch(
-      updatePageTitle(this.props.currentTodo.present.title)
-    );
+
+  componentWillReceiveProps(nextProps) {
+    const {currentTodo} = nextProps;
+
+    this.setState({
+      tempTodo: {...currentTodo}
+    });
   }
 
   saveChanges = () => {
-    const {updateTodo} = todoActions;//this.props.actions;
     const {currentTodo} = this.props;
     let {tempTodo} = this.state;
-    store.dispatch(updateTodo(currentTodo.present, tempTodo));
+    this.props.todoActions.updateTodo(currentTodo, tempTodo);
 
     this.goToRelatedCategoryPage(tempTodo.categoryId);
   };
 
   cancel = () => {
-    const {categoryId} = this.props.currentTodo.present;
+    const {categoryId} = this.props.currentTodo;
     this.goToRelatedCategoryPage(categoryId);
   };
 
   goToRelatedCategoryPage = (categoryId) => {
-    let {searchQuery, showDone} = store.getState().todoFilterState.present;
+    let {searchQuery, showDone} = this.props.todoFilterState;
 
-    store.dispatch(
-      push(`/category/${categoryId}${ searchQuery ? '/searchQuery/' + searchQuery : ''}${showDone ? '/showDone/true' : ''}`)
-    );
+    searchQuery = searchQuery ? '/searchQuery/' + searchQuery : '';
+    showDone = showDone ? '/showDone/true' : '';
+
+    this.props.routerActions.push(`/category/${categoryId}${searchQuery}${showDone}`);
   };
 
   updateTitle = (event) => {
     let title = event.target.value;
-    
+
     this.setState({
-      tempTodo: {...this.state.tempTodo, title }
+      tempTodo: {...this.state.tempTodo, title}
     });
 
-    store.dispatch(
-      updatePageTitle(title)
-    );
+    this.props.currentTodoActions.updateCurrentTodo({title});
   };
 
   updateIsDone = (isDone) => {
@@ -98,7 +97,7 @@ export default class TodoEditPage extends Component {
     this.setState({
       tempTodo: Object.assign({}, tempTodo, {categoryId: categoryId})
     });
-    store.dispatch(push(`category/${categoryId}/todo/${tempTodo.id}`));
+    this.props.routerActions.push(`category/${categoryId}/todo/${tempTodo.id}`);
   };
 
   render() {
@@ -125,7 +124,7 @@ export default class TodoEditPage extends Component {
             <input type="text"
                    className="todo-title-field"
                    placeholder="todo title here..."
-                   defaultValue={tempTodo.title}
+                   value={tempTodo.title}
                    onInput={this.updateTitle}
             />
           </p>
@@ -140,7 +139,7 @@ export default class TodoEditPage extends Component {
                 <textarea className="todo-description-area"
                           placeholder="todo description here..."
                           onInput={this.updateDescription}
-                          defaultValue={tempTodo.description} />
+                          value={tempTodo.description}/>
           </p>
         </div>
       </div>

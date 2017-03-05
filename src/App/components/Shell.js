@@ -3,7 +3,7 @@ import UndoRedo from './../components/Common/UndoRedo/UndoRedo.js';
 import logo from '../../logo.svg';
 import {connect} from 'react-redux';
 
-import { RouteTransition } from 'react-router-transition';
+import {RouteTransition} from 'react-router-transition';
 
 
 import TodoFilter from './Common/TodoFilter/TodoFilter';
@@ -12,7 +12,7 @@ import CategoryContainer from './Common/CategoryContainer/CategoryContainer';
 
 function mapStateToProps(state, props) {
   return {
-    pageTitle: state.pageTitle
+    currentTodoTitle: state.currentTodo.title
   };
 }
 
@@ -24,15 +24,15 @@ export default class Shell extends Component {
   };
 
   stylesAtEnter = () => {
-    return { translateX: this.isIndexPage() ? -100 : 100 };
+    return {translateX: this.isIndexPage() ? -100 : 100};
   };
 
   stylesAtLeave = () => {
-    return { translateX: this.isIndexPage() ? 100 : -100 };
+    return {translateX: this.isIndexPage() ? 100 : -100};
   };
 
   render() {
-    console.log(this.props.location);
+    let isIndexPage = this.isIndexPage();
 
     return (
       <div className="App wh100">
@@ -45,14 +45,14 @@ export default class Shell extends Component {
           <div className="layout-header">
             <div className="layout-subheading">
               <h2 className="page-name">
-                {this.props.pageTitle}
+                {isIndexPage ? 'To-do list' : this.props.currentTodoTitle}
               </h2>
               {
-                this.isIndexPage() && <TodoFilter />
+                isIndexPage && <TodoFilter />
               }
             </div>
             {
-              this.isIndexPage() && <ProgressBar />
+              isIndexPage && <ProgressBar />
             }
           </div>
           <div className="layout-body">
@@ -64,17 +64,14 @@ export default class Shell extends Component {
                 pathname={this.isIndexPage().toString()}
                 atEnter={this.stylesAtEnter()}
                 atLeave={this.stylesAtLeave()}
-                atActive={{ translateX: 0 }}
-                mapStyles={styles => ({ transform: `translateX(${styles.translateX}%)` })}
+                atActive={{translateX: 0}}
+                mapStyles={styles => ({transform: `translateX(${styles.translateX}%)`})}
               >
                 {this.props.children}
               </RouteTransition>
-
             </div>
           </div>
-
         </div>
-
       </div>
     );
   }

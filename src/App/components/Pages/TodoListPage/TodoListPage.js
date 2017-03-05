@@ -8,7 +8,6 @@ import './TodoListPage.scss';
 
 import {store} from '../../../store/store';
 import {updateTodoFilter} from '../../../actions/todo-filter-actions';
-import {updatePageTitle} from '../../../actions/page-title-actions';
 
 import _ from 'lodash';
 
@@ -23,7 +22,7 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(todoActions, dispatch)
+    todoActions: bindActionCreators(todoActions, dispatch)
   };
 }
 
@@ -31,7 +30,7 @@ function mapDispatchToProps(dispatch) {
 export default class TodoListPage extends Component {
   static propTypes = {
     todoList: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
+    todoActions: PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -41,11 +40,10 @@ export default class TodoListPage extends Component {
       categoryId: props.params.categoryId,
       todoList: []
     };
-
-
   }
 
   componentDidMount() {
+    console.log('TodoListPage');
     let {searchQuery, showDone} = this.props.params;
 
     if (searchQuery || showDone) {
@@ -59,7 +57,6 @@ export default class TodoListPage extends Component {
       );
     }
 
-    this.setPageTitle();
   }
 
   componentWillReceiveProps(nextProps) {//todo: split to smart (with Business logic) and dumb component (only for render)
@@ -83,22 +80,14 @@ export default class TodoListPage extends Component {
         })
       );
     }
-
-    this.setPageTitle();
-  }
-
-  setPageTitle() {
-    store.dispatch(
-      updatePageTitle('To-do list')
-    );
   }
 
   onAddTodo = (todo) => {
-    this.props.actions.addTodo(todo, this.state.categoryId);
+    this.props.todoActions.addTodo(todo, this.state.categoryId);
   };
 
   render() {
-    const {removeTodo, updateTodo} = this.props.actions;
+    const {removeTodo, updateTodo} = this.props.todoActions;
     let {todoList} = this.props;
 
     return (
