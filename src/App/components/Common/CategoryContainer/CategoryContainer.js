@@ -2,7 +2,7 @@ import React, {PropTypes, Component} from 'react';
 import Modal from 'react-modal';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as categoryActions from '../../../actions/category-actions';
+import * as categoryActions from './Category.ducks';
 import CategoryForm from '../CategoryForm/CategoryForm';
 import CategoryList from '../CategoryList/CategoryList';
 import RaisedButton from 'material-ui/RaisedButton';

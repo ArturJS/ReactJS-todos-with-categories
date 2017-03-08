@@ -4,7 +4,7 @@ import {routerReducer} from 'react-router-redux';
 import todoList from './todo-reducer.js';
 import todoFilterState from './todo-filter-reducer.js';
 import currentTodo from './current-todo-reducer.js';
-import categoryList from './category-list-reducer.js';
+import categoryList from '../components/Common/CategoryContainer/Category.ducks';
 
 const rootReducer = combineReducers({
   todoList: undoable(todoList),
