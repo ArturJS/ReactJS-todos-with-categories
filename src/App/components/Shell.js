@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
-import UndoRedo from './../components/Common/UndoRedo/UndoRedo.js';
+import UndoRedo from './Containers/UndoRedo/UndoRedo.js';
 import logo from '../../logo.svg';
 import {connect} from 'react-redux';
 
 import {RouteTransition} from 'react-router-transition';
 
 
-import TodoFilter from './Common/TodoFilter/TodoFilter';
-import ProgressBar from './Common/ProgressBar/ProgressBar';
-import CategoryContainer from './Common/CategoryContainer/CategoryContainer';
+import TodoFilter from './Containers/TodoFilter/TodoFilter';
+import ProgressBar from './Containers/ProgressBar/ProgressBar';
+import CategoryContainer from './Containers/Categories/Categories';
 
 function mapStateToProps(state, props) {
   return {

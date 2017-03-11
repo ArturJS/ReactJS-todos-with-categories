@@ -1,9 +1,9 @@
 import React, {PropTypes, Component} from 'react';
 import Collapse from 'react-collapse';
-import './Category.scss';
+import './CategoryItem.scss';
 import {Link} from 'react-router';
 
-export default class Category extends Component {
+export default class CategoryItem extends Component {
   static propTypes = {
     category: PropTypes.object.isRequired,
     addSubcategory: PropTypes.func.isRequired,
@@ -185,7 +185,7 @@ export default class Category extends Component {
             {
               category.childs.map((child) =>
                 <li key={child.id}>
-                  <Category category={child}
+                  <CategoryItem category={child}
                             currentCategoryId={currentCategoryId}
                             addSubcategory={addSubcategory}
                             deleteCategory={deleteCategory}

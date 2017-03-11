@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as todoFilterActions from '../../../actions/todo-filter-actions';
 import './TodoFilter.scss';
-import Checkbox from '../Checkbox/Checkbox';
+import Checkbox from '../../Common/Checkbox/Checkbox';
 
 function mapStateToProps(state, props) {
   return {

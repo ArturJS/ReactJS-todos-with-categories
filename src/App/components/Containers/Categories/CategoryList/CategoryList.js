@@ -1,5 +1,5 @@
 import React, {PropTypes, Component} from 'react';
-import Category from '../Category/Category';
+import CategoryItem from '../CategoryItem/CategoryItem';
 import './CategoryList.scss';
 
 export default class CategoryList extends Component {
@@ -8,21 +8,21 @@ export default class CategoryList extends Component {
     addSubcategory: PropTypes.func.isRequired,
     deleteCategory: PropTypes.func.isRequired
   };
-  
+
   render() {
     let {
-      categoryList, 
-      currentCategoryId, 
-      isAttachMode, 
-      attachByCategoryId, 
-      addSubcategory, 
+      categoryList,
+      currentCategoryId,
+      isAttachMode,
+      attachByCategoryId,
+      addSubcategory,
       deleteCategory
     } = this.props;
-    
+
     return (
       <div className="category-list">
         {categoryList.map((category) =>
-          <Category key={category.id}
+          <CategoryItem key={category.id}
                     currentCategoryId={currentCategoryId}
                     isAttachMode={isAttachMode}
                     attachByCategoryId={attachByCategoryId}

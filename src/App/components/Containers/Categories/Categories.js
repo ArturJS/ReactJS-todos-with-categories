@@ -2,12 +2,12 @@ import React, {PropTypes, Component} from 'react';
 import Modal from 'react-modal';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as categoryActions from './Category.ducks';
-import CategoryForm from '../CategoryForm/CategoryForm';
-import CategoryList from '../CategoryList/CategoryList';
+import * as categoryActions from './Categories.ducks';
+import CategoryForm from './CategoryForm/CategoryForm';
+import CategoryList from './CategoryList/CategoryList';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import './CategoryContainer.scss';
+import './Categories.scss';
 import _ from 'lodash';
 
 import {push} from 'react-router-redux';
