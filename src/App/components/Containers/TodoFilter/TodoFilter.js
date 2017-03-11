@@ -8,16 +8,12 @@ import Checkbox from '../../Common/Checkbox/Checkbox';
 import _ from 'lodash';
 
 function mapQueryParams(queryParams) {
-  let queryResult = '?';
   const existingEntries = Object.entries(queryParams).filter(([key, value]) => value);
 
   if (existingEntries.length === 0) return '';
 
-  for (let [key, value] of existingEntries) {
-    queryResult += `${key}=${encodeURIComponent(value)}&`;
-  }
-
-  return queryResult.substr(0, queryResult.length - 1);
+  return '?' + existingEntries.map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+                              .join('&');
 }
 
 function mapDispatchToProps(dispatch) {
