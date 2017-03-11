@@ -1,14 +1,23 @@
 import React, {PropTypes, Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import {hashHistory} from 'react-router';
 import * as todoFilterActions from '../../../actions/todo-filter-actions';
 import './TodoFilter.scss';
 import Checkbox from '../../Common/Checkbox/Checkbox';
+import _ from 'lodash';
 
-function mapStateToProps(state, props) {
-  return {
-    todoFilterState: state.todoFilterState
-  };
+function mapQueryParams(queryParams) {
+  let queryResult = '?';
+  const existingEntries = Object.entries(queryParams).filter(([key, value]) => value);
+
+  if (existingEntries.length === 0) return '';
+
+  for (let [key, value] of existingEntries) {
+    queryResult += `${key}=${encodeURIComponent(value)}&`;
+  }
+
+  return queryResult.substr(0, queryResult.length - 1);
 }
 
 function mapDispatchToProps(dispatch) {
@@ -17,47 +26,77 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(()=>({}), mapDispatchToProps)
 export default class TodoFilter extends Component {
   static propTypes = {
-    todoFilterState: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
 
-  constructor(props) {
-    super(props);
+  state = {
+    showDone: true,
+    searchQuery: ''
+  };
 
-    this.state = {
-      showDone: true,
-      searchQuery: ''
-    };
+  componentDidMount() {
+    this.updateState(
+      hashHistory.getCurrentLocation()
+    );
 
-    this.updateSearchQuery = this.updateSearchQuery.bind(this);
-    this.resetSearchQuery = this.resetSearchQuery.bind(this);
+    this.unlisten = hashHistory.listen(this.updateState);
   }
 
+  componentWillUnmount() {
+    this.unlisten();
+  }
+
+  updateState = (location) => {
+    let {showDone, searchQuery} = location.query;
+
+    showDone = showDone === 'true';
+    searchQuery = searchQuery || '';
+
+    this.setState({
+      showDone,
+      searchQuery
+    });
+
+    this.props.actions.updateTodoFilter({showDone, searchQuery});
+  };
+
+  updateTodoFilter = ({showDone, searchQuery}) => {
+    this.props.actions.updateTodoFilter({showDone, searchQuery});
+
+    const location = hashHistory.getCurrentLocation();
+    const {query} = location;
+
+    let queryPath = mapQueryParams({
+      showDone: _.isUndefined(showDone) ? query.showDone : showDone,
+      searchQuery: _.isUndefined(searchQuery) ? query.searchQuery : searchQuery,
+    });
+
+    hashHistory.replace(location.pathname + queryPath);
+  };
+
+  onShowDoneChange = (value) => {
+    this.updateTodoFilter({showDone: value});
+  };
+
   updateSearchQuery = (event) => {
-    this.props.actions.updateTodoFilter({searchQuery: event.target.value});
+    this.updateTodoFilter({searchQuery: event.target.value});
   };
 
   resetSearchQuery = () => {
-    this.props.actions.updateTodoFilter({searchQuery: ''});
+    this.updateTodoFilter({searchQuery: ''});
   };
 
   render() {
-    let {todoFilterState} = this.props;
-    const {updateTodoFilter} = this.props.actions;
-
-    todoFilterState = todoFilterState.present;
-
-    let {showDone, searchQuery} = todoFilterState;
+    const {showDone, searchQuery} = this.state;
 
     return (
       <div className="todo-filter">
         <label className="show-done">
-          <Checkbox value={showDone} onChange={(value)=>{
-            updateTodoFilter({showDone: value, searchQuery: searchQuery});
-          }}/>
+          <Checkbox value={showDone}
+                    onChange={this.onShowDoneChange}/>
           &nbsp;Show done
         </label>
         <div className="search-input-cnt">
@@ -67,10 +106,10 @@ export default class TodoFilter extends Component {
                  onInput={this.updateSearchQuery}
                  placeholder="search todo..."
           />
-          <button className="reset-search-input"
+          <button type="button"
+                  className="reset-search-input"
                   onClick={this.resetSearchQuery}>&times;</button>
         </div>
-
       </div>
     );
   }

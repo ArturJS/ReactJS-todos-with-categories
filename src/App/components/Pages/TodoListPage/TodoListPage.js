@@ -43,7 +43,6 @@ export default class TodoListPage extends Component {
   }
 
   componentDidMount() {
-    console.log('TodoListPage');
     let {searchQuery, showDone} = this.props.params;
 
     if (searchQuery || showDone) {

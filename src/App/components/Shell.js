@@ -32,7 +32,6 @@ export default class Shell extends Component {
 
   render() {
     let isIndexPage = this.isIndexPage();
-    console.log(this.props.params);
 
     return (
       <div className="App wh100">
