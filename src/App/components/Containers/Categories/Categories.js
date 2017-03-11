@@ -28,7 +28,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class CategoryContainer extends Component {
+export default class Categories extends Component {
   static propTypes = {
     categoryList: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired

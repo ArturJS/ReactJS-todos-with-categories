@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
-import UndoRedo from './Containers/UndoRedo/UndoRedo.js';
 import logo from '../../logo.svg';
 import {connect} from 'react-redux';
 
 import {RouteTransition} from 'react-router-transition';
 
-
+import UndoRedo from './Containers/UndoRedo/UndoRedo.js';
 import TodoFilter from './Containers/TodoFilter/TodoFilter';
 import ProgressBar from './Containers/ProgressBar/ProgressBar';
-import CategoryContainer from './Containers/Categories/Categories';
+import Categories from './Containers/Categories/Categories';
 
 function mapStateToProps(state, props) {
   return {
@@ -33,6 +32,7 @@ export default class Shell extends Component {
 
   render() {
     let isIndexPage = this.isIndexPage();
+    console.log(this.props.params);
 
     return (
       <div className="App wh100">
@@ -57,7 +57,7 @@ export default class Shell extends Component {
           </div>
           <div className="layout-body">
             <div className="layout-left-pane">
-              <CategoryContainer />
+              <Categories currentCategoryId={this.props.params.categoryId} />
             </div>
             <div className="layout-right-pane">
               <RouteTransition
