@@ -6,6 +6,13 @@
   flex-direction: column;
 }
 
+.category-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px 5px;
+}
+
 .confirm-modal {
   position: fixed;
   top: 50%;

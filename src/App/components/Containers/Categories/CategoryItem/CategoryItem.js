@@ -46,9 +46,6 @@ export default class CategoryItem extends Component {
     event.stopPropagation();
 
     this._tempName = this.props.category.name;
-    setTimeout(()=> {
-      this._nameInput.focus();
-    }, 0);
 
     this.setState({isEditing: true});
   };
@@ -67,7 +64,7 @@ export default class CategoryItem extends Component {
     this.setState({isEditing: false});
   };
 
-  attachByCategoryId = (event) => {
+  attachByCategoryId = (event) => { // todo: update related todo
     event.preventDefault();
     event.stopPropagation();
     this.props.attachByCategoryId(this.props.category.id);
@@ -101,20 +98,22 @@ export default class CategoryItem extends Component {
           }
         </div>
         {
-          hasChilds ? this.renderChilds() : ''
+          hasChilds && this.renderChilds()
         }
       </div>
     );
   }
 
   renderAttachMode() {
-    let {category, currentCategoryId} = this.props;
+    let {category} = this.props;
+
     return (
       <div className="category-name-with-controls">
         <span className="category-name-cnt">
-          <Link to={'category/' + category.id}
+          <Link to={`category/${category.id}/`}
                 onClick={this.stopPropagation}
-                className={`category-name ${category.id === currentCategoryId ? 'category-selected' : ''}`}>
+                activeClassName="category-selected"
+                className={`category-name`}>
             {category.name}
           </Link>
         </span>
@@ -128,7 +127,7 @@ export default class CategoryItem extends Component {
 
   renderDefaultMode() {
     let {isEditing} = this.state;
-    let {category, currentCategoryId} = this.props;
+    let {category} = this.props;
     return (
       <div className="category-name-with-controls">
         {
@@ -138,6 +137,7 @@ export default class CategoryItem extends Component {
                   <input type="text"
                          className="category-input"
                          ref={(node) => this._nameInput = node}
+                         autoFocus="autoFocus"
                          onClick={this.stopPropagation}
                          defaultValue={this._tempName}/>
                   <i className="glyphicon glyphicon-ok-circle category-control-icon"
@@ -147,9 +147,10 @@ export default class CategoryItem extends Component {
                 </span>
 
             : <span className="category-name-cnt">
-                  <Link to={'category/' + category.id}
+                  <Link to={`category/${category.id}/`}
                         onClick={this.stopPropagation}
-                        className={`category-name ${category.id === currentCategoryId ? 'category-selected' : ''}`}>
+                        activeClassName="category-selected"
+                        className={`category-name`}>
                     {category.name}
                   </Link>
                   <i className="glyphicon glyphicon-pencil"
@@ -174,8 +175,8 @@ export default class CategoryItem extends Component {
   }
 
   renderChilds() {
-    let {category, currentCategoryId} = this.props;
-    let {isExpanded} = this.state;
+    const {category} = this.props;
+    const {isExpanded} = this.state;
     const {addSubcategory, deleteCategory, attachByCategoryId, isAttachMode} = this.props;
 
     return (
@@ -186,7 +187,6 @@ export default class CategoryItem extends Component {
               category.childs.map((child) =>
                 <li key={child.id}>
                   <CategoryItem category={child}
-                            currentCategoryId={currentCategoryId}
                             addSubcategory={addSubcategory}
                             deleteCategory={deleteCategory}
                             isAttachMode={isAttachMode}

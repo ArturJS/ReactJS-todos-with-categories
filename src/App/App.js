@@ -16,19 +16,21 @@ const history = syncHistoryWithStore(hashHistory, store);
 
 const routes = (
   <Route path="/" component={Shell}>
-    <IndexRoute component={TodoListPage}/>
-    <Route path='/category/:categoryId(/searchQuery/:searchQuery)(/showDone/:showDone)'
-           component={TodoListPage}/>
-    <Route path='/category/:categoryId/todo/:todoId' component={TodoEditPage}/>
+    <IndexRoute component={null}/>
+    <Route path="/category/:categoryId" component={null}>
+      <IndexRoute component={TodoListPage}/>
+      <Route path="todo/:todoId" component={TodoEditPage}/>
+    </Route>
   </Route>
 );
+
 
 export default class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
         <Provider store={store}>
-          <Router history={history} routes={routes} />
+          <Router history={history} routes={routes}/>
         </Provider>
       </MuiThemeProvider>
     );

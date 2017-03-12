@@ -1,4 +1,5 @@
 import React, {PropTypes, Component} from 'react';
+import _ from 'lodash';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {push} from 'react-router-redux';
@@ -12,6 +13,7 @@ import Checkbox from '../../Common/Checkbox/Checkbox';
 
 function mapStateToProps(state, props) {
   return {
+    todoList: state.todoList.present,
     currentTodo: state.currentTodo,
     todoFilterState: state.todoFilterState.present
   };
@@ -40,24 +42,32 @@ export default class TodoEditPage extends Component {
     };
   }
 
+  componentDidMount() {
+    const {todoId} = this.props.params;
+    const relatedTodo = _.find(this.props.todoList, (todo)=> todo.id === todoId);
+    this.props.currentTodoActions.updateCurrentTodo(relatedTodo);
+  }
+
   componentWillReceiveProps(nextProps) {
     const {currentTodo} = nextProps;
-
     this.setState({
-      tempTodo: {...currentTodo}
+      tempTodo: {...currentTodo, categoryId: this.state.tempTodo.categoryId}
     });
   }
 
   saveChanges = () => {
     const {currentTodo} = this.props;
     let {tempTodo} = this.state;
+
+    tempTodo.categoryId = currentTodo.categoryId;
+
     this.props.todoActions.updateTodo(currentTodo, tempTodo);
 
     this.goToRelatedCategoryPage(tempTodo.categoryId);
   };
 
   cancel = () => {
-    const {categoryId} = this.props.currentTodo;
+    const {categoryId} = this.state.tempTodo;
     this.goToRelatedCategoryPage(categoryId);
   };
 

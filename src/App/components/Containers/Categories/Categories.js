@@ -1,14 +1,19 @@
 import React, {PropTypes, Component} from 'react';
+import {hashHistory} from 'react-router';
+import _ from 'lodash';
 import Modal from 'react-modal';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+
 import * as categoryActions from './Categories.ducks';
+import * as currentTodoActions from '../../../actions/current-todo-actions';
+
 import CategoryForm from './CategoryForm/CategoryForm';
-import CategoryList from './CategoryList/CategoryList';
+import CategoryItem from './CategoryItem/CategoryItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+
 import './Categories.scss';
-import _ from 'lodash';
 
 import {push} from 'react-router-redux';
 import {store} from '../../../store/store';
@@ -23,7 +28,8 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(categoryActions, dispatch)
+    categoryActions: bindActionCreators(categoryActions, dispatch),
+    currentTodoActions: bindActionCreators(currentTodoActions, dispatch)
   };
 }
 
@@ -31,7 +37,8 @@ function mapDispatchToProps(dispatch) {
 export default class Categories extends Component {
   static propTypes = {
     categoryList: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired
+    categoryActions: PropTypes.object.isRequired,
+    isAttachMode: PropTypes.bool.isRequired
   };
 
   _categoryForRemoving;
@@ -54,11 +61,11 @@ export default class Categories extends Component {
 
 
   addCategory = (newCategory) => {
-    this.props.actions.addCategory(newCategory);
+    this.props.categoryActions.addCategory(newCategory);
   };
 
   addSubcategory = (relatedCategoryId) => {
-    this.props.actions.addSubCategory(relatedCategoryId);
+    this.props.categoryActions.addSubCategory(relatedCategoryId);
   };
 
   onDeleteCategory = (categoryId) => {
@@ -84,7 +91,7 @@ export default class Categories extends Component {
         store.dispatch(push('/'));
       }
 
-      const {removeCategoryTodos, removeCategory} = this.props.actions;
+      const {removeCategoryTodos, removeCategory} = this.props.categoryActions;
       removeCategoryTodos(relatedCategory);
       removeCategory(relatedCategory);
     }
@@ -92,20 +99,32 @@ export default class Categories extends Component {
     this.closeModal();
   };
 
+  attachByCategoryId = (categoryId) => {
+    const location = hashHistory.getCurrentLocation();
+    hashHistory.replace(
+      location.pathname.replace(/category\/(.+)\/todo\/(.+)/, (match, p1, p2) => `category/${categoryId}/todo/${p2}`)
+    );
+
+    this.props.currentTodoActions.updateCurrentTodo({categoryId});
+  };
+
   render() {
-    let {categoryList, currentCategoryId, isAttachMode, attachByCategoryId} = this.props;
+    let {categoryList, isAttachMode} = this.props;
     categoryList = categoryList.present;
 
     return (
       <div className="category-container">
         <CategoryForm addCategory={this.addCategory}/>
-        <CategoryList categoryList={categoryList}
-                      currentCategoryId={currentCategoryId}
-                      addSubcategory={this.addSubcategory}
-                      deleteCategory={this.onDeleteCategory}
-                      isAttachMode={isAttachMode}
-                      attachByCategoryId={attachByCategoryId}
-        />
+        <div className="category-list">
+          {categoryList.map((category) =>
+            <CategoryItem key={category.id}
+                          isAttachMode={isAttachMode}
+                          attachByCategoryId={this.attachByCategoryId}
+                          category={category}
+                          addSubcategory={this.addSubcategory}
+                          deleteCategory={this.onDeleteCategory}/>
+          )}
+        </div>
         <Modal
           isOpen={this.state.modalIsOpen}
           className="confirm-modal"

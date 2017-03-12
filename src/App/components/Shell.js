@@ -56,7 +56,10 @@ export default class Shell extends Component {
           </div>
           <div className="layout-body">
             <div className="layout-left-pane">
-              <Categories currentCategoryId={this.props.params.categoryId} />
+              <Categories
+                currentCategoryId={this.props.params.categoryId}
+                isAttachMode={!isIndexPage}
+              />
             </div>
             <div className="layout-right-pane">
               <RouteTransition
