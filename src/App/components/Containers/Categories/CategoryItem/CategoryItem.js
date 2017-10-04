@@ -1,9 +1,9 @@
-import React, {PropTypes, Component} from 'react';
+import React, {PropTypes, PureComponent} from 'react';
 import Collapse from 'react-collapse';
 import './CategoryItem.scss';
 import {Link} from 'react-router';
 
-export default class CategoryItem extends Component {
+export default class CategoryItem extends PureComponent {
   static propTypes = {
     category: PropTypes.object.isRequired,
     addSubcategory: PropTypes.func.isRequired,

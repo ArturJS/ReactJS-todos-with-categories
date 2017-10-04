@@ -1,4 +1,4 @@
-@import "../../../styles/_mixins";
+@import "../../../styles/_references";
 
 .todo-list-page {
   flex-grow: 1;
@@ -10,5 +10,11 @@
   .half-width {
     width: 50%;
   }
-}
 
+  .todo-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: 10px;
+  }
+}

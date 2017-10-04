@@ -1,0 +1,31 @@
+$bootstrap-sass-asset-helper: false;
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+// Core variables and mixins
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+
+// Reset and dependencies
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/normalize";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/print";
+
+// Core CSS
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/scaffolding";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/grid";
+
+// Utility classes
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/utilities";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/_glyphicons";
+
+@font-face {
+  font-family: "Glyphicons Halflings";
+  src: url("~bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.eot");
+  src: url("~bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("~bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff")
+      format("woff"),
+    url("~bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.ttf")
+      format("truetype"),
+    url("~bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons-halflingsregular")
+      format("svg");
+}

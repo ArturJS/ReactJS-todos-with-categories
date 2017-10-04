@@ -1,9 +1,9 @@
-import React, {PropTypes, Component} from 'react';
+import React, {PropTypes, PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as todoActions from '../../../actions/todo-actions';
-import TodoList from './TodoList/TodoList';
 import TodoForm from './TodoForm/TodoForm';
+import Todo from './Todo/Todo';
 import './TodoListPage.scss';
 
 import {store} from '../../../store/store';
@@ -27,7 +27,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class TodoListPage extends Component {
+export default class TodoListPage extends PureComponent {
   static propTypes = {
     todoList: PropTypes.array.isRequired,
     todoActions: PropTypes.object.isRequired
@@ -92,7 +92,14 @@ export default class TodoListPage extends Component {
     return (
       <div className="todo-list-page">
         <TodoForm addTodo={this.onAddTodo}/>
-        <TodoList todoList={todoList} removeTodo={removeTodo} updateTodo={updateTodo}/>
+        <div className="todo-list">
+          {
+            todoList.length > 0
+              ? todoList.map((todo) =>
+                <Todo key={todo.id} todo={todo} removeTodo={removeTodo} updateTodo={updateTodo} />)
+              : <h3>Nothing to display...</h3>
+          }
+        </div>
       </div>
     );
   }

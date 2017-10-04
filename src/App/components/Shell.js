@@ -1,9 +1,7 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import logo from '../../logo.svg';
 import {connect} from 'react-redux';
-
 import {RouteTransition} from 'react-router-transition';
-
 import UndoRedo from './Containers/UndoRedo/UndoRedo.js';
 import TodoFilter from './Containers/TodoFilter/TodoFilter';
 import ProgressBar from './Containers/ProgressBar/ProgressBar';
@@ -16,7 +14,7 @@ function mapStateToProps(state, props) {
 }
 
 @connect(mapStateToProps)
-export default class Shell extends Component {
+export default class Shell extends PureComponent {
 
   isIndexPage = () => {
     return this.props.location.pathname.indexOf('todo') === -1;

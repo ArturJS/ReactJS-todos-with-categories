@@ -1,4 +1,4 @@
-@import "App/styles/_mixins";
-@import "App/styles/_vendors";
-@import "App/styles/_atomic";
-@import "App/styles/_layout";
+@import "./App/styles/vendors";
+@import "./App/styles/atomic";
+@import "./App/styles/layout";
+@import "./App/styles/components/buttons";

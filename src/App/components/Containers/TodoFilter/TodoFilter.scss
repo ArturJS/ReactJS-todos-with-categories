@@ -1,5 +1,4 @@
-@import "../../../styles/_mixins";
-@import "../../../styles/_colors";
+@import "../../../styles/_references";
 
 .todo-filter {
   text-align: right;
@@ -42,6 +41,4 @@
       }
     }
   }
-
-
 }

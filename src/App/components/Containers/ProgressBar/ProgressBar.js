@@ -1,8 +1,7 @@
-import React, {PropTypes, Component} from 'react';
-import {connect} from 'react-redux';
-import LinearProgress from 'material-ui/LinearProgress';
-import getProgress from './ProgressBar.selector';
-import './ProgressBar.scss';
+import React, { PropTypes, PureComponent } from "react";
+import { connect } from "react-redux";
+import getProgress from "./ProgressBar.selector";
+import "./ProgressBar.scss";
 
 function mapStateToProps(state, props) {
   return {
@@ -11,15 +10,16 @@ function mapStateToProps(state, props) {
 }
 
 @connect(mapStateToProps)
-export default class ProgressBar extends Component {
+export default class ProgressBar extends PureComponent {
   static propTypes = {
     progress: PropTypes.number
   };
 
   render() {
+    const { progress } = this.props;
     return (
-      <div className="progress-bar-cnt">
-        <LinearProgress className="progress-bar" mode="determinate" value={this.props.progress}/>
+      <div className="progress-bar">
+        <div className="progress-line" style={{ width: `${progress}%` }} />
       </div>
     );
   }

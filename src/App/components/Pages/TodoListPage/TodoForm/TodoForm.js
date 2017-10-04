@@ -1,15 +1,14 @@
-import React, {PropTypes, Component} from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
-import './TodoForm.scss';
+import React, { PropTypes, PureComponent } from "react";
+import "./TodoForm.scss";
 
-export default class TodoForm extends Component {
+export default class TodoForm extends PureComponent {
   static propTypes = {
     addTodo: PropTypes.func.isRequired
   };
 
   _title;
 
-  onAddTodo = (event) => {
+  onAddTodo = event => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -19,7 +18,7 @@ export default class TodoForm extends Component {
 
     this.props.addTodo({
       title: title,
-      description: ''
+      description: ""
     });
 
     this.resetForm();
@@ -28,30 +27,29 @@ export default class TodoForm extends Component {
   };
 
   resetForm = () => {
-    this._title.value = '';
+    this._title.value = "";
   };
 
   focusTitleInput = () => {
     this._title.focus();
   };
 
-  setTitleInput = (node) => {
+  setTitleInput = node => {
     this._title = node;
   };
 
   render() {
     return (
-      <form className="todo-form"
-            onSubmit={this.onAddTodo}>
-        <input type="text"
-               className="todo-title-field"
-               placeholder="Enter todo title here..."
-               ref={this.setTitleInput}
+      <form className="todo-form" onSubmit={this.onAddTodo}>
+        <input
+          type="text"
+          className="todo-title-field"
+          placeholder="Enter todo title here..."
+          ref={this.setTitleInput}
         />
-        <RaisedButton
-          type="submit"
-          label="Add"
-        />
+        <button className="btn btn-primary" type="submit">
+          Add
+        </button>
       </form>
     );
   }

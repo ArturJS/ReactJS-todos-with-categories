@@ -1,9 +1,33 @@
-.progress-bar-cnt {
-  height: 50px;
-  display: flex;
-  padding-right: 15px;
+@import "../../../styles/_references";
 
-  .progress-bar {
+.progress {
+  &-bar {
+    height: 50px;
+    display: flex;
+    margin-right: 15px;
+    position: relative;
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 10px;
+      background-color: rgba(0, 0, 0, 0.1);
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: -1;
+      border-radius: 3px;
+    }
+  }
+
+  &-line {
     align-self: center;
+    height: 10px;
+    background-color: $c-green;
+    transition: width 0.25s ease;
+    will-change: width;
+    overflow: hidden;
+    border-radius: 3px;
   }
 }

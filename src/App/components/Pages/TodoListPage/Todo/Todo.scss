@@ -1,4 +1,4 @@
-@import "../../../../styles/_colors";
+@import "../../../../styles/_references";
 
 .todo-card {
   $c-shadow: $c-todo-card-shadow;
@@ -41,6 +41,7 @@
     &-link {
       align-self: center;
       word-break: break-all;
+      white-space: normal;
     }
   }
 
@@ -52,8 +53,6 @@
     transform: translateY(-50%);
   }
 }
-
-
 
 @keyframes zoom {
   from {

@@ -1,4 +1,4 @@
-import React, {PropTypes, Component} from 'react';
+import React, {PropTypes, PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {hashHistory} from 'react-router';
@@ -23,7 +23,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(()=>({}), mapDispatchToProps)
-export default class TodoFilter extends Component {
+export default class TodoFilter extends PureComponent {
   static propTypes = {
     actions: PropTypes.object.isRequired
   };

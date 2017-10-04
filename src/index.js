@@ -9,4 +9,9 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
+if (process.env.NODE_ENV !== 'production') {
+  const {whyDidYouUpdate} = require('why-did-you-update');
+  whyDidYouUpdate(React);
+}
+
 ReactDOM.render(<App />, document.getElementById('root'));

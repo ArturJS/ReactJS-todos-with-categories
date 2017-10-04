@@ -59,12 +59,12 @@
     "webpack-dev-server": "1.16.2",
     "webpack-manifest-plugin": "1.1.0",
     "webpack-subresource-integrity": "0.8.1",
-    "whatwg-fetch": "1.0.0"
+    "whatwg-fetch": "1.0.0",
+    "why-did-you-update": "0.0.8"
   },
   "dependencies": {
     "bootstrap-sass": "3.3.7",
     "lodash": "4.17.4",
-    "material-ui": "0.16.5",
     "react": "15.4.2",
     "react-collapse": "2.3.3",
     "react-dom": "15.4.2",

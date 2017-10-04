@@ -1,9 +1,9 @@
-import React, {PropTypes, Component} from 'react';
+import React, {PropTypes, PureComponent} from 'react';
 import './Todo.scss';
 import Checkbox from '../../../Common/Checkbox/Checkbox';
 import {Link} from 'react-router';
 
-export default class Todo extends Component {
+export default class Todo extends PureComponent {
   static propTypes = {
     todo: PropTypes.object.isRequired,
     removeTodo: PropTypes.func.isRequired,

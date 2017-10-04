@@ -1,11 +1,9 @@
-import React, {Component} from 'react';
-import './UndoRedo.scss';
-import {ActionCreators} from 'redux-undo';
-import {store} from '../../../store/store';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
+import React, { PureComponent } from "react";
+import "./UndoRedo.scss";
+import { ActionCreators } from "redux-undo";
+import { store } from "../../../store/store";
 
-export default class UndoRedo extends Component {
-  
+export default class UndoRedo extends PureComponent {
   undo = () => {
     store.dispatch(ActionCreators.undo());
   };
@@ -17,12 +15,12 @@ export default class UndoRedo extends Component {
   render() {
     return (
       <div className="undo-redo-cnt">
-        <FloatingActionButton onClick={this.undo} className={'undo-button'}>
-          <i className="glyphicon glyphicon-share-alt undo-icon" />
-        </FloatingActionButton>
-        <FloatingActionButton onClick={this.redo}>
-          <i className="glyphicon glyphicon-share-alt" />
-        </FloatingActionButton>
+        <button type="button" className="btn btn-default" onClick={this.undo}>
+          <i className="glyphicon glyphicon glyphicon-arrow-left" />
+        </button>
+        <button type="button" className="btn btn-default" onClick={this.redo}>
+          <i className="glyphicon glyphicon glyphicon-arrow-right" />
+        </button>
       </div>
     );
   }

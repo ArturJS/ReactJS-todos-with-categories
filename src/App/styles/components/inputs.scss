@@ -1,0 +1,5 @@
+@import "../_references";
+
+.form-control {
+  @include input-shadow();
+}
