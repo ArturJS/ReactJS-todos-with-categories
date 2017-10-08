@@ -1,0 +1,14 @@
+.todo-list-page {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin: 0 15px;
+
+  .todo-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: 10px;
+    text-align: center;
+  }
+}

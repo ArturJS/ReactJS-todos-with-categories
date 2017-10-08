@@ -1,0 +1,51 @@
+@import "../../common/styles/_references";
+
+.todo-edit-page {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  .buttons-right {
+    float: right;
+
+    .button-item {
+      margin: 0 10px 10px;
+    }
+  }
+
+  .todo-title-field {
+    width: 100%;
+    border: none;
+    height: 35px;
+    font-size: 16px;
+    padding: 0 5px;
+    @include input-shadow();
+  }
+
+  &--body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    text-align: left;
+    padding: 10px 10px 0;
+  }
+
+  .todo-is-done {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .todo-description-area {
+    width: 100%;
+    resize: none;
+    flex-grow: 1;
+    border: 0;
+    @include input-shadow();
+
+    &-cnt {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: column;
+    }
+  }
+}

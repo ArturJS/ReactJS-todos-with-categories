@@ -1,0 +1,117 @@
+@import "../../../styles/_references";
+
+.category-card {
+  &-header {
+    display: flex;
+    box-shadow: $c-category-shadow 0px 1px 6px, $c-category-shadow 0px 1px 4px;
+    border-radius: 2px;
+    text-align: left;
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  &-body {
+    overflow: hidden;
+
+    &-wrap {
+      padding: 10px 5px 10px 25px;
+      margin: 0;
+      list-style-type: none;
+    }
+  }
+
+  .category-toggle-open {
+    display: flex;
+    align-self: center;
+    cursor: pointer;
+    width: 25px;
+    height: 10px;
+    transition: transform 0.15s ease-in;
+    transform: rotate(-90deg);
+
+    &.is-expanded {
+      transform: rotate(0deg);
+    }
+  }
+
+  .category-name-cnt {
+    display: inline-flex;
+    flex-grow: 1;
+    width: 100%;
+  }
+
+  .category-name {
+    flex-grow: 0.9;
+    width: 0; //necessary for correct working of flex-grow
+    color: $c-category-text;
+    cursor: pointer;
+    margin: 0 10px;
+    @include ellipsis();
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &.active {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  }
+
+  .category-name-with-controls {
+    flex-grow: 1;
+    display: flex;
+  }
+
+  .category-controls-right {
+    display: flex;
+    margin-left: auto;
+    align-self: center;
+
+    .glyphicon {
+      margin-right: 5px;
+    }
+  }
+
+  .category-input {
+    width: 100%;
+    margin-right: 5px;
+    min-width: 50px;
+
+    &-cnt {
+      display: flex;
+      flex-grow: 1;
+    }
+  }
+
+  .category-control-icon {
+    display: flex;
+    align-self: center;
+    margin-right: 5px;
+  }
+
+  .hidden {
+    visibility: hidden;
+  }
+
+  .category-selected {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+  .attach-icon {
+    transform: scaleX(-1);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    align-items: center;
+    text-align: center;
+    padding-left: 5px;
+
+    &:hover {
+      background-color: $c-category-bg;
+    }
+  }
+}

@@ -1,7 +1,0 @@
-export const ADD_TODO = 'ADD_TODO';
-export const REMOVE_TODO = 'REMOVE_TODO';
-export const UPDATE_TODO = 'UPDATE_TODO';
-export const UPDATE_TODO_FILTER = 'UPDATE_TODO_FILTER';
-
-
-export const UPDATE_CURRENT_TODO = 'UPDATE_CURRENT_TODO';
