@@ -6,7 +6,7 @@ import {withRouter} from 'react-router';
 import queryString from 'query-string';
 import _ from 'lodash';
 
-import {updateTodosFilter} from '../../ducks/todos-filter.ducks';
+import {updateTodosFilter, initialTodosFilterState} from '../../ducks/todos-filter.ducks';
 import Checkbox from '../Checkbox';
 import './TodosFilter.scss';
 
@@ -61,12 +61,14 @@ export default class TodosFilter extends PureComponent {
 
   onHistoryChange = ({search}) => {
     const queryParams = queryString.parse(search);
-    this.updateTodosFilter(queryParams);
+    this.updateTodosFilter({
+      ...initialTodosFilterState,
+      ...queryParams
+    });
   };
 
   updateTodosFilter = ({showDone, searchQuery}) => {
     const patchForTodosFilterState = this.createPatch({showDone, searchQuery});
-
     if (!_.isEmpty(patchForTodosFilterState)) {
       this.props.updateTodosFilter(patchForTodosFilterState);
     }

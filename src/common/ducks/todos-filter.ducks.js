@@ -1,11 +1,11 @@
 const UPDATE_TODO_FILTER = 'reactjs-learning/TodosFilter/UPDATE_TODO_FILTER';
 
-const initialState = {
+export const initialTodosFilterState = {
   showDone: false,
   searchQuery: ''
 };
 
-export default (state = initialState, action) => {
+export default (state = initialTodosFilterState, action) => {
   const {
     type,
     payload
