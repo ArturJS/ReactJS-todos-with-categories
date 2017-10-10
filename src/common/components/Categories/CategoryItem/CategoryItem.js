@@ -9,6 +9,7 @@ import * as categorySelectors from '../../../orm/selectors/category.selectors';
 import * as categoryActions from '../../../orm/actions/category.actions';
 import * as editingTodoActions from '../../../ducks/editing-todo.ducks';
 import SubCategoryItem from './CategoryItem'; // necessary that child CategoryItems were wrapped with @connect
+import modalProvider from '../../../features/modals/modal-provider';
 import './CategoryItem.scss';
 
 function mapStateToProps(state, props) {
@@ -30,7 +31,7 @@ function mapDispatchToProps(dispatch) {
 export default class CategoryItem extends PureComponent {
   static propTypes = {
     categoryId: PropTypes.string.isRequired,
-    category: PropTypes.object.isRequired,
+    category: PropTypes.object,
     categoryActions: PropTypes.object.isRequired,
     editingTodoActions: PropTypes.object.isRequired,
     isAttachMode: PropTypes.bool.isRequired,
@@ -61,7 +62,20 @@ export default class CategoryItem extends PureComponent {
 
   deleteCategory = event => {
     event.stopPropagation();
-    this.props.categoryActions.removeCategory(this.props.categoryId);
+    const {
+      category
+    } = this.props;
+
+    modalProvider.showConfirm({
+      title: 'Please, confirm your action',
+      body: `Are you sure you want to delete "${category.name}"?`
+    })
+      .result
+      .then((shouldDelete) => {
+        if (shouldDelete) {
+          this.props.categoryActions.removeCategory(category.id);
+        }
+      });
   };
 
   editCategory = event => {

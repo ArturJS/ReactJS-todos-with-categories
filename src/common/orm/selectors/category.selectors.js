@@ -9,5 +9,6 @@ export const rootCategoryIds = createSelector(orm, state => state.orm, session =
 });
 
 export const categoryById = (categoryId) => createSelector(orm, state => state.orm, session => {
+  if (!session.Category.hasId(categoryId)) return null;
   return session.Category.withId(categoryId).ref;
 });

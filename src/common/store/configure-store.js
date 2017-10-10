@@ -6,6 +6,7 @@ import orm from '../orm';
 import history from '../history';
 import todosFilterReducer from '../ducks/todos-filter.ducks';
 import editingTodoReducer from '../ducks/editing-todo.ducks';
+import modalStackReducer from '../features/modals/modal.ducks';
 
 const middleware = routerMiddleware(history);
 const ormReducer = createReducer(orm);
@@ -16,7 +17,8 @@ export default (initialState) => {
       router: routerReducer,
       orm: ormReducer,
       todosFilter: todosFilterReducer,
-      editingTodo: editingTodoReducer
+      editingTodo: editingTodoReducer,
+      modalStack: modalStackReducer
     }),
     initialState,
     applyMiddleware(middleware)

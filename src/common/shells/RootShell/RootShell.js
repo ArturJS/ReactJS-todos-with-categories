@@ -7,6 +7,7 @@ import UndoRedo from '../../components/UndoRedo';
 import TodosFilter from '../../components/TodosFilter';
 import ProgressBar from '../../components/ProgressBar';
 import Categories from '../../components/Categories';
+import ModalDialog from '../../features/modals/ModalDialog';
 import './RootShell.scss';
 
 function mapStateToProps(state, props) {
@@ -55,6 +56,7 @@ export default class RootShell extends PureComponent {
             </div>
           </div>
         </div>
+        <ModalDialog />
       </div>
     );
   }
