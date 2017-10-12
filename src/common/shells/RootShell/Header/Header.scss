@@ -1,0 +1,37 @@
+@import "../../../styles/references";
+
+.header {
+  &-content {
+    background-color: $c-dark-bg;
+    color: $c-app-header-text;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    height: 50px;
+    padding: 0 20px;
+    align-items: center;
+
+    @media (min-width: $tablet-width) {
+      height: 80px;
+      padding: 20px;
+    }
+  }
+
+  &-menu {
+    min-height: 0;
+
+    @media (min-width: $tablet-width) {
+      min-height: 50px;
+    }
+
+    &-content {
+      padding: 0 15px;
+    }
+
+    &-toggle {
+      margin-left: auto;
+      font-size: 30px;
+      cursor: pointer;
+    }
+  }
+}

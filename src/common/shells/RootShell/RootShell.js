@@ -1,14 +1,26 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
+import SwipeableViews from 'react-swipeable-views';
 
-import logo from '../../../logo.svg';
-import UndoRedo from '../../components/UndoRedo';
 import TodosFilter from '../../components/TodosFilter';
 import ProgressBar from '../../components/ProgressBar';
 import Categories from '../../components/Categories';
 import ModalDialog from '../../features/modals/ModalDialog';
+import Header from './Header';
 import './RootShell.scss';
+
+
+const styles = {
+  swipeableContainer:{
+    width: '100%'
+  },
+  slideStyle: {
+    display: 'flex',
+    flexGrow: '1',
+    overflow: 'hidden'
+  }
+};
 
 function mapStateToProps(state, props) {
   return {
@@ -28,33 +40,32 @@ export default class RootShell extends PureComponent {
 
     return (
       <div className="root-shell">
-        <div className="root-shell--header">
-          <UndoRedo />
-          <img src={logo} className="App-logo" alt="logo"/>
-          <h2 className="App-logo-text">Welcome to React</h2>
-        </div>
-        <div className="root-shell--body">
-          <div className="layout-header">
-            <div className="layout-subheading">
-              <h2 className="page-name">
-                {isIndexPage ? 'To-do list' : this.props.editingTodoTitle}
-              </h2>
-              {
-                isIndexPage && <TodosFilter />
-              }
-            </div>
+        <Header>
+          <div className="layout-subheading">
+            <h2 className="page-name">
+              {isIndexPage ? 'To-do list' : this.props.editingTodoTitle}
+            </h2>
             {
-              isIndexPage && <ProgressBar />
+              isIndexPage && <TodosFilter />
             }
           </div>
-          <div className="layout-body">
+        </Header>
+        <div className="root-shell--body">
+          {
+            isIndexPage && <ProgressBar />
+          }
+          <SwipeableViews
+            className="layout-body"
+            containerStyle={styles.swipeableContainer}
+            slideStyle={styles.slideStyle}
+          >
             <div className="layout-left-pane">
               <Categories />
             </div>
             <div className="layout-right-pane">
               {this.props.children}
             </div>
-          </div>
+          </SwipeableViews>
         </div>
         <ModalDialog />
       </div>

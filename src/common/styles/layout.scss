@@ -20,7 +20,7 @@ body {
   overflow: hidden;
 }
 
-.layout {
+.layout { // todo move to RootShell.scss
   &-header {
     display: flex;
     flex-direction: column;
@@ -28,31 +28,67 @@ body {
   }
 
   &-subheading {
-    height: 50px;
+    display: flex;
+    flex-wrap: wrap;
+
+    @media (min-width: $tablet-width) {
+      flex-wrap: nowrap;
+    }
 
     .page-name {
       max-width: 100%;
-      float: left;
       @include ellipsis();
+
+      @media (min-width: $tablet-width) {
+        margin-bottom: 0;
+      }
     }
 
     .todo-filter {
-      float: right;
+      margin-left: auto;
     }
   }
 
   &-body {
     display: flex;
-    padding: 10px 15px;
-    height: calc(100% - 50px);
+    flex-grow: 1;
+    overflow: hidden;
+
+    & > .react-swipeable-view-container { // !important necessary to override inline styles
+      @media (min-width: $tablet-width) {
+        transform: none !important;
+      }
+
+      & > div:first-child {
+        width: 100%;
+        flex-grow: 1;
+
+        @media (min-width: $tablet-width) {
+          width: auto !important;
+          flex-grow: 0 !important;
+        }
+      }
+
+      & > div:last-child {
+        width: 100%;
+
+        @media (min-width: $tablet-width) {
+          width: auto !important;
+        }
+      }
+    }
   }
 
   &-left-pane {
     display: flex;
     flex-direction: column;
-    width: 300px;
     min-width: 300px;
     margin-right: 15px;
+    width: 100%;
+
+    @media (min-width: $tablet-width) {
+      width: 300px;
+    }
   }
 
   &-right-pane {
@@ -60,5 +96,10 @@ body {
     flex-direction: column;
     flex-grow: 1;
     overflow: hidden;
+    width: 100%;
+
+    @media (min-width: $tablet-width) {
+      width: auto;
+    }
   }
 }
