@@ -8,6 +8,7 @@ import CategoryForm from './CategoryForm';
 import CategoryItem from './CategoryItem';
 import * as categorySelectors from '../../orm/selectors/category.selectors';
 import * as categoryActions from '../../orm/actions/category.actions';
+import './Categories.scss';
 
 function mapStateToProps(state, props) {
   return {
