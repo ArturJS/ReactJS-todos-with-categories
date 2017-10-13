@@ -32,9 +32,18 @@ export default class TodoListPage extends PureComponent {
     todoActions: PropTypes.object.isRequired
   };
 
+  static contextTypes = {
+    showCategories: PropTypes.func.isRequired
+  };
+
   onAddTodo = (todo) => {
     const {categoryId} = this.props.match.params;
     this.props.todoActions.addTodo(todo, categoryId);
+  };
+
+  showCategories = (event) => {
+    event.preventDefault();
+    this.context.showCategories();
   };
 
   render() {
@@ -42,6 +51,10 @@ export default class TodoListPage extends PureComponent {
 
     return (
       <div className="todo-list-page">
+        <a className="back-to-categories hide-from-tablet" onClick={this.showCategories}>
+          <i className="glyphicon glyphicon-chevron-left"/>
+          Back to categories list
+        </a>
         <TodoForm addTodo={this.onAddTodo}/>
         <div className="todo-list">
           {todoIdsList.length > 0

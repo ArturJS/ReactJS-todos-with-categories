@@ -3,13 +3,13 @@
 .hide {
   &-from-tablet {
     @media (min-width: $tablet-width) {
-      display: none;
+      display: none !important;
     }
   }
 
   &-till-tablet {
     @media (max-width: $tablet-width - 1px) {
-      display: none;
+      display: none !important;
     }
   }
 }

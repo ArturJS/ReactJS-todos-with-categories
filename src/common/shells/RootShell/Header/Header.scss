@@ -19,19 +19,73 @@
 
   &-menu {
     min-height: 0;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 15px;
 
     @media (min-width: $tablet-width) {
       min-height: 50px;
+      box-shadow: none;
     }
 
     &-content {
-      padding: 0 15px;
+      padding: 0 15px 15px;
+    }
+  }
+
+  &-hamburger {
+    $animation-duration: 0.25s;
+    position: relative;
+    margin-left: auto;
+    font-size: 25px;
+    cursor: pointer;
+    width: 1em;
+    height: 1em;
+
+    &-times {
+      &:before,
+      &:after {
+        content: '';
+        width: 1em;
+        height: 3px;
+        background-color: $c-white;
+        position: absolute;
+        transition: transform $animation-duration linear;
+        transform-origin: left center;
+      }
+
+      &:before {
+        top: 0;
+      }
+
+      &:after {
+        bottom: 0;
+      }
     }
 
-    &-toggle {
-      margin-left: auto;
-      font-size: 30px;
-      cursor: pointer;
+    &-line {
+      width: 1em;
+      height: 3px;
+      margin-top: calc(0.5em - 1.5px);
+      background-color: $c-white;
+      transition: opacity $animation-duration linear;
+    }
+
+    &.active {
+      .header-hamburger {
+        &-times {
+          &:before {
+            transform: rotate(45deg) scaleX(1.2);
+          }
+          &:after {
+            transform: rotate(-45deg) scaleX(1.2);
+          }
+        }
+
+        &-line {
+          opacity: 0;
+        }
+      }
     }
   }
 }
+
+

@@ -39,6 +39,10 @@ export default class CategoryItem extends PureComponent {
     editingTodo: PropTypes.object.isRequired
   };
 
+  static contextTypes = {
+    showTodos: PropTypes.func.isRequired
+  };
+
   state = {
     isEditing: false
   };
@@ -110,6 +114,11 @@ export default class CategoryItem extends PureComponent {
       categoryId
     });
     history.replace(`/category/${categoryId}/todo/${editingTodo.id}`);
+  };
+
+  openRelatedTodos = (event) => {
+    event.stopPropagation();
+    this.context.showTodos();
   };
 
   stopPropagation(event) {
@@ -200,7 +209,7 @@ export default class CategoryItem extends PureComponent {
             <span className="category-name-cnt">
               <NavLink
                 to={`/category/${category.id}/`}
-                onClick={this.stopPropagation}
+                onClick={this.openRelatedTodos}
                 className={`category-name`}
                 activeClassName={'active'}
               >

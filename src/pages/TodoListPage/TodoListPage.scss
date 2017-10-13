@@ -2,7 +2,13 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  margin: 0 15px;
+
+  .back-to-categories {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    cursor: pointer;
+  }
 
   .todo-list {
     flex-grow: 1;

@@ -4,9 +4,13 @@
   display: flex;
   margin-bottom: 15px;
   min-height: 36px;
-  width: 350px;
+  width: 100%;
   max-width: 100%;
   align-self: flex-end;
+
+  @media (min-width: $tablet-width) {
+    width: 350px;
+  }
 }
 
 .todo-title-field {

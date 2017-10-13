@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import Collapse from 'react-collapse';
+import classNames from 'classnames';
 
 import logo from '../../../../logo.svg';
 import UndoRedo from '../../../components/UndoRedo';
@@ -26,9 +27,12 @@ export default class Header extends PureComponent {
           <UndoRedo />
           <img src={logo} className="App-logo hide-till-tablet" alt="logo"/>
           <h2 className="App-logo-text hide-till-tablet">Welcome to React</h2>
-          <i
-            className="glyphicon glyphicon-menu-hamburger header-menu-toggle hide-from-tablet"
-            onClick={this.toggleMenu}/>
+          <div
+            className={classNames('header-hamburger hide-from-tablet', {'active': isExpanded})}
+            onClick={this.toggleMenu}>
+            <div className="header-hamburger-times"/>
+            <div className="header-hamburger-line"/>
+          </div>
         </div>
         <Collapse
           className="header-menu"

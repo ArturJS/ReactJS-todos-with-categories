@@ -5,6 +5,10 @@
   flex-direction: column;
   flex-grow: 1;
 
+  .buttons-container {
+    margin-top: 10px;
+  }
+
   .buttons-right {
     float: right;
 
