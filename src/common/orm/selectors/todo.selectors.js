@@ -2,7 +2,7 @@ import {createSelector} from 'redux-orm';
 import orm from '../orm.schema';
 
 export const todoIdsListByCategoryId = (categoryId) => createSelector(orm,
-  state => state.orm,
+  state => state.orm.present,
   state => state.todosFilter,
   (session, todosFilter) => {
     const {showDone, searchQuery} = todosFilter;
@@ -23,13 +23,13 @@ export const todoIdsListByCategoryId = (categoryId) => createSelector(orm,
   }
 );
 
-export const todoById = (todoId) => createSelector(orm, state => state.orm, session => {
+export const todoById = (todoId) => createSelector(orm, state => state.orm.present, session => {
   if (!session.Todo.hasId(todoId)) return null;
 
   return session.Todo.withId(todoId).ref;
 });
 
-export const overallProgress = createSelector(orm, state => state.orm, session => {
+export const overallProgress = createSelector(orm, state => state.orm.present, session => {
   const allTodos = session.Todo.all().toRefArray();
   if (allTodos.length === 0) return 100;
 

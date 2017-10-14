@@ -2,7 +2,8 @@ import shortid from 'shortid'; // todo use server api
 import {
   ADD_CATEGORY,
   REMOVE_CATEGORY,
-  UPDATE_CATEGORY
+  UPDATE_CATEGORY,
+  TOGGLE_EXPAND_CATEGORY
 } from './action-types';
 
 export const removeCategory = (categoryId) => {
@@ -36,4 +37,14 @@ export const updateCategory = (category) => {
       category
     }
   };
+};
+
+export const toggleExpandCategory = (categoryId, isExpanded) => {
+  return {
+    type: TOGGLE_EXPAND_CATEGORY,
+    payload: {
+      categoryId,
+      isExpanded
+    }
+  }
 };

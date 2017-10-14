@@ -51,8 +51,8 @@ export default class CategoryItem extends PureComponent {
   _nameInput;
 
   toggleExpand = () => {
-    const {category} = this.props;
-    this.props.categoryActions.updateCategory({...category, isExpanded: !category.isExpanded});
+    const {categoryId} = this.props;
+    this.props.categoryActions.toggleExpandCategory(categoryId);
   };
 
   addSubcategory = event => {

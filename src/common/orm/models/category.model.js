@@ -2,7 +2,8 @@ import {attr, Model} from 'redux-orm';
 import {
   ADD_CATEGORY,
   REMOVE_CATEGORY,
-  UPDATE_CATEGORY
+  UPDATE_CATEGORY,
+  TOGGLE_EXPAND_CATEGORY
 } from '../actions/action-types';
 
 
@@ -43,6 +44,18 @@ export default class Category extends Model {
       case UPDATE_CATEGORY: {
         const {category} = payload;
         Category.withId(category.id).update(category);
+        break;
+      }
+      case TOGGLE_EXPAND_CATEGORY: {
+        const {categoryId} = payload;
+        const category = Category.withId(categoryId);
+        let {isExpanded} = payload;
+
+        if (typeof isExpanded === 'undefined') {
+          isExpanded = !category.isExpanded;
+        }
+
+        category.update({isExpanded});
         break;
       }
       default:
