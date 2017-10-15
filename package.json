@@ -7,11 +7,11 @@
     "node": "8.6.0"
   },
   "scripts": {
-    "start": "npm run build && npm run start:server",
-    "start:server": "node server/server.js",
+    "start": "node server/server.js",
     "dev": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "postinstall": "npm run build"
   },
   "devDependencies": {
     "autoprefixer": "6.5.1",
