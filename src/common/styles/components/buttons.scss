@@ -21,6 +21,11 @@
     &:hover {
       background-color: $c-gray;
     }
+
+    &:disabled {
+      background-color: $c-white;
+      opacity: 0.5;
+    }
   }
 
   &-primary {
