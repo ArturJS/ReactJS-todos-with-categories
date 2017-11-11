@@ -1,24 +1,14 @@
 import React, {PropTypes, PureComponent} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import {observer, inject} from 'mobx-react';
 
-import * as categoryActions from '../../../orm/actions/category.actions';
 import './CategoryForm.scss';
 
-function mapStateToProps(state) {
-  return state;
-}
 
-function mapDispatchToProps(dispatch) {
-  return {
-    addCategory: bindActionCreators(categoryActions.addCategory, dispatch)
-  };
-}
-
-@connect(mapStateToProps, mapDispatchToProps)
+@inject('categoriesStore')
+@observer
 export default class CategoryForm extends PureComponent {
   static propTypes = {
-    addCategory: PropTypes.func.isRequired
+    categoriesStore: PropTypes.object.isRequired
   };
 
   _name;
@@ -34,7 +24,7 @@ export default class CategoryForm extends PureComponent {
     const name = this._name.value.trim();
     if (!name) return;
 
-    this.props.addCategory({name});
+    this.props.categoriesStore.addCategory({name});
     this.resetForm();
     this.focusTitleInput();
   };

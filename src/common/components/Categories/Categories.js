@@ -1,32 +1,19 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import {withRouter} from 'react-router';
+import {observer, inject} from 'mobx-react';
 
 import CategoryForm from './CategoryForm';
 import CategoryItem from './CategoryItem';
-import * as categorySelectors from '../../orm/selectors/category.selectors';
-import * as categoryActions from '../../orm/actions/category.actions';
 import './Categories.scss';
 
-function mapStateToProps(state, props) {
-  return {
-    categoryIds: categorySelectors.rootCategoryIds(state)
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    categoryActions: bindActionCreators(categoryActions, dispatch)
-  };
-}
 
 @withRouter
-@connect(mapStateToProps, mapDispatchToProps)
+@inject('categoriesStore')
+@observer
 export default class Categories extends PureComponent {
   static propTypes = {
-    categoryIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+    categoriesStore: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
   };
@@ -55,17 +42,19 @@ export default class Categories extends PureComponent {
   };
 
   render() {
-    const {categoryIds} = this.props;
+    const {rootCategories, categories} = this.props.categoriesStore;
     const {isAttachMode} = this.state;
+
+    console.log('categories', categories.map(category => category.name));
 
     return (
       <div className="category-container">
         <CategoryForm />
         <div className="category-list">
-          {categoryIds.map(categoryId => (
+          {rootCategories.map(category => (
             <CategoryItem
-              key={categoryId}
-              categoryId={categoryId}
+              key={category.id}
+              category={category}
               isAttachMode={isAttachMode}
             />
           ))}

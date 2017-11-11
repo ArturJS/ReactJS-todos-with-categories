@@ -1,42 +1,23 @@
 import React, {PropTypes, PureComponent} from 'react';
 import Collapse from 'react-collapse';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
 import {NavLink} from 'react-router-dom';
 import {withRouter} from 'react-router';
+import {observer, inject} from 'mobx-react';
 
-import * as categorySelectors from '../../../orm/selectors/category.selectors';
-import * as categoryActions from '../../../orm/actions/category.actions';
-import * as editingTodoActions from '../../../ducks/editing-todo.ducks';
-import SubCategoryItem from './CategoryItem'; // necessary that child CategoryItems were wrapped with @connect
-import modalProvider from '../../../features/modals/modal-provider';
+import SubCategoryItem from './CategoryItem'; // necessary that child CategoryItems were wrapped with @observer
 import './CategoryItem.scss';
 
-function mapStateToProps(state, props) {
-  return {
-    category: categorySelectors.categoryById(props.categoryId)(state),
-    editingTodo: state.editingTodo
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    categoryActions: bindActionCreators(categoryActions, dispatch),
-    editingTodoActions: bindActionCreators(editingTodoActions, dispatch)
-  };
-}
 
 @withRouter
-@connect(mapStateToProps, mapDispatchToProps)
+@inject('categoriesStore', 'modalStore')
+@observer
 export default class CategoryItem extends PureComponent {
   static propTypes = {
-    categoryId: PropTypes.string.isRequired,
+    categoriesStore: PropTypes.object.isRequired,
     category: PropTypes.object,
-    categoryActions: PropTypes.object.isRequired,
-    editingTodoActions: PropTypes.object.isRequired,
     isAttachMode: PropTypes.bool.isRequired,
     history: PropTypes.object.isRequired,
-    editingTodo: PropTypes.object.isRequired
+    // editingTodo: PropTypes.object.isRequired
   };
 
   static contextTypes = {
@@ -51,15 +32,15 @@ export default class CategoryItem extends PureComponent {
   _nameInput;
 
   toggleExpand = () => {
-    const {categoryId} = this.props;
-    this.props.categoryActions.toggleExpandCategory(categoryId);
+    const {category} = this.props;
+    this.props.categoriesStore.toggleExpandCategory(category.id);
   };
 
   addSubcategory = event => {
     event.stopPropagation();
     const {category} = this.props;
-    this.props.categoryActions.addCategory({
-      parentId: category.id,
+    this.props.categoriesStore.addCategory({
+      parent: category,
       name: `${category.name}-${category.childs.length + 1}`
     });
   };
@@ -70,14 +51,14 @@ export default class CategoryItem extends PureComponent {
       category
     } = this.props;
 
-    modalProvider.showConfirm({
+    this.props.modalStore.showConfirm({
       title: 'Please, confirm your action',
       body: `Are you sure you want to delete "${category.name}"?`
     })
       .result
       .then((shouldDelete) => {
         if (shouldDelete) {
-          this.props.categoryActions.removeCategory(category.id);
+          this.props.categoriesStore.removeCategory(category.id);
         }
       });
   };
@@ -92,7 +73,7 @@ export default class CategoryItem extends PureComponent {
     event.stopPropagation();
     const {category} = this.props;
     const name = this._nameInput.value;
-    this.props.categoryActions.updateCategory({...category, name});
+    this.props.categoriesStore.updateCategory({...category, name});
     this.setState({isEditing: false});
   };
 
@@ -104,16 +85,16 @@ export default class CategoryItem extends PureComponent {
   attachByCategoryId = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    const {
-      editingTodoActions,
-      categoryId,
-      history,
-      editingTodo
-    } = this.props;
-    editingTodoActions.updateEditingTodo({
-      categoryId
-    });
-    history.replace(`/category/${categoryId}/todo/${editingTodo.id}`);
+    // const {
+    //   editingTodoActions,
+    //   categoryId,
+    //   history,
+    //   editingTodo
+    // } = this.props;
+    // editingTodoActions.updateEditingTodo({
+    //   categoryId
+    // });
+    // history.replace(`/category/${categoryId}/todo/${editingTodo.id}`);
   };
 
   openRelatedTodos = (event) => {
@@ -127,7 +108,6 @@ export default class CategoryItem extends PureComponent {
 
   render() {
     const {category, isAttachMode} = this.props;
-    if (!category) return null;
 
     const {isExpanded} = category;
     const hasChilds = category.childs.length > 0;
@@ -246,10 +226,10 @@ export default class CategoryItem extends PureComponent {
       <div className="category-card-body">
         <Collapse isOpened={isExpanded}>
           <ul className="category-card-body-wrap">
-            {category.childs.map(categoryId => (
-              <li key={categoryId}>
+            {category.childs.map(category => (
+              <li key={category.id}>
                 <SubCategoryItem
-                  categoryId={categoryId}
+                  category={category}
                   isAttachMode={isAttachMode}
                 />
               </li>

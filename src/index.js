@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
+import {Provider} from 'mobx-react';
 import {Redirect, Route, Switch} from 'react-router';
-import {ConnectedRouter} from 'react-router-redux';
+import {BrowserRouter} from 'react-router-dom';
 import 'babel-polyfill';
 
-import history from './common/history';
-import store from './common/store';
+import {categoriesStore} from './common/mst/categories/categories.store';
+import modalStore from './common/features/modals/modal.store';
+// import {todosStore} from './common/mst/todos/todos.store';
 import RootShell from './common/shells/RootShell';
-import TodoEditPage from './pages/TodoEditPage';
+// import TodoEditPage from './pages/TodoEditPage';
 import TodoListPage from './pages/TodoListPage';
 import './index.scss';
 
@@ -17,17 +18,23 @@ import './index.scss';
 //   whyDidYouUpdate(React);
 // }
 
+const stores = {
+  categoriesStore,
+  modalStore
+  // todosStore
+};
+
 ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
+  <Provider {...stores}>
+    <BrowserRouter>
       <RootShell>
         <Switch>
           <Route exact path={'/category/:categoryId?'} component={TodoListPage}/>
-          <Route exact path={'/category/:categoryId/todo/:todoId'} component={TodoEditPage}/>
+          {/* <Route exact path={'/category/:categoryId/todo/:todoId'} component={TodoEditPage}/> */}
           <Redirect from={'/*'} to="/"/>
         </Switch>
       </RootShell>
-    </ConnectedRouter>
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );

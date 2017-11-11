@@ -1,11 +1,10 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import SwipeableViews from 'react-swipeable-views';
 
-import TodosFilter from '../../components/TodosFilter';
-import ProgressBar from '../../components/ProgressBar';
+// import TodosFilter from '../../components/TodosFilter';
+// import ProgressBar from '../../components/ProgressBar';
 import Categories from '../../components/Categories';
 import ModalDialog from '../../features/modals/ModalDialog';
 import Header from './Header';
@@ -13,7 +12,7 @@ import './RootShell.scss';
 
 
 const styles = {
-  swipeableContainer:{
+  swipeableContainer: {
     width: '100%'
   },
   slideStyle: {
@@ -23,18 +22,11 @@ const styles = {
   }
 };
 
-function mapStateToProps(state, props) {
-  return {
-    editingTodoTitle: state.editingTodo.title
-  };
-}
-
 @withRouter
-@connect(mapStateToProps)
 export default class RootShell extends PureComponent {
   static propTypes = {
     location: PropTypes.object.isRequired,
-    editingTodoTitle: PropTypes.string,
+    // editingTodoTitle: PropTypes.string,
     children: PropTypes.any.isRequired
   };
 
@@ -93,15 +85,15 @@ export default class RootShell extends PureComponent {
             <h2 className="page-name">
               {isIndexPage ? 'To-do list' : editingTodoTitle}
             </h2>
-            {
+            {/* {
               isIndexPage && <TodosFilter />
-            }
+            } */}
           </div>
         </Header>
         <div className="root-shell--body">
-          {
+          {/* {
             isIndexPage && <ProgressBar />
-          }
+          } */}
           <SwipeableViews
             className="layout-body"
             containerStyle={styles.swipeableContainer}
@@ -110,14 +102,14 @@ export default class RootShell extends PureComponent {
             onChangeIndex={this.onChangeIndex}
           >
             <div className="layout-left-pane">
-              <Categories />
+              <Categories/>
             </div>
             <div className="layout-right-pane">
               {children}
             </div>
           </SwipeableViews>
         </div>
-        <ModalDialog />
+        <ModalDialog/>
       </div>
     );
   }

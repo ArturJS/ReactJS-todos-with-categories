@@ -3,7 +3,7 @@ import Collapse from 'react-collapse';
 import classNames from 'classnames';
 
 import logo from '../../../../logo.svg';
-import UndoRedo from '../../../components/UndoRedo';
+// import UndoRedo from '../../../components/UndoRedo';
 import './Header.scss';
 
 export default class Header extends PureComponent {
@@ -24,7 +24,7 @@ export default class Header extends PureComponent {
     return (
       <div className="header">
         <div className="header-content">
-          <UndoRedo />
+          {/* <UndoRedo /> */}
           <img src={logo} className="App-logo hide-till-tablet" alt="logo"/>
           <h2 className="App-logo-text hide-till-tablet">Welcome to React</h2>
           <div

@@ -1,32 +1,18 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import {observer, inject} from 'mobx-react';
 import Modal from 'react-modal';
 import _ from 'lodash';
 
-import * as modalActions from './modal.ducks';
-import {MODAL_TYPES} from './modal-provider';
+import {MODAL_TYPES} from './modal.store';
 import './ModalDialog.scss';
 
 
-function mapStateToProps(state, props) {
-  return {
-    modalStack: state.modalStack
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    modalActions: bindActionCreators(modalActions, dispatch)
-  };
-}
-
-@connect(mapStateToProps, mapDispatchToProps)
+@inject('modalStore')
+@observer
 export default class ModalDialog extends PureComponent {
   static propTypes = {
-    modalStack: PropTypes.array.isRequired,
-    modalActions: PropTypes.object.isRequired
+    modalStore: PropTypes.object.isRequired
   };
 
   static noBackdropStyle = {
@@ -39,22 +25,22 @@ export default class ModalDialog extends PureComponent {
 
   close = (event) => {
     const {id} = event.target.dataset;
-    this.props.modalActions.closeModal({
+    this.props.modalStore.close({
       id,
       reason: true
-    })
+    });
   };
 
   dismiss = (event) => {
     const {id} = event.target.dataset;
-    this.props.modalActions.closeModal({
+    this.props.modalStore.close({
       id,
       reason: false
-    })
+    });
   };
 
   render() {
-    const {modalStack} = this.props;
+    const {modalStack} = this.props.modalStore;
 
     return (
       <span>
