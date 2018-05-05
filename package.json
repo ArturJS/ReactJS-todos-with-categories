@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "node server/server.js",
+    "start:aws": "npx cross-env PORT=80 node server/server.js",
     "dev": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
